@@ -2,9 +2,7 @@
 
 Hello! My name is Dennise Catolos and I am a high school student based in Singapore.
 
-### Programs That I Use ❤
-
-The list here is that programs and software that I use to create my projects.
+## Programs That I Use ❤
 
 * Visual Studio 2019
   * ReSharper Ultimate
