@@ -4,7 +4,6 @@ Hello! My name is Dennise! I am a high school student based in Singapore and I h
 
 * 🌐 Website: [Click Me](https://dentolos19.github.io)
 * ✉ Email: [Click Me](https://dentolos19.github.io/contact)
-* 🎮 Discord: @dentolos19#6996
 
 ## Programs That I Use ❤
 
