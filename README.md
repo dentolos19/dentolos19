@@ -1,13 +1,18 @@
 ## Hello World! 👋
 
-Hello! My name is Dennise Catolos and I am a high school student based in Singapore.
+Hello! My name is Dennise! I am a high school student based in Singapore
 
 ## Programs That I Use ❤
+
+Most of the programs that I've used came from the GitHub Education Pack!
 
 * Visual Studio 2019
   * ReSharper Ultimate
   * Roslynator
-* JetBrains Rider
-* PyCharm Professional
-* GitKraken
-* Unity Pro
+* JetBrains
+  * IntelliJ Ultimate
+  * PyCharm Professional
+  * Rider
+* GitKraken (Pro)
+* Unity (Pro)
+* Bootstrap Studio
