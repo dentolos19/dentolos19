@@ -4,11 +4,11 @@ Hello! My name is Dennise! I am a high school student based in Singapore and I h
 
 * 🌐 Website: [Click Me](https://dentolos19.github.io)
 * ✉ Email: [Click Me](https://dentolos19.github.io/contact)
-* 📜 Programming Languages: C#, Python, Java (Still Learning), C++ (Still Learning)
+* 📜 Programming Languages: **C#**, **Python**, **Java** (Still Learning), **C++** (Still Learning)
 
 ## Programs That I Use ❤
 
-Most of the programs that I've used came from the GitHub Education Pack!
+Most of the programs that I've used came from the [GitHub Education Pack](https://education.github.com)!
 
 * Visual Studio 2019
   * ReSharper Ultimate
