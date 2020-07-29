@@ -4,7 +4,7 @@ Hello! My name is Dennise! I am a high school student based in Singapore and I h
 
 * 🌐 Website: [Click Me](https://dentolos19.github.io)
 * ✉ Email: [Click Me](https://dentolos19.github.io/contact)
-* 📜 Programming Languages: **C#** (My Primary Lang), **Python** (For Scripting Only), **Java** (Still Learning), **C++** (Still Learning)
+* 📜 Programming Languages: **C#** (My Primary Language), **Python** (For Scripting Only), **Java** (Still Learning), **C++** (Still Learning)
 
 ## Programs That I Use ❤
 
@@ -13,7 +13,7 @@ Most of the programs that I've used came from the [GitHub Education Pack](https:
 * Visual Studio 2019
   * ReSharper Ultimate
   * Roslynator
-* JetBrains (Education License)
+* JetBrains (Educational License)
   * IntelliJ Ultimate
   * PyCharm Professional
   * Rider
