@@ -12,7 +12,6 @@ Most of the programs that I've used came from the [GitHub Education Pack](https:
 
 * Visual Studio 2019
   * ReSharper Ultimate
-  * Roslynator
 * JetBrains (Educational License)
   * IntelliJ Ultimate
   * PyCharm Professional
