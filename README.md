@@ -12,10 +12,9 @@ Most of the programs that I've used came from the [GitHub Education Pack](https:
 
 * Visual Studio 2019
   * ReSharper Ultimate
-* JetBrains
-  * IntelliJ Ultimate
-  * PyCharm Professional
-  * Rider
+* IntelliJ Ultimate
+* PyCharm Professional
+* Rider
 * GitKraken
 * Unity
 * Bootstrap Studio
