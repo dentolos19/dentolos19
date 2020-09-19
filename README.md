@@ -18,3 +18,7 @@ Some of the programs on this list came from the [GitHub Education Pack](https://
 * GitKraken
 * Bootstrap Studio
 * Adobe Photoshop
+
+## My Profile Statistics 📊
+
+![Statistics](https://github-readme-stats.vercel.app/api?username=dentolos19&show_icons=true&theme=cobalt&hide=issues)
