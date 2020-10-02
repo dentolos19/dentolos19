@@ -4,7 +4,8 @@ Hello! My name is Dennise! I am a high school student based in Singapore and I h
 
 * 🌐 Website: [Click Me](https://dentolos19.github.io)
 * ✉ Email: [Click Me](https://dentolos19.github.io/contact)
-* 📜 Programming Languages: **C#**, **C++** & **Python**
+* 📜 Gists: [Click Me](https://gist.github.com/dentolos19)
+* 💻 Programming Languages: **C#**, **C++** & **Python**
 
 ## Programs That I Use ❤
 
