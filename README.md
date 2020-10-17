@@ -18,7 +18,6 @@ Some of the programs on this list came from the [GitHub Education Pack](https://
   * JetBrains Rider
 * GitKraken
 * Bootstrap Studio
-* Adobe Photoshop
 
 ## My Profile Statistics 📊
 
