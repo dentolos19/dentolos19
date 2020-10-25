@@ -14,11 +14,10 @@ Some of the programs on this list came from the [GitHub Education Pack](https://
 * Visual Studio 2019
   * ReSharper Ultimate
 * Unity
-  * Blender
   * JetBrains Rider
 * GitKraken
 * Bootstrap Studio
 
 ## My Profile Statistics 📊
 
-[![Statistics](https://github-readme-stats.vercel.app/api?username=dentolos19&show_icons=true&theme=cobalt&hide=issues)](https://github.com/dentolos19)
+[![](https://github-readme-stats.vercel.app/api?username=dentolos19&show_icons=true&theme=cobalt&hide=issues)](https://github.com/dentolos19)
