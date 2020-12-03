@@ -18,6 +18,10 @@ Some of the programs on this list came from the [GitHub Education Pack](https://
 * GitKraken
 * Bootstrap Studio
 
+## My Profile Badges 📛
+
+[![](https://www.codewars.com/users/dentolos19/badges/large)](https://www.codewars.com/users/dentolos19)
+
 ## My Profile Statistics 📊
 
 [![](https://github-readme-stats.vercel.app/api?username=dentolos19&show_icons=true&theme=cobalt&hide=issues)](https://github.com/dentolos19)
