@@ -5,7 +5,7 @@ Hello! My name is Dennise! I am a high school student based in Singapore and I h
 * 🌐 Website: [Click Me](https://dentolos19.github.io)
 * ✉ Email: [Click Me](https://dentolos19.github.io/contact)
 * 📜 Gists: [Click Me](https://gist.github.com/dentolos19)
-* 💻 Programming Languages: **C#**, **Kotlin** & **Python**
+* 💻 Programming Languages: **C#** & **Python**
 
 ## Programs That I Use ❤
 
@@ -21,7 +21,3 @@ Some of the programs on this list came from the [GitHub Education Pack](https://
 ## My Profile Badges 📛
 
 [![](https://www.codewars.com/users/dentolos19/badges/large)](https://www.codewars.com/users/dentolos19)
-
-## My Profile Statistics 📊
-
-[![](https://github-readme-stats.vercel.app/api?username=dentolos19&show_icons=true&theme=cobalt&hide=issues)](https://github.com/dentolos19)
