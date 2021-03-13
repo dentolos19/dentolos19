@@ -2,7 +2,7 @@
 
 Hi there! My name is Dennise! I am a high school student based in Singapore and I have a hobby of creating projects that could benefit or be useful in any scenario. But I am really bad at maintaining them because I always look forward to creating something new, so if you want to contribute to my projects then feel free to do so!
 
-- 🗃 .NET Projects: [Click Me](https://github.com/search?q=user%3Adentolos19+topic%3Adotnet)
+* 🗃 .NET Projects: [Click Me](https://github.com/search?q=user%3Adentolos19+topic%3Adotnet)
 
 - 🌐 Website: [Click Me](https://dentolos19.github.io)
 - ✉ Email: [Click Me](https://dentolos19.github.io/contact)
