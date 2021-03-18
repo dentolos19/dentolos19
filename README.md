@@ -15,6 +15,7 @@ Hi there! My name is Dennise! I am a high school student based in Singapore and 
 Some of the programs on this list came from the [GitHub Education Pack](https://education.github.com)!
 
 - JetBrains Rider
+- Visual Studio Code
 - Unity
 - GitKraken
 
