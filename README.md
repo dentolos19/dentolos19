@@ -7,7 +7,6 @@ Hi there! My name is Dennise! I am a high school student based in Singapore and 
 * 📚 Python Projects: [Click Me](https://github.com/search?q=user%3Adentolos19+topic%3Apython)
 
 - 🌐 Website: [Click Me](https://dentolos19.github.io)
-- ✉ Email: [Click Me](https://dentolos19.github.io/contact)
 - 📜 Gists: [Click Me](https://gist.github.com/dentolos19)
 - 💻 Programming Languages: **C#** & **Python**
 
