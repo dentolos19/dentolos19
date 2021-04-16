@@ -5,9 +5,9 @@ Welcome to my GitHub profile! Here, you will find all my software projects that 
 * 📚 .NET Projects: [Click Me](https://github.com/search?q=user%3Adentolos19+topic%3Adotnet)
 * 📚 Unity Projects: [Click Me](https://github.com/search?q=user%3Adentolos19+topic%3Aunity)
 
-- 🌐 Website: [Click Me](https://dentolos19.github.io)
-- 📜 Gists: [Click Me](https://gist.github.com/dentolos19)
-- 💻 Programming Languages: **C#** & **Python**
+- 🌐 My Website: [Click Me](https://dentolos19.github.io)
+- 📜 My Gists: [Click Me](https://gist.github.com/dentolos19)
+- 💻 Programming Languages: **C#**
 
 ## Programs That I Use ❤
 
