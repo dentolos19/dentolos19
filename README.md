@@ -13,7 +13,7 @@ Welcome to my GitHub profile! Here, you will find all my software projects that 
 
 Some of the programs on this list came from the [GitHub Education Pack](https://education.github.com)!
 
-- JetBrains Rider
+- Visual Studio 2019
 - Visual Studio Code
 - Unity
 - GitKraken
