@@ -14,6 +14,7 @@ Welcome to my GitHub profile!
   - 🚀 making projects that i would (mostly) never release
   - 🧑‍💻 copyin- ahem; getting inspiration from other ppl's code
   - 🚀 im bad at versioning my releases (trying to follow [semver](https://semver.org)/[calver](https://calver.org))
+  - 🧪 im lazy at writing tests; dont expect my tests to be good
 
 ### 💻 Programming Languages
 
