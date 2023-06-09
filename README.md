@@ -14,7 +14,8 @@ Welcome to my GitHub profile!
   - 🚀 making projects that i would (mostly) never release
   - 🧑‍💻 copyin- ahem; getting inspiration from other ppl's code
   - 🚀 im bad at versioning my releases (trying to follow [semver](https://semver.org)/[calver](https://calver.org))
-  - 🧪 im lazy at writing tests; dont expect my tests to be good
+  - 🧪 im lazy at writing unit tests; dont expect them to be good
+  - 📑 im also lazy at writing documentation; dont even expect them to be good either
 
 ### 💻 Programming Languages
 
@@ -27,6 +28,7 @@ Welcome to my GitHub profile!
 ![.NET](https://img.shields.io/badge/-.NET-512BD4?style=for-the-badge&logo=.net&logoColor=white)
 ![Unity](https://img.shields.io/badge/-Unity-FFFFFF?style=for-the-badge&logo=unity&logoColor=black)
 ![Node.js](https://img.shields.io/badge/-Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)
+![Next.js](https://img.shields.io/badge/-Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)
 ![MongoDB](https://img.shields.io/badge/-MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
 ![Git](https://img.shields.io/badge/-Git-F05032?style=for-the-badge&logo=git&logoColor=white)
 ![GitKraken](https://img.shields.io/badge/-GitKraken-179287?style=for-the-badge&logo=gitkraken&logoColor=white)
@@ -34,3 +36,5 @@ Welcome to my GitHub profile!
 ![Visual Studio](https://img.shields.io/badge/-Visual%20Studio-5C2D91?style=for-the-badge&logo=visual-studio&logoColor=white)
 ![Visual Studio Code](https://img.shields.io/badge/-Visual%20Studio%20Code-007ACC?style=for-the-badge&logo=visual-studio-code&logoColor=white)
 ![Postman](https://img.shields.io/badge/-Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)
+![Vercel](https://img.shields.io/badge/-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/-Tailwind%20CSS-06B6D4?style=for-the-badge&logo=vercel&logoColor=white)
