@@ -1,14 +1,18 @@
 ## 👋 Hello World!
 
+![Student @ Nanyang Polytechnic](https://img.shields.io/badge/Student-Nanyang%20Polytechnic-0E4193?style=for-the-badge&logo=googlescholar&logoColor=white)
+
+![Diploma in Information Technology](https://img.shields.io/badge/Diploma-Information%20Technology-E20613?style=for-the-badge&logo=googlescholar&logoColor=white)
+
 Welcome to my GitHub profile!
 
-- 🌐 My Website: [Click Me](https://dentolos19.github.io)
-- 🖥️ My Projects:
+- 🌐 My website: [Click Me](https://dentolos19.github.io)
+- 🖥️ My projects:
   - 📚 .NET Projects: [Click Me](https://github.com/dentolos19?tab=repositories&q=topic%3Adotnet)
   - 📚 Unity Projects: [Click Me](https://github.com/dentolos19?tab=repositories&q=topic%3Aunity)
   - 📚 Web Projects: [Click Me](https://github.com/dentolos19?tab=repositories&q=topic%3Aweb)
-- 📜 My Gists: [Click Me](https://gist.github.com/dentolos19)
-- ⭐ My (dumb) Skills/Downsides:
+- 📜 My gists: [Click Me](https://gist.github.com/dentolos19)
+- ⭐ My (dumb) skills/downsides:
   - 🧠 i procrastinate a lot (pls send help)
   - 💩 writing shit (but working) code
   - 🚀 making projects that i would (mostly) never release
