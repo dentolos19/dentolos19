@@ -2,8 +2,6 @@
 
 ![Student @ Nanyang Polytechnic](https://img.shields.io/badge/Student-Nanyang%20Polytechnic-0E4193?style=for-the-badge&logo=googlescholar&logoColor=white)
 
-![Diploma in Information Technology](https://img.shields.io/badge/Diploma-Information%20Technology-E20613?style=for-the-badge&logo=googlescholar&logoColor=white)
-
 Welcome to my GitHub profile!
 
 - 🌐 My website: [Click Me](https://dentolos19.github.io)
