@@ -1,6 +1,6 @@
 ## 👋 Hello World!
 
-![Student @ Nanyang Polytechnic](https://img.shields.io/badge/Student-Nanyang%20Polytechnic-0E4193?style=for-the-badge&logo=googlescholar&logoColor=white)
+![Student @ Nanyang Polytechnic](https://img.shields.io/badge/Student-Nanyang%20Polytechnic-0E4193?style=for-the-badge&logo=googlescholar&logoColor=white&labelColor=E20613)
 
 Welcome to my GitHub profile!
 
