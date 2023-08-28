@@ -1,7 +1,5 @@
 ## 👋 Hello World!
 
-![Student @ Nanyang Polytechnic](https://img.shields.io/badge/Nanyang%20Polytechnic-Student-0E4193?style=for-the-badge&logo=googlescholar&logoColor=white&labelColor=E20613)
-
 Welcome to my GitHub profile!
 
 - 🌐 My website: [Click Me](https://dentolos19.github.io)
@@ -24,6 +22,7 @@ Welcome to my GitHub profile!
 ![C#](https://img.shields.io/badge/-C%23-239120?style=for-the-badge&logo=csharp&logoColor=white)
 ![Python](https://img.shields.io/badge/-Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Rust](https://img.shields.io/badge/Learning-Rust-000000?style=for-the-badge&logo=rust&logoColor=white)
 
 ### 🧑‍💻 Technologies & Tools
 
@@ -40,3 +39,4 @@ Welcome to my GitHub profile!
 ![Postman](https://img.shields.io/badge/-Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)
 ![Vercel](https://img.shields.io/badge/-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/-Tailwind%20CSS-06B6D4?style=for-the-badge&logo=vercel&logoColor=white)
+![PocketBase](https://img.shields.io/badge/-PocketBase-B8DBE4?style=for-the-badge&logo=pocketbase&logoColor=black)
