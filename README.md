@@ -4,9 +4,10 @@ Welcome to my GitHub profile!
 
 - 🌐 My website: [Click Me](https://dentolos19.github.io)
 - 🖥️ My projects:
-  - 📚 .NET Projects: [Click Me](https://github.com/dentolos19?tab=repositories&q=topic%3Adotnet)
-  - 📚 Unity Projects: [Click Me](https://github.com/dentolos19?tab=repositories&q=topic%3Aunity)
-  - 📚 Web Projects: [Click Me](https://github.com/dentolos19?tab=repositories&q=topic%3Aweb)
+  - 📚 .NET Projects: [Click Me](https://github.com/dentolos19?tab=repositories&q=topic%3Adotnet&sort=stargazers)
+  - 📚 Web Projects: [Click Me](https://github.com/dentolos19?tab=repositories&q=topic%3Aweb&sort=stargazers)
+  - 📚 Python Projects: [Click Me](https://github.com/dentolos19?tab=repositories&q=topic%3Apython&sort=stargazers)
+  - 📚 Unity Projects: [Click Me](https://github.com/dentolos19?tab=repositories&q=topic%3Aunity&sort=stargazers)
 - 📜 My gists: [Click Me](https://gist.github.com/dentolos19)
 - ⭐ My (dumb) skills/downsides:
   - 🧠 i procrastinate a lot (pls send help)
