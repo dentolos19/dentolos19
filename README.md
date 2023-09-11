@@ -2,7 +2,8 @@
 
 Welcome to my GitHub profile!
 
-- 🌐 My website: [Click Me](https://dentolos19.github.io)
+- 🌏 My website: [Click Me](https://dennise.me)
+- 🤳 My blog: [Click Me](https://blog.dennise.me)
 - 🖥️ My projects:
   - 📚 .NET Projects: [Click Me](https://github.com/dentolos19?tab=repositories&q=topic%3Adotnet&sort=stargazers)
   - 📚 Web Projects: [Click Me](https://github.com/dentolos19?tab=repositories&q=topic%3Aweb&sort=stargazers)
