@@ -1,0 +1,18 @@
+# environment
+.vs/
+.idea/
+.vscode/
+!.vscode/extensions.json
+!.vscode/launch.json
+node_modules/
+
+# output
+dist/
+
+# user
+*.local
+
+# miscellaneous
+.DS_Store
+Desktop.ini
+Thumbs.db

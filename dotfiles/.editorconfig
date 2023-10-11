@@ -3,48 +3,7 @@ root = true
 [*]
 
 charset = utf-8
-indent_style = space
-indent_size = 4
-tab_width = 4
 end_of_line = lf
 trim_trailing_whitespace = true
 insert_final_newline = false
 max_line_length = 120
-
-# ReSharper
-
-# resharper_blank_lines_after_block_statements = 0
-# resharper_csharp_empty_block_style = together_same_line
-# resharper_csharp_wrap_lines = false
-# resharper_html_linebreak_before_elements =
-# resharper_html_space_before_self_closing = true
-# resharper_indent_preprocessor_region = no_indent
-# resharper_keep_existing_arrangement = true
-# resharper_max_attribute_length_for_same_line = 120
-# resharper_normalize_tag_names = true
-# resharper_no_indent_inside_elements =
-# resharper_place_attribute_on_same_line = if_owner_is_single_line
-# resharper_show_autodetect_configure_formatting_tip = false
-# resharper_xmldoc_blank_line_after_pi = false
-# resharper_xmldoc_wrap_lines = false
-# resharper_xml_blank_line_after_pi = false
-# resharper_xml_wrap_lines = false
-
-[*.{js,jsx,ts,tsx}]
-
-indent_size = 2
-tab_width = 2
-
-[*.{css,sass,scss,less}]
-
-indent_size = 2
-tab_width = 2
-
-[*.{json,yml,yaml}]
-
-indent_size = 2
-tab_width = 2
-
-[*.{cmd,bat}]
-
-end_of_line = crlf
