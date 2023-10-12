@@ -12,7 +12,6 @@ obj/
 # user
 *.user
 *.suo
-*.local
 
 # miscellaneous
 .DS_Store

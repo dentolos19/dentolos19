@@ -9,9 +9,6 @@
 # output
 __pycache__/
 
-# user
-*.local
-
 # miscellaneous
 .DS_Store
 Desktop.ini
