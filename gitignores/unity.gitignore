@@ -1,0 +1,27 @@
+# ide files
+.vs/
+.idea/
+
+# generated files
+/Library/
+/Logs/
+/Recordings/
+/Temp/
+/UIElementsSchema/
+*.sln
+*.csproj
+
+# output files
+obj/
+
+# user-specific files
+*.user
+*.suo
+
+# hide personal info
+sysinfo.txt
+
+# miscellaneous files
+.DS_Store
+Desktop.ini
+Thumbs.db

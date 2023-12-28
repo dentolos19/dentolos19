@@ -1,19 +1,19 @@
-# environment
+# ide files
 .vs/
 .idea/
 .vscode/
 !.vscode/extensions.json
 !.vscode/launch.json
 
-# output
+# output files
 bin/
 obj/
 
-# user
+# user-specific files
 *.user
 *.suo
 
-# miscellaneous
+# miscellaneous files
 .DS_Store
 Desktop.ini
 Thumbs.db
