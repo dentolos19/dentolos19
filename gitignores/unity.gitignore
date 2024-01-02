@@ -3,23 +3,25 @@
 .idea/
 
 # generated files
-/Library/
-/Logs/
-/Recordings/
-/Temp/
-/UIElementsSchema/
+/[Ll]ibrary/
+/[Tt]emp/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+/[Rr]ecordings/
 *.sln
 *.csproj
 
+# other generated files
+/.utmp/
+/UIElementsSchema/
+
 # output files
-obj/
+/[Oo]bj/
+/[Bb]uild/
 
 # user-specific files
 *.user
 *.suo
-
-# hide personal info
-sysinfo.txt
 
 # miscellaneous files
 .DS_Store
