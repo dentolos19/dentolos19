@@ -1,17 +1,14 @@
-# ide files
+# IDE configurations
 .vs/
 .idea/
-.vscode/
-!.vscode/extensions.json
-!.vscode/launch.json
 
-# environment files
+# Environment files
 .venv/
 
-# output files
+# Cache files
 __pycache__/
 
-# miscellaneous files
+# Miscellaneous files
 .DS_Store
 Desktop.ini
 Thumbs.db
