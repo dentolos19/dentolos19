@@ -1,15 +1,12 @@
 # ide files
 .vs/
 .idea/
-.vscode/
-!.vscode/extensions.json
-!.vscode/launch.json
 
 # environment files
 node_modules/
 
 # output files
-dist/
+.next/
 
 # user-specific files
 *.local

@@ -1,9 +1,6 @@
 # ide files
 .vs/
 .idea/
-.vscode/
-!.vscode/extensions.json
-!.vscode/launch.json
 
 # output files
 [Bb]in/
