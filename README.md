@@ -1,5 +1,7 @@
 ## 👋 Hello World!
 
+[![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/R6R0UXG7G)
+
 Welcome to my GitHub profile! Want to know more about me? [Click here](https://blog.dennise.me/about)!
 
 - 🌏 My website: [Click Me](https://dennise.me)
