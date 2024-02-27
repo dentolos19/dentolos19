@@ -1,8 +1,8 @@
-# ide files
+# IDE configurations
 .vs/
 .idea/
 
-# generated files
+# Generated files
 /[Ll]ibrary/
 /[Tt]emp/
 /[Ll]ogs/
@@ -11,19 +11,19 @@
 *.sln
 *.csproj
 
-# other generated files
+# Other generated files
 /.utmp/
 /UIElementsSchema/
 
-# output files
+# Output files
 /[Oo]bj/
 /[Bb]uild/
 
-# user-specific files
+# User-specific files
 *.user
 *.suo
 
-# miscellaneous files
+# Miscellaneous files
 .DS_Store
 Desktop.ini
 Thumbs.db

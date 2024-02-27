@@ -1,4 +1,4 @@
-## 👋 Hello World!
+# 👋 Hello World!
 
 [![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/R6R0UXG7G)
 
@@ -6,30 +6,24 @@ Welcome to my GitHub profile! Want to know more about me? [Click here](https://b
 
 - 🌏 My website: [Click Me](https://dennise.me)
 - 🤳 My blog: [Click Me](https://blog.dennise.me)
+- 📜 My gists: [Click Me](https://gist.github.com/dentolos19)
 - 🖥️ My projects:
   - 📚 .NET Projects: [Click Me](https://github.com/dentolos19?tab=repositories&q=topic%3Adotnet&sort=stargazers)
-  - 📚 Web Projects: [Click Me](https://github.com/dentolos19?tab=repositories&q=topic%3Aweb&sort=stargazers)
-  - 📚 Python Projects: [Click Me](https://github.com/dentolos19?tab=repositories&q=topic%3Apython&sort=stargazers)
-  - 📚 Game (e.g. Unity) Projects: [Click Me](https://github.com/dentolos19?tab=repositories&q=topic%3Agame&sort=stargazers)
-  - 📚 School Projects : [Click Me](https://github.com/dentolos19?tab=repositories&q=topic%3Aschool-project&sort=stargazers)
-- 📜 My gists: [Click Me](https://gist.github.com/dentolos19)
-- ⭐ My (dumb) skills/downsides:
-  - 🧠 i procrastinate a lot (pls send help)
-  - 💩 writing shit (but working) code
-  - 🚀 making projects that i would (mostly) never release
-  - 🧑‍💻 copyin- ahem; getting inspiration from other ppl's code
-  - 🚀 im bad at versioning my releases (trying to follow [semver](https://semver.org)/[calver](https://calver.org))
-  - 🧪 im lazy at writing unit tests; dont expect them to be good
-  - 📑 im also lazy at writing documentation; dont even expect them to be good either
+  - 🕸️ Web Projects: [Click Me](https://github.com/dentolos19?tab=repositories&q=topic%3Aweb&sort=stargazers)
+  - 🐍 Python Projects: [Click Me](https://github.com/dentolos19?tab=repositories&q=topic%3Apython&sort=stargazers)
+  - 🎮 Game (e.g. Unity) Projects: [Click Me](https://github.com/dentolos19?tab=repositories&q=topic%3Agame&sort=stargazers)
+  - 🏫 School Projects: [Click Me](https://github.com/dentolos19?tab=repositories&q=topic%3Aschool-project&sort=stargazers)
+- 💼 My other projects:
+  - 🧑‍💻 VSCode Extensions: [Click Me](https://github.com/dentolos19?tab=repositories&q=topic%3Avscode-extension&sort=stargazers)
 
-### 💻 Programming Languages
+## 💻 Programming Languages
 
 [![C#](https://img.shields.io/badge/-C%23-239120?style=for-the-badge&logo=csharp&logoColor=white)](https://wikipedia.org/wiki/C_Sharp_(programming_language))
 [![Python](https://img.shields.io/badge/-Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://typescriptlang.org)
 [![Rust](https://img.shields.io/badge/Learning-Rust-000000?style=for-the-badge&logo=rust&logoColor=white)](https://rust-lang.org)
 
-### 🧑‍💻 Technologies & Tools
+## 🧑‍💻 Technologies & Tools
 
 [![.NET](https://img.shields.io/badge/-.NET-512BD4?style=for-the-badge&logo=.net&logoColor=white)](https://dot.net)
 [![Unity](https://img.shields.io/badge/-Unity-FFFFFF?style=for-the-badge&logo=unity&logoColor=black)](https://unity.com)
