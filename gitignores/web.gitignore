@@ -5,9 +5,12 @@
 # Environment files
 node_modules/
 
-# Output files
+# Output files: Next.js
 .next/
-next.d.ts
+next-env.d.ts
+
+# User-specific files
+.env*.local
 
 # Miscellaneous files
 .DS_Store
