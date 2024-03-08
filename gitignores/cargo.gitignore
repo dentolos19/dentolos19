@@ -1,0 +1,11 @@
+# IDE configurations
+.vs/
+.idea/
+
+# Output files
+target/
+
+# Miscellaneous files
+.DS_Store
+Desktop.ini
+Thumbs.db
