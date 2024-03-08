@@ -1,7 +1,5 @@
 # 👋 Hello World
 
-Welcome to my GitHub profile! Here, you can see all my work and contributions in open-source software!
-
 <div align="center">
     <img src="https://c.tenor.com/uig4MIIEykoAAAAC/tenor.gif">
 </div>
@@ -12,20 +10,7 @@ Welcome to my GitHub profile! Here, you can see all my work and contributions in
     <a href="https://dennise.me"><kbd> <br> <span>🌐 My Website</span> <br> </kbd></a>
     <a href="https://blog.dennise.me"><kbd> <br> <span>📑 My Blog</span> <br> </kbd></a>
     <a href="https://gist.github.com/dentolos19"><kbd> <br> <span>📜 My Gists</span> <br> </kbd></a>
-    <!-- <a href="https://github.com/sponsors/dentolos19"><kbd> <br> <span>💵 Sponsor Me</span> <br> </kbd></a>
-    <a href="https://ko-fi.com/R6R0UXG7G"><kbd> <br> <span>💝 Support Me</span> <br> </kbd></a> -->
-</div>
-
-<br>
-
-<div align="center">
-    <a href="https://github.com/dentolos19?tab=repositories&q=topic%3Adotnet&sort=stargazers"><kbd> <br> <span>📚 .NET Projects</span> <br> </kbd></a>
-    <a href="https://github.com/dentolos19?tab=repositories&q=topic%3Aweb&sort=stargazers"><kbd> <br> <span>🕸️ Web Projects</span> <br> </kbd></a>
-    <a href="https://github.com/dentolos19?tab=repositories&q=topic%3Apython&sort=stargazers"><kbd> <br> <span>🐍 Python Projects</span> <br> </kbd></a>
-    <a href="https://github.com/dentolos19?tab=repositories&q=topic%3Agame&sort=stargazers"><kbd> <br> <span>🎮 Game (e.g. Unity) Projects</span> <br> </kbd></a>
-    <a href="https://github.com/dentolos19?tab=repositories&q=topic%3Aschool-project&sort=stargazers"><kbd> <br> <span>🏫 School Projects</span> <br> </kbd></a>
-    <a href="https://github.com/dentolos19?tab=repositories&q=topic%3Avscode-extension&sort=stargazers"><kbd> <br> <span>🧑‍💻 VSCode Extensions</span> <br> </kbd></a>
-    <a href="https://github.com/dentolos19?tab=repositories&q=topic%3Agithub-actions&sort=stargazers"><kbd> <br> <span>🏃‍♂️ GitHub Actions</span> <br> </kbd></a>
+    <a href="https://github.com/sponsors/dentolos19"><kbd> <br> <span>💵 Sponsor Me</span> <br> </kbd></a>
 </div>
 
 ## 💻 Programming Languages
