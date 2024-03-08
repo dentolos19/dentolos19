@@ -1,7 +1,12 @@
 # 👋 Hello World
 
-<div align="center">
+<!-- <div align="center">
     <img src="https://c.tenor.com/uig4MIIEykoAAAAC/tenor.gif">
+</div> -->
+
+<div align="center">
+    <img src="./banner.png" alt="Banner">
+    <div style="font-size: 0.75rem">someone sponsor me pls so i can export as svg in canva 😭😭😭</div>
 </div>
 
 <br>
