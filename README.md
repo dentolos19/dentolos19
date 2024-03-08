@@ -1,17 +1,7 @@
 # 👋 Hello World
 
-<!-- <div align="center">
-    <img src="https://c.tenor.com/uig4MIIEykoAAAAC/tenor.gif">
-</div> -->
-
 <div align="center">
-    <img src="./banner.png" alt="Banner">
-    <div style="font-size: 0.75rem">someone sponsor me pls so i can export as svg in canva 😭😭😭</div>
-</div>
-
-<br>
-
-<div align="center">
+    <img src="./banner.svg" alt="Banner">
     <a href="https://dennise.me"><kbd> <br> <span>🌐 My Website</span> <br> </kbd></a>
     <a href="https://blog.dennise.me"><kbd> <br> <span>📑 My Blog</span> <br> </kbd></a>
     <a href="https://gist.github.com/dentolos19"><kbd> <br> <span>📜 My Gists</span> <br> </kbd></a>
