@@ -10,6 +10,10 @@ on:
       artifact_pattern:
         type: string
         required: false
+      create_draft:
+        type: boolean
+        required: false
+        default: false
 permissions:
   contents: write
 jobs:
@@ -29,4 +33,5 @@ jobs:
           files: artifacts/*
           title: ${{ inputs.release_title }}
           automatic_release_tag: ${{ inputs.release_tag }}
+          draft: ${{ inputs.create_draft }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
