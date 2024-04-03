@@ -1,4 +1,3 @@
-name: Deploy Artifacts
 on:
   workflow_call:
     inputs:
@@ -16,7 +15,7 @@ permissions:
 jobs:
   main:
     runs-on: ubuntu-latest
-    name: ${{ github.workflow }}
+    name: Deploy Artifacts
     steps:
       - name: Download Artifacts
         uses: actions/download-artifact@v4
