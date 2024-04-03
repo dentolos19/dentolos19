@@ -1,0 +1,82 @@
+name: Build .NET
+on:
+  workflow_call:
+    inputs:
+      project-name:
+        type: string
+        required: true
+      project-file:
+        type: string
+        required: true
+      project-version:
+        type: string
+        required: false
+      runtime-platform:
+        type: string
+        required: false
+        default: win-x64
+      executable-file:
+        type: string
+        required: false
+jobs:
+  main:
+    runs-on: windows-latest
+    name: ${{ github.workflow }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+          submodules: recursive
+          fetch-depth: 0
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+      - id: info
+        name: Get Version Information
+        shell: pwsh
+        run: |
+          $version = ${{ inputs.project-version }}
+          $dateVersion = Get-Date -Format yyyy.MM.dd
+          $commitId = git rev-parse --short HEAD
+          Write-Output "dateVersion=$dateVersion" >> $env:GITHUB_OUTPUT
+          Write-Output "commitId=$commitId" >> $env:GITHUB_OUTPUT
+          if ($version) {
+            Write-Output "version=$version+$commitId" >> $env:GITHUB_OUTPUT
+          } else {
+            Write-Output "version=$dateVersion+$commitId" >> $env:GITHUB_OUTPUT
+          }
+      - name: Publish
+        shell: pwsh
+        run: |
+          dotnet publish ${{ inputs.project-file }} --output build --runtime ${{ inputs.runtime-platform }} -p:Version=${{ steps.info.outputs.version }}
+          $artifacts = (Get-ChildItem -Path build -Recurse).FullName
+          New-Item -Path artifacts -ItemType Directory
+          Compress-Archive -Path $artifacts -DestinationPath artifacts/${{ inputs.project-name }}_${{ inputs.runtime-platform }}.zip
+      - name: Create Setup (Windows-only)
+        if: startsWith(inputs.runtime-platform, 'win') && inputs.executable-file
+        shell: pwsh
+        run: |
+          Invoke-WebRequest -Uri ${{ env.SetupScriptUrl }} -OutFile setup.iss
+          iscc `
+            /O"${{ env.OutputDirName }}" `
+            /F"${{ env.OutputFileName }}" `
+            /DName="${{ env.Name }}" `
+            /DVersion="${{ env.Version }}" `
+            /DFilesDirName="${{ env.FilesDirName }}" `
+            /DExecutableFileName="${{ env.ExecutableFileName }}" `
+            /DLicenseFileName="${{ env.LicenseFileName }}" `
+            setup.iss
+        env:
+          SetupScriptUrl: https://dentolos19.github.io/scripts/setup.iss
+          OutputDirName: artifacts
+          OutputFileName: ${{ inputs.project-name }}_${{ inputs.runtime-platform }}-setup
+          Name: ${{ inputs.project-name }}
+          Version: ${{ steps.info.outputs.version }}
+          FilesDirName: build
+          ExecutableFileName: ${{ inputs.executable-file }}
+          LicenseFileName: LICENSE
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.project-name }}_${{ inputs.runtime-platform }}
+          path: artifacts/*

@@ -15,6 +15,10 @@ dist/
 .next/
 next-env.d.ts
 
+# Output files: VSCode Extension Development
+.vscode-test/
+*.vsix
+
 # User-specific files
 .env*.local
 
