@@ -1,4 +1,3 @@
-name: Build .NET
 on:
   workflow_call:
     inputs:
@@ -23,7 +22,7 @@ on:
 jobs:
   main:
     runs-on: windows-latest
-    name: ${{ github.workflow }}
+    name: Build .NET
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -71,7 +70,7 @@ jobs:
         env:
           setup_script_url: https://raw.githubusercontent.com/dentolos19/dentolos19/main/assets/setup.iss
           output_dir_name: artifacts
-          output_file_name: ${{ inputs.project_name }}_${{ inputs.runtime_platform }}-setup
+          output_file_name: ${{ inputs.project_name }}_${{ inputs.runtime_platform }}
           name: ${{ inputs.project_name }}
           version: ${{ steps.info.outputs.version }}
           files_dir_name: build
