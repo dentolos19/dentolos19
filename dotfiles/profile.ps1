@@ -9,5 +9,3 @@ if (Test-Path $historyFile) {
     Remove-Item -Path $historyFile -Force
 }
 Set-Alias -Name "serve" -Value ServeFolder
-
-Write-Host
