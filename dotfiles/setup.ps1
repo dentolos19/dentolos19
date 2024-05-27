@@ -2,7 +2,7 @@ Set-Location $PSScriptRoot
 
 # Setup Global Editorconfig
 
-Copy-Item -Path "dotfiles\.editorconfig" -Destination (Join-Path $env:USERPROFILE ".editorconfig")
+Copy-Item -Path ".editorconfig" -Destination (Join-Path $env:USERPROFILE ".editorconfig")
 
 # Setup Powershell Profile
 
@@ -10,7 +10,7 @@ $powershellProfile = (Join-Path $env:USERPROFILE "Documents\PowerShell\Microsoft
 $powershellProfileDir = Split-Path -Path $powershellProfile -Parent
 
 if (-not (Test-Path -Path $powershellProfileDir)) {
-    New-Item -ItemType Directory -Path $parentDir | Out-Null
+    New-Item -ItemType Directory -Path $powershellProfileDir | Out-Null
 }
 
-Copy-Item -Path "dotfiles\profile.ps1" -Destination $powershellProfile
+Copy-Item -Path "profile.ps1" -Destination $powershellProfile
