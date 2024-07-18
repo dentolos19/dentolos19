@@ -13,4 +13,5 @@ if (-not (Test-Path -Path $powershellProfileDir)) {
     New-Item -ItemType Directory -Path $powershellProfileDir | Out-Null
 }
 
-Copy-Item -Path "profile.ps1" -Destination $powershellProfile
+Copy-Item -Path "powershell.profile.ps1" -Destination $powershellProfile
+Copy-Item -Path "powershell.config.json" -Destination (Join-Path $powershellProfileDir "powershell.config.json")
