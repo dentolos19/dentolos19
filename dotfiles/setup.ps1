@@ -1,17 +1,22 @@
 Set-Location $PSScriptRoot
 
+Write-Host Installing...
+
 # Setup Global Editorconfig
 
 Copy-Item -Path ".editorconfig" -Destination (Join-Path $env:USERPROFILE ".editorconfig")
 
 # Setup Powershell Profile
 
-$powershellProfile = (Join-Path $env:USERPROFILE "Documents\PowerShell\Microsoft.PowerShell_profile.ps1")
-$powershellProfileDir = Split-Path -Path $powershellProfile -Parent
+$powershellProfileDir = (Join-Path $env:USERPROFILE "Documents\PowerShell")
+$powershellProfileFile = (Join-Path $powershellProfileDir "Microsoft.PowerShell_profile.ps1")
+$powershellConfigFile = (Join-Path $powershellProfileDir "powershell.config.json")
 
 if (-not (Test-Path -Path $powershellProfileDir)) {
     New-Item -ItemType Directory -Path $powershellProfileDir | Out-Null
 }
 
-Copy-Item -Path "powershell.profile.ps1" -Destination $powershellProfile
-Copy-Item -Path "powershell.config.json" -Destination (Join-Path $powershellProfileDir "powershell.config.json")
+Copy-Item -Path "profiles/powershell.profile.ps1" -Destination $powershellProfileFile
+Copy-Item -Path "profiles/powershell.config.json" -Destination $powershellConfigFile
+
+Write-Host Completed!
