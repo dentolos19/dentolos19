@@ -5,7 +5,9 @@
 # Environment files
 .venv/
 
-# Cache files
+# Output files
+build/
+dist/
 __pycache__/
 
 # Miscellaneous files

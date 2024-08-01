@@ -6,9 +6,9 @@
 node_modules/
 
 # Output files
-out/
 build/
 dist/
+out/
 
 # Output files: Next.js
 .vercel/
