@@ -4,7 +4,7 @@ Write-Host Installing...
 
 # Setup Global Editorconfig
 
-Copy-Item -Path ".editorconfig" -Destination (Join-Path $env:USERPROFILE ".editorconfig")
+Copy-Item -Path "global.editorconfig" -Destination (Join-Path $env:USERPROFILE ".editorconfig")
 
 # Setup Powershell Profile
 
