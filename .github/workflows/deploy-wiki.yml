@@ -1,0 +1,17 @@
+on:
+  workflow_call:
+    inputs:
+      wiki_path:
+        type: string
+        required: true
+permissions:
+  contents: write
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: Andrew-Chen-Wang/github-wiki-action@v4
+        with:
+          strategy: init
+          path: ${{ inputs.wiki_path }}
