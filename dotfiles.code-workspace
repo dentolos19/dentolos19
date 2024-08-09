@@ -4,26 +4,14 @@
       "path": "dotfiles"
     }
   ],
-  "tasks": {
-    "version": "2.0.0",
-    "tasks": [
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
       {
-        "label": "Setup Dotfiles",
-        "command": "echo This task is only supported on Windows!",
-        "windows": {
-          "command": "powershell",
-          "args": [
-            "-ExecutionPolicy",
-            "Bypass",
-            "-File",
-            "${workspaceFolder}/../setup.ps1"
-          ]
-        },
-        "presentation": {
-          "reveal": "silent",
-          "clear": true,
-          "showReuseMessage": false
-        }
+        "name": "Setup",
+        "type": "PowerShell",
+        "request": "launch",
+        "script": "${workspaceFolder}/setup.ps1"
       }
     ]
   },

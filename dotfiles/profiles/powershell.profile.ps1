@@ -1,12 +1,23 @@
 function ServeFolder {
-    Start-Process -FilePath "http://localhost:8000"
+    Start-Process "http://localhost:8000"
     & py -m http.server
 }
 
-$historyFile = (Get-PSReadlineOption).HistorySavePath
-
-if (Test-Path $historyFile) {
-    Remove-Item -Path $historyFile -Force
+function BatteryReport() {
+    $outputFile = (Join-Path $env:TEMP "batteryreport.html")
+    & powercfg /batteryreport /output $outputFile
+    Start-Process $outputFile
 }
 
-Set-Alias -Name "serve" -Value ServeFolder
+function ClearHistory {
+    $historyFile = (Get-PSReadlineOption).HistorySavePath
+    if (Test-Path $historyFile) {
+        Remove-Item $historyFile
+    }
+    Clear-History
+    Write-Host "Your command history has been cleared, please restart your shell!"
+}
+
+Set-Alias -Name "sf" -Value ServeFolder
+Set-Alias -Name "br" -Value BatteryReport
+Set-Alias -Name "cch" -Value ClearHistory
