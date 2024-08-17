@@ -15,7 +15,7 @@ out/
 .next/
 next-env.d.ts
 
-# Output files: VSCode Extension Development
+# Output files: VSCode Extension
 .vscode-test/
 *.vsix
 

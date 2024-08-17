@@ -3,8 +3,8 @@
 .idea/
 
 # Output files
-[Bb]in/
-[Oo]bj/
+bin/
+obj/
 
 # User-specific files
 *.user

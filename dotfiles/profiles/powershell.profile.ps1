@@ -18,6 +18,6 @@ function ClearHistory {
     Write-Host "Your command history has been cleared, please restart your shell!"
 }
 
-Set-Alias -Name "sf" -Value ServeFolder
-Set-Alias -Name "br" -Value BatteryReport
-Set-Alias -Name "cch" -Value ClearHistory
+Set-Alias -Name "serve" -Value ServeFolder
+Set-Alias -Name "battery" -Value BatteryReport
+Set-Alias -Name "forget" -Value ClearHistory
