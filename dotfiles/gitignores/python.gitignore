@@ -10,6 +10,10 @@ build/
 dist/
 __pycache__/
 
+# User-specific files
+.env*
+!.env*.template
+
 # Miscellaneous files
 .DS_Store
 Desktop.ini

@@ -20,7 +20,8 @@ next-env.d.ts
 *.vsix
 
 # User-specific files
-.env*.local
+.env*
+!.env*.template
 
 # Miscellaneous files
 .DS_Store

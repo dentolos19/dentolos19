@@ -5,6 +5,10 @@
 # Output files
 target/
 
+# User-specific files
+.env*
+!.env*.template
+
 # Miscellaneous files
 .DS_Store
 Desktop.ini

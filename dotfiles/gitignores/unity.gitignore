@@ -20,6 +20,8 @@
 /[Bb]uild/
 
 # User-specific files
+.env*
+!.env*.template
 *.user
 *.suo
 
