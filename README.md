@@ -14,10 +14,10 @@
 
 ## 🗃️ Notable Projects
 
-- [iamsven2005/techjam](https://github.com/iamsven2005/techjam) — A curated personal assistant for shopping. Made for [TikTok TechJam 2024](https://tiktoktechjam2024.devpost.com).
+- [dentolos19/finn](https://github.com/dentolos19/finn) — An AI-powered finanical assistant with simplicity and accessibility in mind. Made for [hacksingapore 2024](https://angelhack.com/hackglobal/singapore).
+- [iamsven2005/techjam](https://github.com/iamsven2005/techjam) — An AI-integrated personal assistant curated for shopping. Made for [TikTok TechJam 2024](https://tiktoktechjam2024.devpost.com).
 
 ## 🫂 Collaborated Projects
 
 - [nyp-tech/nyptech](https://github.com/nyp-tech/nyptech) — The home website for NYP Technopreneurship Club.
-- [nyp-tech/nyptech-admin](https://github.com/nyp-tech/nyptech-admin) — The service for managing web operations related to NYP Technopreneurship Club.
-- [nyp-tech/nyptech-go](https://github.com/nyp-tech/nyptech-go) — The service for centralizing links related to NYP Technopreneurship Club.
+- [nyp-tech/nyptech-go](https://github.com/nyp-tech/nyptech-go) — The web service for shortening links and hosting files related to NYP Technopreneurship Club.
