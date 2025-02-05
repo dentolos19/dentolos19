@@ -21,3 +21,5 @@ function ClearHistory {
 Set-Alias -Name "serve" -Value ServeFolder
 Set-Alias -Name "battery" -Value BatteryReport
 Set-Alias -Name "forget" -Value ClearHistory
+
+$env:COREPACK_ENABLE_AUTO_PIN = "0"
