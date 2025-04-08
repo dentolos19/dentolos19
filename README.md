@@ -1,7 +1,7 @@
 # 👋 Hello World
 
 <div align="center">
-  <img src="assets/banner.svg" alt="Banner">
+  <img src="assets/banner.png" alt="Banner">
   <br>
   <br>
   <a href="https://dennise.me"><kbd> <br> <span>🌐 My Website</span> <br> </kbd></a> &bullet;
