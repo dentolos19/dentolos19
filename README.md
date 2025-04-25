@@ -6,17 +6,17 @@
   <br>
   <a href="https://dennise.me"><kbd> <br> <span>🌐 My Website</span> <br> </kbd></a> &bullet;
   <a href="https://dennise.me/blog"><kbd> <br> <span>📑 My Blog</span> <br> </kbd></a> &bullet;
-  <a href="https://linkedin.com/in/dentolos19"><kbd> <br> <span>👨‍👩‍👧‍👦 Let's Connect</span> <br> </kbd></a> &bullet;
-  <a href="https://github.com/sponsors/dentolos19"><kbd> <br> <span>💵 Sponsor Me</span> <br> </kbd></a>
+  <a href="https://dennise.me/go/linkedin"><kbd> <br> <span>👨‍👩‍👧‍👦 Let's Connect</span> <br> </kbd></a> &bullet;
+  <a href="https://dennise.me/go/sponsor"><kbd> <br> <span>💵 Sponsor Me</span> <br> </kbd></a>
 </div>
 
 ---
 
 ## ⭐ Star Projects
 
-- [polyguru](https://polyguru.xyz) — My own personal project! A plaform for connecting with students and an all-in-one study kit!
-- [virage-platform](https://virage.app) — A vishing simulation platform designed for educating the vulnerable and helping them understand and recognize voice and email phishing attacks!
-- [initiate-platform](https://initiatex.netlify.app) — A community platform for connecting startups, investors, and businesses alike in one place! Accelerate and grow your startup!
+- [Polyguru](https://polyguru.xyz) — My own personal project! A plaform for connecting with students and an all-in-one study kit!
+- [Virage](https://virage.app) — A vishing simulation platform designed for educating the vulnerable and helping them understand and recognize voice and email phishing attacks!
+- [Initiate](https://initiate.global) — A community platform for connecting startups, investors, and businesses alike in one place! Accelerate and grow your startup!
 
 ## 🗃️ Hackathon Projects
 
