@@ -27,7 +27,4 @@ Set-Alias "battery" -Value BatteryReport
 Set-Alias "forget" -Value ClearHistory
 Set-Alias "open" -Value OpenFolder
 
-$env:FNM_COREPACK_ENABLED = "true"
 $env:COREPACK_ENABLE_AUTO_PIN = "0"
-
-& fnm env --use-on-cd --shell powershell | Out-String | Invoke-Expression
