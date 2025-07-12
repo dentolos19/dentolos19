@@ -20,5 +20,7 @@ Copy-Item "profiles/powershell.config.json" $powershellConfigFile
 Write-Host "Setting Up Configurations..."
 
 Copy-Item "configs/default.editorconfig" (Join-Path $env:USERPROFILE ".editorconfig")
+Copy-Item "configs/personal.instructions.md" (Join-Path $env:APPDATA "Code/User/prompts/personal.instructions.md")
+Copy-Item "configs/beast.chatmode.md" (Join-Path $env:APPDATA "Code/User/prompts/beast.chatmode.md")
 
 Write-Host "Completed!"
