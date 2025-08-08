@@ -1,5 +1,5 @@
 ---
-description: Personal Instructions
+description: "Personal Style"
 ---
 
 - Always add curly braces around every attribute values of a JSX element, expect for the content or children inside the JSX element.
