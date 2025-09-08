@@ -1,5 +1,6 @@
 ---
 description: "Personal Style"
+applyTo: "**"
 ---
 
 # Coding Styles

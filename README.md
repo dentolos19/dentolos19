@@ -1,5 +1,3 @@
-# 👋 Hello World
-
 <div align="center">
   <img src="assets/banner.png" alt="Banner">
   <br>
@@ -14,7 +12,7 @@
 
 ## ⭐ Star Projects
 
-- [Polyguru](https://polyguru.xyz) — A community plaform for connecting with students and an all-in-one study productivity kit!
+- [Nudge](https://nudge.study) — A community plaform for connecting with students and an all-in-one study productivity kit!
 - [Virage](https://virage.app) — A vishing simulation platform designed for educating the vulnerable and helping them understand and recognize voice and email phishing attacks!
 - [Initiate](https://initiate.global) — A community platform for connecting startups, investors, and businesses alike in one place! Accelerate and grow your startup!
 
