@@ -3,7 +3,7 @@
   <br>
   <br>
   <a href="https://dennise.me"><kbd> <br> <span>🌐 My Website</span> <br> </kbd></a> &bullet;
-  <a href="https://dennise.me/blog"><kbd> <br> <span>📑 My Blog</span> <br> </kbd></a> &bullet;
+  <!-- <a href="https://dennise.me/blog"><kbd> <br> <span>📑 My Blog</span> <br> </kbd></a> &bullet; -->
   <a href="https://dennise.me/go/linkedin"><kbd> <br> <span>👨‍👩‍👧‍👦 Let's Connect</span> <br> </kbd></a> &bullet;
   <a href="https://dennise.me/go/sponsor"><kbd> <br> <span>💵 Sponsor Me</span> <br> </kbd></a>
 </div>
@@ -12,9 +12,9 @@
 
 ## ⭐ Star Projects
 
-- [Nudge](https://nudge.study) — A community plaform for connecting with students and an all-in-one study productivity kit!
 - [Virage](https://virage.app) — A vishing simulation platform designed for educating the vulnerable and helping them understand and recognize voice and email phishing attacks!
 - [Initiate](https://initiate.global) — A community platform for connecting startups, investors, and businesses alike in one place! Accelerate and grow your startup!
+- [Nudge](https://nudge.study) — A community plaform for connecting with students and an all-in-one study productivity kit!
 
 ## 🗃️ Hackathon Projects
 
