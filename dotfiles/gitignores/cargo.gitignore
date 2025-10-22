@@ -1,11 +1,11 @@
-# IDE configurations
+# Editor configurations
 .vs/
 .idea/
 
-# Output files
+# Project files
 target/
 
-# User-specific files
+# User files
 .env*
 !.env*.template
 

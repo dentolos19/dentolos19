@@ -1,27 +1,25 @@
-# IDE configurations
+# Editor configurations
 .vs/
 .idea/
 
-# Environment files
+# Project files
 node_modules/
+*.d*
 
-# Output files
-build/
-dist/
-out/
-
-# Output files: Next.js
-.vercel/
-.next/
-next-env.d.ts
-
-# Output files: VSCode Extension
-.vscode-test/
-*.vsix
-
-# User-specific files
+# User files
 .env*
 !.env*.template
+
+# Other files: Next.js
+.vercel/
+.next/
+.open-next/
+
+# Other files: Cloudflare
+.wrangler/
+
+# Other files: VSCode Extension
+.vscode-test/
 
 # Miscellaneous files
 .DS_Store

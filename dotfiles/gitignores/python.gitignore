@@ -1,16 +1,12 @@
-# IDE configurations
+# Editor configurations
 .vs/
 .idea/
 
-# Environment files
+# Project files
 .venv/
-
-# Output files
-build/
-dist/
 __pycache__/
 
-# User-specific files
+# User files
 .env*
 !.env*.template
 
