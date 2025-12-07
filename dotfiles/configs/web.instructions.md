@@ -3,7 +3,7 @@ description: "Web Development"
 applyTo: "**/*.{ts,tsx,js,jsx}"
 ---
 
-# Project Context
+# Web Development
 
 I want strict type safety, accessibility standards, and consistent code quality for JavaScript/TypeScript projects. Use Biome's lightning-fast formatter and linter or ESLint with Prettier where the project context applies.
 
