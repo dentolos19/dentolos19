@@ -1,8 +1,3 @@
-function ServeFolder {
-    Start-Process "http://localhost:8000"
-    & py -m http.server
-}
-
 function BatteryReport {
     $outputFile = (Join-Path $env:TEMP "batteryreport.html")
     & powercfg /batteryreport /output $outputFile
@@ -22,9 +17,10 @@ function OpenFolder {
     Start-Process "explorer.exe" .
 }
 
-Set-Alias "serve" -Value ServeFolder
 Set-Alias "battery" -Value BatteryReport
 Set-Alias "forget" -Value ClearHistory
 Set-Alias "open" -Value OpenFolder
 
 $env:COREPACK_ENABLE_AUTO_PIN = "0"
+
+& fnm env --use-on-cd --shell powershell | Out-String | Invoke-Expression

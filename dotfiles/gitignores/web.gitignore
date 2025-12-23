@@ -10,16 +10,11 @@ node_modules/
 .env*
 !.env*.template
 
-# Other files: Next.js
+# Other files
 .vercel/
 .next/
 .open-next/
-
-# Other files: Cloudflare
 .wrangler/
-
-# Other files: VSCode Extension
-.vscode-test/
 
 # Miscellaneous files
 .DS_Store
