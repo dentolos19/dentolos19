@@ -2,10 +2,10 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Setup",
+      "name": "Setup Dotfiles",
       "type": "PowerShell",
       "request": "launch",
-      "script": "${workspaceFolder}/dotfiles/setup.ps1"
+      "script": "${workspaceFolder}/scripts/setup-dotfiles.ps1"
     }
   ]
 }
