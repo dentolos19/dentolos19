@@ -12,16 +12,13 @@ if (-not (Test-Path -Path $powershellProfileDir)) {
     New-Item $powershellProfileDir -ItemType Directory | Out-Null
 }
 
-Copy-Item "../configs/profiles/powershell.profile.ps1" $powershellProfileFile
-Copy-Item "../configs/profiles/powershell.config.json" $powershellConfigFile
+Copy-Item "../dotfiles/profiles/powershell.profile.ps1" $powershellProfileFile
+Copy-Item "../dotfiles/profiles/powershell.config.json" $powershellConfigFile
 
 # Setup Configurations
 
 Write-Host "Setting Up Configurations..."
 
 Copy-Item "../.editorconfig" (Join-Path $env:USERPROFILE ".editorconfig")
-Copy-Item "../configs/personal.instructions.md" (Join-Path $env:APPDATA "Code/User/prompts/personal.instructions.md")
-Copy-Item "../configs/web.instructions.md" (Join-Path $env:APPDATA "Code/User/prompts/web.instructions.md")
-Copy-Item "../configs/react.instructions.md" (Join-Path $env:APPDATA "Code/User/prompts/react.instructions.md")
 
 Write-Host "Completed!"

@@ -38,6 +38,7 @@ try {
     # Run Office installation
     Write-Host "Starting installation..." -ForegroundColor Yellow
     $setupPath = Join-Path $tempPath "setup.exe"
+    $installArgs = "/configure `"$configPath`""
     Start-Process -FilePath $setupPath -ArgumentList $installArgs -Verb RunAs | Out-Null
 
     Write-Host "Installation initiated successfully!" -ForegroundColor Green
