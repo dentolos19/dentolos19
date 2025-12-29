@@ -5,6 +5,9 @@
 # Project files
 .venv/
 __pycache__/
+build/
+dist/
+*.spec
 
 # User files
 .env*
