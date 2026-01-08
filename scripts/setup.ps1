@@ -12,8 +12,8 @@ if (-not (Test-Path -Path $powershellProfileDir)) {
     New-Item $powershellProfileDir -ItemType Directory | Out-Null
 }
 
-Copy-Item "../dotfiles/profiles/powershell.profile.ps1" $powershellProfileFile
-Copy-Item "../dotfiles/profiles/powershell.config.json" $powershellConfigFile
+Copy-Item "../configs/powershell.profile.ps1" $powershellProfileFile
+Copy-Item "../configs/powershell.config.json" $powershellConfigFile
 
 # Setup Configurations
 

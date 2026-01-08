@@ -17,9 +17,20 @@ function OpenFolder {
     Start-Process "explorer.exe" .
 }
 
+function AdminMode {
+    if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+        Start-Process wt -ArgumentList "pwsh", "-NoExit", "-Command", "Set-Location '$PWD'" -Verb RunAs
+        exit
+    }
+    else {
+        Write-Host "Already running as administrator."
+    }
+}
+
 Set-Alias "battery" -Value BatteryReport
 Set-Alias "forget" -Value ClearHistory
 Set-Alias "open" -Value OpenFolder
+Set-Alias "admin" -Value AdminMode
 
 $env:COREPACK_ENABLE_AUTO_PIN = "0"
 
