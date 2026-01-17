@@ -35,3 +35,5 @@ Set-Alias "admin" -Value AdminMode
 $env:COREPACK_ENABLE_AUTO_PIN = "0"
 
 & fnm env --use-on-cd --shell powershell | Out-String | Invoke-Expression
+
+Import-Module -Name Microsoft.WinGet.CommandNotFound
