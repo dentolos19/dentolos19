@@ -63,4 +63,26 @@ Copy-Item "../.editorconfig" (Join-Path $env:USERPROFILE ".editorconfig")
 Copy-Item "../configs/agent-instructions.md" (Join-Path $env:USERPROFILE ".gemini\GEMINI.md")
 Copy-Item "../configs/copilot-instructions.md" (Join-Path $env:USERPROFILE "AppData\Roaming\Code\User\prompts\personal.instructions.md")
 
-Write-Host "Completed!"
+Write-Host "Completed! Starting post-setup tasks..."
+
+# Activate PowerShell Profile
+
+& $powershellProfileFile
+
+# Setup Agent Skills
+
+Write-Host "Adding Agent Skills..."
+
+$skills = @(
+    @{repo = "https://github.com/giuseppe-trisciuoglio/developer-kit"; skill = "shadcn-ui" },
+    @{repo = "https://github.com/vercel-labs/agent-skills"; skill = "vercel-react-best-practices" },
+    @{repo = "https://github.com/anthropics/skills"; skill = "frontend-design" }
+    @{repo = "https://github.com/softaworks/agent-toolkit"; skill = "humanizer" }
+)
+
+foreach ($skillItem in $skills) {
+    Write-Host "  Installing $($skillItem.skill) from $($skillItem.repo)..."
+    bunx skills add $skillItem.repo --skill $skillItem.skill --global --yes --agent github-copilot antigravity >$null
+}
+
+Write-Debug "Setup completed!"
