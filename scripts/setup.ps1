@@ -78,6 +78,7 @@ $skills = @(
     @{repo = "https://github.com/vercel-labs/agent-skills"; skill = "vercel-react-best-practices" },
     @{repo = "https://github.com/anthropics/skills"; skill = "frontend-design" }
     @{repo = "https://github.com/softaworks/agent-toolkit"; skill = "humanizer" }
+    @{repo = "https://github.com/jezweb/claude-skills"; skill = "tailwind-patterns" }
 )
 
 foreach ($skillItem in $skills) {
