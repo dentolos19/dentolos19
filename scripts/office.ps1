@@ -1,7 +1,7 @@
 # Automatic Office Installer
 
 param(
-    [string]$ConfigUrl = "https://raw.githubusercontent.com/dentolos19/dentolos19/refs/heads/main/scripts/install-office.xml",
+    [string]$ConfigUrl = "https://raw.githubusercontent.com/dentolos19/dentolos19/refs/heads/main/scripts/office.xml",
     [string]$ToolUrl = "https://download.microsoft.com/download/2/7/A/27AF1BE6-DD20-4CB4-B154-EBAB8A7D4A7E/officedeploymenttool_17328-20162.exe"
 )
 
@@ -13,37 +13,37 @@ New-Item -ItemType Directory -Path $tempPath -Force | Out-Null
 
 try {
     # Download deployment tool
-    Write-Host "Downloading deployment tool..." -ForegroundColor Yellow
+    Write-Host "Downloading deployment tool..."
     $toolPath = Join-Path $tempPath "deployment.exe"
     Invoke-WebRequest -Uri $ToolUrl -OutFile $toolPath -UseBasicParsing
 
     # Get configuration file
-    $localConfigPath = Join-Path $PSScriptRoot "install-office.xml"
+    $localConfigPath = Join-Path $PSScriptRoot "office.xml"
     $configPath = Join-Path $tempPath "config.xml"
 
     if (Test-Path $localConfigPath) {
-        Write-Host "Using local configuration file..." -ForegroundColor Yellow
+        Write-Host "Using local configuration file..."
         Copy-Item -Path $localConfigPath -Destination $configPath -Force
     }
     else {
-        Write-Host "Downloading configuration file..." -ForegroundColor Yellow
+        Write-Host "Downloading configuration file..."
         Invoke-WebRequest -Uri $ConfigUrl -OutFile $configPath -UseBasicParsing
     }
 
     # Extract deployment tool
-    Write-Host "Extracting deployment tool..." -ForegroundColor Yellow
+    Write-Host "Extracting deployment tool..."
     $extractArgs = "/quiet /extract:`"$tempPath`""
     Start-Process -FilePath $toolPath -ArgumentList $extractArgs -Verb RunAs -Wait | Out-Null
 
     # Run Office installation
-    Write-Host "Starting installation..." -ForegroundColor Yellow
+    Write-Host "Starting installation..."
     $setupPath = Join-Path $tempPath "setup.exe"
     $installArgs = "/configure `"$configPath`""
     Start-Process -FilePath $setupPath -ArgumentList $installArgs -Verb RunAs | Out-Null
 
-    Write-Host "Installation initiated successfully!" -ForegroundColor Green
+    Write-Host "Installation initiated successfully!"
 }
 catch {
-    Write-Host "An error occurred! $_" -ForegroundColor Red
+    Write-Host "An error occurred! $_"
     exit 1
 }
