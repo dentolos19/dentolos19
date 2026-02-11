@@ -1,0 +1,15 @@
+# Editor configurations
+.vs/
+.idea/
+
+# Project files
+.gradle/
+.kotlin/
+
+# User files
+local.properties
+
+# Miscellaneous files
+.DS_Store
+Desktop.ini
+Thumbs.db
