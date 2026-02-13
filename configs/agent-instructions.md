@@ -2,15 +2,13 @@
 
 ## Personal Style
 
-- Do not write too much comments in the code. Only write comments when the code is not self-explanatory.
 - If you are writing comments, make sure to use full sentences with proper punctuation and full stops at the end. But if the comment is just a single word or a short phrase, punctuation is not necessary.
 - Use American English spelling (e.g., "color" instead of "colour", "organize" instead of "organise") for naming variables, comments, and documentation.
-- Do not run or build any projects (e.g., `pnpm dev`, `dotnet run`) unless explicitly told to do so. If necessary for testing, please prompt the user before proceeding.
 
 ## Package Managers
 
 - When inside a Python project, use `uv` for managing the environment and running files.
-- When inside a Node.js project, use `pnpm` for managing the environment.
+- When inside a Node.js project, detect whether the project is using `pnpm` or `bun`. By default you should use `pnpm`.
 
 ## Version Managers
 

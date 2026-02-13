@@ -30,7 +30,8 @@ foreach ($module in $modules) {
         Install-Module -Name $module -Force -AllowClobber -Scope CurrentUser
     }
     else {
-        Write-Host "  $module is already installed."
+        Write-Host "  $module is already installed. Upgrading instead..."
+        Update-Module -Name $module -Force -Scope CurrentUser
     }
 }
 
@@ -45,13 +46,14 @@ $packages = @(
 )
 
 foreach ($package in $packages) {
-    $installed = winget list --id $package --exact 2>$null
+    $output = winget list --id $package --exact 2>$null
     if ($LASTEXITCODE -ne 0) {
         Write-Host "  Installing $package..."
-        winget install --id $package --exact --silent
+        winget install --id $package --exact --silent >$null
     }
     else {
-        Write-Host "  $package is already installed."
+        Write-Host "  $package is already installed. Upgrading instead..."
+        winget upgrade --id $package --exact --silent >$null
     }
 }
 
