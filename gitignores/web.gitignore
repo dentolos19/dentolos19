@@ -2,7 +2,11 @@
 .vs/
 .idea/
 
-# Project files
+# Environment files
+.vercel/
+.next/
+.open-next/
+.wrangler/
 node_modules/
 *.d*
 
@@ -10,13 +14,8 @@ node_modules/
 .env*
 !.env*.template
 
-# Other files
-.vercel/
-.next/
-.open-next/
-.wrangler/
-
 # Miscellaneous files
 .DS_Store
 Desktop.ini
 Thumbs.db
+!.gitkeep

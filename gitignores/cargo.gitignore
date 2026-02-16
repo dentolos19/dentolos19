@@ -2,7 +2,7 @@
 .vs/
 .idea/
 
-# Project files
+# Environment files
 target/
 
 # User files
@@ -13,3 +13,4 @@ target/
 .DS_Store
 Desktop.ini
 Thumbs.db
+!.gitkeep

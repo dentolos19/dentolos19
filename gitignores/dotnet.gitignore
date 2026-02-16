@@ -2,7 +2,7 @@
 .vs/
 .idea/
 
-# Project files
+# Environment files
 bin/
 obj/
 *.user
@@ -16,3 +16,4 @@ obj/
 .DS_Store
 Desktop.ini
 Thumbs.db
+!.gitkeep
