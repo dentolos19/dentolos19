@@ -5,6 +5,8 @@
 # Environment files
 .venv/
 __pycache__/
+build/
+dist/
 
 # User files
 .env*
@@ -14,3 +16,4 @@ __pycache__/
 .DS_Store
 Desktop.ini
 Thumbs.db
+!.gitkeep
