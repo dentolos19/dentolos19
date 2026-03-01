@@ -42,7 +42,10 @@ Write-Host "Installing WinGet Packages..."
 $packages = @(
     "Schniz.fnm",
     "astral-sh.uv",
-    "Oven-sh.Bun"
+    "Oven-sh.Bun",
+    "Proton.ProtonPass",
+    "Proton.ProtonPass.CLI",
+    "Proton.ProtonVPN"
 )
 
 foreach ($package in $packages) {
@@ -62,8 +65,8 @@ foreach ($package in $packages) {
 Write-Host "Setting Up Configurations..."
 
 Copy-Item "../.editorconfig" (Join-Path $env:USERPROFILE ".editorconfig")
-Copy-Item "../configs/agent-instructions.md" (Join-Path $env:USERPROFILE ".gemini\GEMINI.md")
-Copy-Item "../configs/copilot-instructions.md" (Join-Path $env:USERPROFILE "AppData\Roaming\Code\User\prompts\personal.instructions.md")
+Copy-Item "../configs/instructions.md" (Join-Path $env:USERPROFILE ".gemini\GEMINI.md")
+Copy-Item "../configs/instructions.md" (Join-Path $env:USERPROFILE "AppData\Roaming\Code\User\prompts\personal.instructions.md")
 
 Write-Host "Completed! Starting post-setup tasks..."
 
@@ -85,7 +88,7 @@ $skills = @(
 
 foreach ($skillItem in $skills) {
     Write-Host "  Installing $($skillItem.skill) from $($skillItem.repo)..."
-    bunx skills add $skillItem.repo --skill $skillItem.skill --global --yes --agent github-copilot antigravity >$null
+    bunx skills add $skillItem.repo --skill $skillItem.skill --global --yes --agent github-copilot antigravity opencode >$null
 }
 
 Write-Debug "Setup completed!"
