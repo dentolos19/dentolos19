@@ -18,6 +18,7 @@ This is my personal coding style. This should take precedence over other instruc
 - Prefer explicit over implicit. Avoid magic numbers and unexplained constants, extract them into named constants with a comment if necessary.
 - Remove unused imports, variables, and dead code before finalizing changes.
 - Ensure all new code is properly typed. Avoid using `any` in TypeScript unless absolutely necessary, and add a comment explaining why.
+- Write variable names as the full word (e.g., `db` -> `database`).
 
 ### JavaScript
 
@@ -25,7 +26,8 @@ This is my personal coding style. This should take precedence over other instruc
 
 ### React
 
-- Prefer to have all attributes of an element be enclosed with curly braces for consistency. (e.g., `<h1 className={"..."}>...</h1>`)
+- Prefer to have all attributes of an element be enclosed with curly braces for consistency (e.g., `<h1 className={"..."}>...</h1>`).
+- Do not have to wrap text inside an element with curly braces unless when necessary.
 - Keep components small and focused. If a component grows too large, split it into smaller sub-components.
 - Co-locate related files (component, styles, tests) in the same directory where applicable.
 - Prefer named functions for component definitions.
@@ -64,3 +66,5 @@ Always try to detect the package manager that the project is currently using bef
 ## Git
 
 - Keep commits focused and atomic, one logical change per commit.
+- Write the commit message as an past action (e.g., `Added README.md`, `Updated authentication system`)
+- Be brief in your commit message. Any other details, write it in the commit description. Write commit description as full sentences.
