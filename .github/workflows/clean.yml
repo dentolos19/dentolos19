@@ -1,0 +1,54 @@
+name: Clean Workflow Runs
+on:
+  schedule:
+    - cron: "0 0 1 * *"
+  workflow_dispatch:
+jobs:
+  discover-repositories:
+    outputs:
+      repositories: ${{ steps.discover.outputs.repositories }}
+      repository_count: ${{ steps.discover.outputs.repository_count }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Discover Repositories
+        id: discover
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.CLEAN_WORKFLOWS_TOKEN }}
+          script: |
+            const owner = context.repo.owner.toLowerCase();
+
+            const repositories = await github.paginate(
+              github.rest.repos.listForAuthenticatedUser,
+              { per_page: 100, affiliation: "owner", sort: "full_name" }
+            );
+
+            const filteredRepositories = repositories
+              .filter((repository) =>
+                repository.owner &&
+                repository.owner.type === "User" &&
+                repository.owner.login.toLowerCase() === owner
+              )
+              .map((repository) => repository.full_name);
+
+            core.info(`Found ${filteredRepositories.length} repositories for ${owner}.`);
+            core.setOutput("repositories", JSON.stringify(filteredRepositories));
+            core.setOutput("repository_count", String(filteredRepositories.length));
+
+  delete-runs:
+    needs: discover-repositories
+    if: ${{ needs.discover-repositories.outputs.repository_count != '0' }}
+
+    strategy:
+      matrix:
+        repository: ${{ fromJson(needs.discover-repositories.outputs.repositories) }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete Runs
+        uses: Mattraks/delete-workflow-runs@v2
+        with:
+          token: ${{ secrets.CLEAN_WORKFLOWS_TOKEN }}
+          repository: ${{ matrix.repository }}
+          retain_days: 7
+          keep_minimum_runs: 10
+          use_daily_retention: 5
