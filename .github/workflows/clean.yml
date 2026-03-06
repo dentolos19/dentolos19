@@ -4,7 +4,8 @@ on:
     - cron: "0 0 1 * *"
   workflow_dispatch:
 jobs:
-  discover-repositories:
+  discover:
+    name: Discover Repositories
     outputs:
       repositories: ${{ steps.discover.outputs.repositories }}
       repository_count: ${{ steps.discover.outputs.repository_count }}
@@ -35,10 +36,10 @@ jobs:
             core.setOutput("repositories", JSON.stringify(filteredRepositories));
             core.setOutput("repository_count", String(filteredRepositories.length));
 
-  delete-runs:
-    needs: discover-repositories
+  delete:
+    name: Delete Workflow Runs
+    needs: discover
     if: ${{ needs.discover-repositories.outputs.repository_count != '0' }}
-
     strategy:
       matrix:
         repository: ${{ fromJson(needs.discover-repositories.outputs.repositories) }}
