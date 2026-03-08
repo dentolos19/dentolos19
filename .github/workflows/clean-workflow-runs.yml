@@ -1,7 +1,7 @@
 name: Clean Workflow Runs
 on:
   schedule:
-    - cron: "0 0 1 * *"
+    - cron: "0 0 * * 0"
   workflow_dispatch:
 jobs:
   discover:
@@ -39,10 +39,10 @@ jobs:
   delete:
     name: Delete Workflow Runs
     needs: discover
-    if: ${{ needs.discover-repositories.outputs.repository_count != '0' }}
+    if: ${{ needs.discover.outputs.repository_count != '0' }}
     strategy:
       matrix:
-        repository: ${{ fromJson(needs.discover-repositories.outputs.repositories) }}
+        repository: ${{ fromJson(needs.discover.outputs.repositories) }}
     runs-on: ubuntu-latest
     steps:
       - name: Delete Runs
