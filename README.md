@@ -26,3 +26,11 @@
 | Code Overflow 2024                             | [Pennywise](https://github.com/dentolos19/pennywise)              | School        | Committee Choice |
 | Code Overflow 2023                             | [Anywhere Fitness](https://github.com/dentolos19/anywherefitness) | School        | Top 3            |
 | National Cyberwellness Advocacy Challenge 2022 | [Faker Spotter](https://github.com/dentolos19/fakerspotter)       | National      | Silver           |
+
+## 📎 My Projects
+
+- [**Personal Projects**](https://github.com/dentolos19?tab=repositories&q=-topic%3Aexperimental%2Chackathon%2Cassignment&sort=stargazers): My work made for the general public.
+- [**Community Projects**](https://github.com/dentolos19?tab=repositories&q=topic%3Acommunity&sort=stargazers): My work made for the open source community.
+- [**Experimental Projects**](https://github.com/dentolos19?tab=repositories&q=topic%3Aexperimental&sort=stargazers): My experimental projects.
+- [**Hackathon Projects**](https://github.com/dentolos19?tab=repositories&q=topic%3Ahackathon&sort=stargazers): My hackathon projects.
+- [**School Assignments**](https://github.com/dentolos19?tab=repositories&q=topic%3Aassignment&sort=stargazers): My school assignments.
