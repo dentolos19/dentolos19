@@ -29,8 +29,7 @@
 
 ## 📎 Other Projects
 
-- [**Official Services**](https://github.com/dentolos19?tab=repositories&q=topic%3Aofficial): My services for the general public.
+- [**Personal Projects**](https://github.com/dentolos19?tab=repositories&q=topic%3Apersonal): My personal work for the general public.
 - [**Community Projects**](https://github.com/dentolos19?tab=repositories&q=topic%3Acommunity): My work for the open source community.
-- [**Experimental Projects**](https://github.com/dentolos19?tab=repositories&q=topic%3Aexperimental): My projects made for testing.
 - [**Hackathon Projects**](https://github.com/dentolos19?tab=repositories&q=topic%3Ahackathon): My hackathon projects.
 - [**School Assignments**](https://github.com/dentolos19?tab=repositories&q=topic%3Aassignment): My school work.
