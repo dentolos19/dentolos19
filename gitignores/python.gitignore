@@ -1,7 +1,6 @@
 # Editor configurations
 .vs/
 .idea/
-.vscode/
 *.iml
 
 # Environment files

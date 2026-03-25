@@ -21,8 +21,8 @@
 | National AI Student Challenge 2026             | [Logdog](https://github.com/dentolos19/logdog)                    | National      | Ongoing          |
 | 6th Kibo Robot Programming Challenge           | AstroVibe                                                         | International | Top 11           |
 | Smart Nation Award Competition 2025            | Virage                                                            | National      | Winner           |
-| DSTA BrainHack 2025                            | Brain.exe                                                         | National      | N/A              |
-| hacksingapore 2024                             | [Finn](https://github.com/dentolos19/finn)                        | National      | N/A              |
+| DSTA BrainHack 2025                            | Brain.exe                                                         | National      | Unplaced         |
+| hacksingapore 2024                             | [Finn](https://github.com/dentolos19/finn)                        | National      | Unplaced         |
 | Code Overflow 2024                             | [Pennywise](https://github.com/dentolos19/pennywise)              | School        | Committee Choice |
 | Code Overflow 2023                             | [Anywhere Fitness](https://github.com/dentolos19/anywherefitness) | School        | Top 3            |
 | National Cyberwellness Advocacy Challenge 2022 | [Faker Spotter](https://github.com/dentolos19/fakerspotter)       | National      | Silver           |

@@ -1,4 +1,5 @@
 name: Clean Workflow Runs
+run-name: "Clean Workflow Runs #${{ github.run_number }}"
 on:
   schedule:
     - cron: "0 0 * * 0"
@@ -51,5 +52,3 @@ jobs:
           token: ${{ secrets.CLEAN_WORKFLOWS_TOKEN }}
           repository: ${{ matrix.repository }}
           retain_days: 7
-          keep_minimum_runs: 10
-          use_daily_retention: 5
