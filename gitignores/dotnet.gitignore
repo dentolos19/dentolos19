@@ -1,10 +1,12 @@
 # Editor configurations
 .vs/
 .idea/
+*.iml
 
 # Environment files
 bin/
 obj/
+packages/
 *.user
 *.suo
 

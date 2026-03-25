@@ -1,9 +1,13 @@
 # Editor configurations
 .vs/
 .idea/
+.vscode/
+*.iml
 
 # Environment files
 .venv/
+.pytest_cache/
+.ruff_cache/
 __pycache__/
 build/
 dist/

@@ -3,13 +3,11 @@
 .idea/
 
 # Environment files
-.vercel/
-.next/
-.open-next/
-.wrangler/
-.convex/
 node_modules/
+dist/
+build/
 *.d*
+*.tsbuildinfo
 
 # User files
 .env*

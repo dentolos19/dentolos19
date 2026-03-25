@@ -1,9 +1,12 @@
 # Editor configurations
 .vs/
 .idea/
+*.iml
 
 # Environment files
 target/
+debug/
+release/
 
 # User files
 .env*

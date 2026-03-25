@@ -1,10 +1,15 @@
 # Editor configurations
 .vs/
 .idea/
+.vscode/
+*.iml
 
 # Environment files
 .gradle/
 .kotlin/
+build/
+out/
+*.class
 
 # User files
 local.properties
