@@ -19,7 +19,7 @@
 | Hackathon / Competition                        | Project / Team                                                    | Stage         | Achievement      |
 | ---------------------------------------------- | ----------------------------------------------------------------- | ------------- | ---------------- |
 | National AI Student Challenge 2026             | [Logdog](https://github.com/dentolos19/logdog)                    | National      | Ongoing          |
-| 6th Kibo Robot Programming Challenge           | AstroVibe                                                         | International | Top 11           |
+| 6th Kibo Robot Programming Challenge           | AstroVibe                                                         | International | Global Top 11    |
 | Smart Nation Award Competition 2025            | Virage                                                            | National      | Winner           |
 | DSTA BrainHack 2025                            | Brain.exe                                                         | National      | Unplaced         |
 | hacksingapore 2024                             | [Finn](https://github.com/dentolos19/finn)                        | National      | Unplaced         |

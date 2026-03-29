@@ -1,5 +1,5 @@
-name: Clean Workflow Runs
-run-name: "Clean Workflow Runs #${{ github.run_number }}"
+name: Clean Workflows
+run-name: "Clean Workflows #${{ github.run_number }}"
 on:
   schedule:
     - cron: "0 0 * * 0"
