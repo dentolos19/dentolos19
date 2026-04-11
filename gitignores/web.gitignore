@@ -1,6 +1,7 @@
 # Editor configurations
 .vs/
 .idea/
+*.iml
 
 # Environment files
 node_modules/

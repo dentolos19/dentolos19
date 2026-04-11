@@ -8,9 +8,7 @@ $packages = @(
     "astral-sh.uv",
     "Oven-sh.Bun",
 
-    # Security Tools
-    "Proton.ProtonPass",
-    "Proton.ProtonPass.CLI",
+    # Other Tools
     "Proton.ProtonVPN"
 )
 
