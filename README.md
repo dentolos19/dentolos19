@@ -18,6 +18,7 @@
 
 | Hackathon / Competition                        | Project / Team                                                    | Stage         | Achievement      |
 | ---------------------------------------------- | ----------------------------------------------------------------- | ------------- | ---------------- |
+| AWS X Cognizant X SGCC Vibe Coding Ideathon    | Roamie                                                            | National      | Unplaced         |
 | National AI Student Challenge 2026             | [Logdog](https://github.com/dentolos19/logdog)                    | National      | Ongoing          |
 | 6th Kibo Robot Programming Challenge           | AstroVibe                                                         | International | Global Top 11    |
 | DSTA BrainHack 2025                            | Brain.exe                                                         | National      | Unplaced         |
