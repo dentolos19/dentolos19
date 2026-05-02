@@ -1,18 +1,36 @@
 function AdminMode {
+    if (-not $IsWindows) {
+        Write-Host "This command is only supported on Windows." -ForegroundColor Yellow
+        return
+    }
+
     if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
         Start-Process wt -ArgumentList "pwsh", "-NoExit", "-Command", "Set-Location '$PWD'" -Verb RunAs
         exit
     }
     else {
-        Write-Host "Already running as administrator."
+        Write-Host "Already running as administrator." -ForegroundColor Green
     }
 }
 
 function OpenFolder {
-    Start-Process "explorer.exe" .
+    if ($IsWindows) {
+        Start-Process "explorer.exe" .
+    }
+    elseif ($IsMacOS) {
+        open .
+    }
+    else {
+        xdg-open .
+    }
 }
 
 function BatteryReport {
+    if (-not $IsWindows) {
+        Write-Host "This command is only supported on Windows." -ForegroundColor Yellow
+        return
+    }
+
     $outputFile = (Join-Path $env:TEMP "batteryreport.html")
     & powercfg /batteryreport /output $outputFile
     Start-Process $outputFile
@@ -26,7 +44,7 @@ function ClearHistory {
     }
 
     Clear-History
-    Write-Host "Your command history has been cleared, please restart your shell!"
+    Write-Host "Your command history has been cleared, please restart your shell!" -ForegroundColor Green
 }
 
 Set-Alias "admin" -Value AdminMode
@@ -34,10 +52,10 @@ Set-Alias "open" -Value OpenFolder
 Set-Alias "battery" -Value BatteryReport
 Set-Alias "forget" -Value ClearHistory
 
-Set-Alias "pass" -Value "pass-cli"
-
 $env:COREPACK_ENABLE_AUTO_PIN = "0"
 
 & fnm env --use-on-cd --shell powershell | Out-String | Invoke-Expression
 
-Import-Module -Name Microsoft.WinGet.CommandNotFound
+if ($IsWindows) {
+    Import-Module -Name Microsoft.WinGet.CommandNotFound
+}

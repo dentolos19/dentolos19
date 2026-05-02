@@ -2,25 +2,39 @@ Set-Location $PSScriptRoot
 
 Write-Host "Installing Packages..." -ForegroundColor Yellow
 
-$packages = @(
-    # Development Tools
-    "Schniz.fnm",
-    "astral-sh.uv",
-    "Oven-sh.Bun",
+$hasBrew = $null -ne (Get-Command "brew" -ErrorAction SilentlyContinue)
 
-    # Other Tools
-    "Proton.ProtonVPN"
+$packages = @(
+    @{ Name = "fnm"; WinId = "Schniz.fnm"; BrewId = "fnm" }
+    @{ Name = "uv"; WinId = "astral-sh.uv"; BrewId = "uv" }
+    @{ Name = "bun"; WinId = "Oven-sh.Bun"; BrewId = "bun" }
 )
 
-foreach ($package in $packages) {
-    $output = winget list --id $package --exact 2>$null
-    if ($LASTEXITCODE -ne 0) {
-        Write-Host "  Installing $package..."
-        winget install --id $package --exact --silent >$null
+foreach ($packages in $packages) {
+    if ($IsWindows) {
+        $output = winget list --id $packages.WinId --exact 2>$null
+        if ($LASTEXITCODE -ne 0) {
+            Write-Host "  Installing $($packages.Name)..." -ForegroundColor Cyan
+            winget install --id $packages.WinId --exact --silent >$null
+        }
+        else {
+            Write-Host "  $($packages.Name) is already installed. Upgrading instead..." -ForegroundColor Cyan
+            winget upgrade --id $packages.WinId --exact --silent >$null
+        }
+    }
+    elseif ($hasBrew -and $packages.BrewId) {
+        $installed = brew list $($packages.BrewId) 2>$null
+        if ($LASTEXITCODE -ne 0) {
+            Write-Host "  Installing $($packages.Name)..." -ForegroundColor Cyan
+            brew install $($packages.BrewId)
+        }
+        else {
+            Write-Host "  $($packages.Name) is already installed. Upgrading instead..." -ForegroundColor Cyan
+            brew upgrade $($packages.BrewId)
+        }
     }
     else {
-        Write-Host "  $package is already installed. Upgrading instead..."
-        winget upgrade --id $package --exact --silent >$null
+        Write-Host "  Skipping $($packages.Name). Homebrew is not available." -ForegroundColor Cyan
     }
 }
 
