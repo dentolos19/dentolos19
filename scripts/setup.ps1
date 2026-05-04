@@ -98,7 +98,7 @@ function Install-Packages {
 }
 
 function Install-Agents {
-    Write-Host "Installing OpenCode Agents..." -ForegroundColor Yellow
+    Write-Host "Installing Agents..." -ForegroundColor Yellow
 
     $agentSourceDir = Join-Path $PSScriptRoot ".." "prompts" "opencode"
     $agentDestDir = Join-Path $HOME ".config" "opencode" "agents"
@@ -117,7 +117,34 @@ function Install-Agents {
     Write-Host "OpenCode Agents installed successfully!" -ForegroundColor Green
 }
 
-Install-Profiles
-Install-Modules
-Install-Packages
-Install-Agents
+function Setup-Windows {
+    Install-Profiles
+    Install-Modules
+    Install-Packages
+    Install-Agents
+}
+
+function Setup-Linux {
+    Install-Agents
+}
+
+function Setup-Mac {
+    Install-Agents
+}
+
+function Setup-Environment {
+    if ($IsWindows) {
+        Setup-Windows
+    }
+    elseif ($IsLinux) {
+        Setup-Linux
+    }
+    elseif ($IsMacOS) {
+        Setup-Mac
+    }
+    else {
+        Write-Host "Unsupported operating system. Please set up manually." -ForegroundColor Red
+    }
+}
+
+Setup-Environment
