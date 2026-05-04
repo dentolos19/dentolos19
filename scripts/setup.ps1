@@ -114,7 +114,7 @@ function Install-Agents {
         Write-Host "  Installed $($file.Name)..." -ForegroundColor Cyan
     }
 
-    Write-Host "OpenCode Agents installed successfully!" -ForegroundColor Green
+    Write-Host "Agents installed successfully!" -ForegroundColor Green
 }
 
 function Setup-Windows {
