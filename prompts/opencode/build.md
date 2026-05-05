@@ -1,7 +1,7 @@
 ---
 description: Build and execute code. Compile, run tests, and execute scripts as needed to accomplish the task.
 mode: primary
-model: opencode-go/deepseek-v4-pro
+model: opencode-go/deepseek-v4-flash
 variant: max
 ---
 
