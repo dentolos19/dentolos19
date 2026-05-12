@@ -1,3 +1,7 @@
+# User files
+.env*
+!.env*.template
+
 # Miscellaneous files
 .DS_Store
 Desktop.ini

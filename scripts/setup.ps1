@@ -1,31 +1,54 @@
 Set-Location $PSScriptRoot
 
-function Install-Profiles {
-    Write-Host "Installing Profiles..." -ForegroundColor Yellow
+function Insert-Env {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$Path,
 
-    if (-not $IsWindows) {
-        Write-Host "  Skipping profile setup. You are not on Windows." -ForegroundColor Cyan
-        return
+        [hashtable]$EnvVars = @{},
+
+        [string]$EnvFilePath
+    )
+
+    $vars = @{}
+
+    if ($EnvFilePath -and (Test-Path $EnvFilePath)) {
+        Get-Content $EnvFilePath | ForEach-Object {
+            if ($_ -match '^\s*([^#=]+?)\s*=\s*"?([^"]*?)"?\s*$') {
+                $key = $matches[1]
+                if (-not $vars.ContainsKey($key)) {
+                    $vars[$key] = $matches[2]
+                }
+            }
+        }
     }
 
-    $powershellProfileDir = Join-Path $HOME "Documents\PowerShell"
-    if (-not (Test-Path -Path $powershellProfileDir)) {
-        New-Item $powershellProfileDir -ItemType Directory -Force | Out-Null
+    foreach ($key in $EnvVars.Keys) {
+        $vars[$key] = $EnvVars[$key]
     }
 
-    $profileSource = Join-Path $PSScriptRoot ".." "configs" "powershell.profile.ps1"
-    $profileDest = Join-Path $powershellProfileDir "Microsoft.PowerShell_profile.ps1"
-    if (Test-Path $profileSource) {
-        Copy-Item $profileSource $profileDest -Force
+    $content = Get-Content $Path -Raw
+    if (-not $content) {
+        return ""
     }
 
-    $configSource = Join-Path $PSScriptRoot ".." "configs" "powershell.config.json"
-    $configDest = Join-Path $powershellProfileDir "powershell.config.json"
-    if (Test-Path $configSource) {
-        Copy-Item $configSource $configDest -Force
-    }
+    $pattern = '\$\{env:([^}]+)\}'
+    return [regex]::Replace($content, $pattern, {
+            param($match)
 
-    Write-Host "Profiles installed successfully!" -ForegroundColor Green
+            $varName = $match.Groups[1].Value
+
+            if ($vars.ContainsKey($varName)) {
+                return $vars[$varName]
+            }
+
+            $value = [Environment]::GetEnvironmentVariable($varName)
+            if ($null -ne $value) {
+                return $value
+            }
+
+            return $match.Value
+        })
 }
 
 function Install-Modules {
@@ -58,93 +81,132 @@ function Install-Modules {
 function Install-Packages {
     Write-Host "Installing Packages..." -ForegroundColor Yellow
 
-    $hasBrew = $null -ne (Get-Command "brew" -ErrorAction SilentlyContinue)
-
-    $packages = @(
-        @{ Name = "fnm"; WinId = "Schniz.fnm"; BrewId = "fnm" }
-        @{ Name = "uv"; WinId = "astral-sh.uv"; BrewId = "uv" }
-        @{ Name = "bun"; WinId = "Oven-sh.Bun"; BrewId = "bun" }
+    $windowsPackages = @(
+        @{ Name = "fnm"; Id = "Schniz.fnm" }
+        @{ Name = "uv"; Id = "astral-sh.uv" }
+        @{ Name = "bun"; Id = "Oven-sh.Bun" }
     )
 
-    foreach ($pkg in $packages) {
-        if ($IsWindows) {
-            $output = winget list --id $pkg.WinId --exact 2>$null
+    $macPackages = @(
+        @{ Name = "fnm"; Id = "fnm" }
+        @{ Name = "uv"; Id = "uv" }
+        @{ Name = "bun"; Id = "bun" }
+    )
+
+    $fedoraPackages = @(
+        @{ Name = "fnm"; Id = "fnm" }
+        @{ Name = "uv"; Id = "uv" }
+        @{ Name = "bun"; Id = "bun" }
+    )
+
+    if ($IsWindows) {
+        foreach ($pkg in $windowsPackages) {
+            $output = winget list --id $pkg.Id --exact 2>$null
             if ($LASTEXITCODE -ne 0) {
                 Write-Host "  Installing $($pkg.Name)..." -ForegroundColor Cyan
-                winget install --id $pkg.WinId --exact --silent >$null
+                winget install --id $pkg.Id --exact --silent >$null
             }
             else {
                 Write-Host "  $($pkg.Name) is already installed. Upgrading instead..." -ForegroundColor Cyan
-                winget upgrade --id $pkg.WinId --exact --silent >$null
+                winget upgrade --id $pkg.Id --exact --silent >$null
             }
         }
-        elseif ($hasBrew -and $pkg.BrewId) {
-            $installed = brew list $($pkg.BrewId) 2>$null
+    }
+    elseif ($IsMacOS) {
+        $hasBrew = $null -ne (Get-Command "brew" -ErrorAction SilentlyContinue)
+
+        if (-not $hasBrew) {
+            Write-Host "  Homebrew is not available. Skipping package installation." -ForegroundColor Cyan
+            return
+        }
+
+        foreach ($pkg in $macPackages) {
+            $output = brew list $($pkg.Id) 2>$null
             if ($LASTEXITCODE -ne 0) {
                 Write-Host "  Installing $($pkg.Name)..." -ForegroundColor Cyan
-                brew install $($pkg.BrewId)
+                brew install $($pkg.Id)
             }
             else {
                 Write-Host "  $($pkg.Name) is already installed. Upgrading instead..." -ForegroundColor Cyan
-                brew upgrade $($pkg.BrewId)
+                brew upgrade $($pkg.Id)
             }
         }
-        else {
-            Write-Host "  Skipping $($pkg.Name). Homebrew is not available." -ForegroundColor Cyan
+    }
+    elseif ($IsLinux) {
+        $osRelease = Get-Content /etc/os-release -ErrorAction SilentlyContinue
+        $isFedora = ($osRelease -match '^ID=fedora$')
+
+        if (-not $isFedora) {
+            Write-Host "  Unsupported Linux distribution. Only Fedora is currently supported." -ForegroundColor Cyan
+            return
         }
+
+        foreach ($pkg in $fedoraPackages) {
+            $output = dnf list installed $($pkg.Id) 2>$null
+            if ($LASTEXITCODE -ne 0) {
+                Write-Host "  Installing $($pkg.Name)..." -ForegroundColor Cyan
+                sudo dnf install -y $($pkg.Id)
+            }
+            else {
+                Write-Host "  $($pkg.Name) is already installed. Upgrading instead..." -ForegroundColor Cyan
+                sudo dnf upgrade -y $($pkg.Id)
+            }
+        }
+    }
+    else {
+        Write-Host "  Unsupported operating system." -ForegroundColor Cyan
+        return
     }
 
     Write-Host "Packages installed successfully!" -ForegroundColor Green
 }
 
-function Install-Agents {
-    Write-Host "Installing Agents..." -ForegroundColor Yellow
+function Install-Configurations {
+    Write-Host "Installing Configurations..." -ForegroundColor Yellow
 
-    $agentSourceDir = Join-Path $PSScriptRoot ".." "prompts" "opencode"
-    $agentDestDir = Join-Path $HOME ".config" "opencode" "agents"
+    $agentsSource = Join-Path $PSScriptRoot ".." "prompts" "opencode"
+    $agentsDirectory = Join-Path $HOME ".config" "opencode" "agents"
+    $agentsFiles = Get-ChildItem -Path $agentsSource -Filter "*.md"
 
-    if (-not (Test-Path -Path $agentDestDir)) {
-        New-Item $agentDestDir -ItemType Directory -Force | Out-Null
+    if (-not (Test-Path -Path $agentsDirectory)) {
+        New-Item $agentsDirectory -ItemType Directory -Force | Out-Null
     }
 
-    $agentFiles = Get-ChildItem -Path $agentSourceDir -Filter "*.md"
-    foreach ($file in $agentFiles) {
-        $dest = Join-Path $agentDestDir $file.Name
-        Copy-Item $file.FullName $dest -Force
-        Write-Host "  Installed $($file.Name)..." -ForegroundColor Cyan
+    foreach ($file in $agentsFiles) {
+        Write-Host "  Installing $($file.Name)..." -ForegroundColor Cyan
+        $agentDestination = Join-Path $agentsDirectory $file.Name
+        Copy-Item $file.FullName $agentDestination -Force
     }
 
-    Write-Host "Agents installed successfully!" -ForegroundColor Green
-}
-
-function Setup-Windows {
-    Install-Profiles
-    Install-Modules
-    Install-Packages
-    Install-Agents
-}
-
-function Setup-Linux {
-    Install-Agents
-}
-
-function Setup-Mac {
-    Install-Agents
-}
-
-function Setup-Environment {
     if ($IsWindows) {
-        Setup-Windows
+        $psDirectory = Join-Path $HOME "Documents\PowerShell"
+
+        if (-not (Test-Path -Path $psDirectory)) {
+            New-Item $psDirectory -ItemType Directory -Force | Out-Null
+        }
+
+        $psProfileSource = Join-Path $PSScriptRoot ".." "configs" "powershell.profile.ps1"
+        $psProfileDestination = Join-Path $psDirectory "Microsoft.PowerShell_profile.ps1"
+        Copy-Item $psProfileSource $psProfileDestination -Force
+
+        $psConfigSource = Join-Path $PSScriptRoot ".." "configs" "powershell.config.json"
+        $psConfigDestination = Join-Path $psDirectory "powershell.config.json"
+        Copy-Item $psConfigSource $psConfigDestination -Force
     }
-    elseif ($IsLinux) {
-        Setup-Linux
-    }
-    elseif ($IsMacOS) {
-        Setup-Mac
-    }
-    else {
-        Write-Host "Unsupported operating system. Please set up manually." -ForegroundColor Red
-    }
+
+    $zedSettingsSource = Join-Path $PSScriptRoot ".." "configs" "zed.jsonc"
+    $zedSettingsDestination = Join-Path $HOME ".config" "zed" "settings.json"
+    $zedSettingsContent = Insert-Env -Path $zedSettingsSource
+    Set-Content -Path $zedSettingsDestination -Value $zedSettingsContent -Force
+
+    $ocSettingsSource = Join-Path $PSScriptRoot ".." "configs" "opencode.jsonc"
+    $ocSettingsDestination = Join-Path $HOME ".config" "opencode" "opencode.json"
+    $ocSettingsContent = Insert-Env -Path $ocSettingsSource
+    Set-Content -Path $ocSettingsDestination -Value $ocSettingsContent -Force
+
+    Write-Host "Configurations installed successfully!" -ForegroundColor Green
 }
 
-Setup-Environment
+Install-Modules
+Install-Packages
+Install-Configurations

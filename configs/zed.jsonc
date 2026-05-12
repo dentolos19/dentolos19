@@ -1,0 +1,67 @@
+{
+  // General
+
+  "base_keymap": "VSCode",
+  "buffer_font_family": "Fira Code",
+  "buffer_font_size": 14,
+  "tab_size": 2,
+  "mouse_wheel_zoom": false,
+  "session": {
+    "trust_all_worktrees": true
+  },
+  "terminal": {
+    "font_family": "Hack Nerd Font"
+  },
+  "sticky_scroll": {
+    "enabled": false
+  },
+  "file_types": {
+    "tailwindcss": ["*.css", "*.scss"],
+    "dotenv": ["*.env*", "*.dev.vars*"]
+  },
+
+  // Appearance
+
+  "wrap_guides": [80, 120],
+  "colorize_brackets": true,
+  "max_tabs": 8,
+  "autosave": "on_focus_change",
+  "theme": {
+    "mode": "system",
+    "light": "Ayu Light",
+    "dark": "Ayu Dark"
+  },
+  "project_panel": {
+    "dock": "left",
+    "entry_spacing": "comfortable"
+  },
+  "agent": {
+    "dock": "right",
+    "favorite_models": [],
+    "model_parameters": []
+  },
+
+  // Agents
+
+  "agent_servers": {
+    "opencode": {
+      "type": "registry"
+    }
+  },
+  "context_servers": {
+    "mcp-server-firecrawl": {
+      "enabled": true,
+      "remote": false,
+      "settings": {
+        "firecrawl_api_key": "${env:FIRECRAWL_API_KEY}"
+      }
+    },
+    "mcp-server-context7": {
+      "enabled": true,
+      "remote": false,
+      "settings": {
+        "context7_api_key": "${env:CONTEXT7_API_KEY}"
+      }
+    }
+  }
+}

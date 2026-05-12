@@ -1,0 +1,38 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "master",
+  "provider": {
+    // "ollama": {
+    //   "name": "Ollama",
+    //   "npm": "@ai-sdk/openai-compatible",
+    //   "options": {
+    //     "baseURL": "http://localhost:11434/v1"
+    //   },
+    //   "models": {
+    //     "gemma4": {
+    //       "name": "Gemma 4"
+    //     },
+    //     "qwen3.6": {
+    //       "name": "Qwen3.6"
+    //     }
+    //   }
+    // }
+  },
+  "mcp": {
+    "context7": {
+      "type": "remote",
+      "enabled": true,
+      "url": "https://mcp.context7.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${env:CONTEXT7_API_KEY}"
+      }
+    },
+    "firecrawl": {
+      "type": "remote",
+      "enabled": true,
+      "url": "https://mcp.firecrawl.dev/${env:FIRECRAWL_API_KEY}/v2/mcp"
+    }
+  },
+  "plugin": ["opencode-notify@latest", "opencode-vibeguard@latest"],
+  "instructions": ["https://raw.githubusercontent.com/dentolos19/dentolos19/refs/heads/main/prompts/agents.md"]
+}
