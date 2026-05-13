@@ -85,16 +85,12 @@ function Install-Packages {
         @{ Name = "bun"; Id = "Oven-sh.Bun" }
     )
 
-    $macPackages = @(
+    $brewPackages = @(
         @{ Name = "fnm"; Id = "fnm" }
         @{ Name = "uv"; Id = "uv" }
-        @{ Name = "bun"; Id = "bun" }
-    )
-
-    $fedoraPackages = @(
-        @{ Name = "fnm"; Id = "fnm" }
-        @{ Name = "uv"; Id = "uv" }
-        @{ Name = "bun"; Id = "bun" }
+        @{ Name = "bun"; Id = "oven-sh/bun/bun" }
+        @{ Name = "terraform"; Id = "hashicorp/tap/terraform" }
+        @{ Name = "cloudflared"; Id = "cloudflared" }
     )
 
     if ($IsWindows) {
@@ -110,7 +106,7 @@ function Install-Packages {
             }
         }
     }
-    elseif ($IsMacOS) {
+    else {
         $hasBrew = $null -ne (Get-Command "brew" -ErrorAction SilentlyContinue)
 
         if (-not $hasBrew) {
@@ -118,45 +114,20 @@ function Install-Packages {
             return
         }
 
-        foreach ($pkg in $macPackages) {
+        foreach ($pkg in $brewPackages) {
             $output = brew list $($pkg.Id) 2>$null
             if ($LASTEXITCODE -ne 0) {
                 Write-Host "  Installing $($pkg.Name)..." -ForegroundColor Cyan
-                brew install $($pkg.Id)
+                brew install $($pkg.Id) >$null 2>$null
             }
             else {
                 Write-Host "  $($pkg.Name) is already installed. Upgrading instead..." -ForegroundColor Cyan
-                brew upgrade $($pkg.Id)
+                brew upgrade $($pkg.Id) >$null 2>$null
             }
         }
     }
-    elseif ($IsLinux) {
-        $osRelease = Get-Content /etc/os-release -ErrorAction SilentlyContinue
-        $isFedora = ($osRelease -match '^ID=fedora$')
 
-        if (-not $isFedora) {
-            Write-Host "  Unsupported Linux distribution. Only Fedora is currently supported." -ForegroundColor Cyan
-            return
-        }
-
-        foreach ($pkg in $fedoraPackages) {
-            $output = dnf list installed $($pkg.Id) 2>$null
-            if ($LASTEXITCODE -ne 0) {
-                Write-Host "  Installing $($pkg.Name)..." -ForegroundColor Cyan
-                sudo dnf install -y $($pkg.Id)
-            }
-            else {
-                Write-Host "  $($pkg.Name) is already installed. Upgrading instead..." -ForegroundColor Cyan
-                sudo dnf upgrade -y $($pkg.Id)
-            }
-        }
-    }
-    else {
-        Write-Host "  Unsupported operating system." -ForegroundColor Cyan
-        return
-    }
-
-    Write-Host "Packages installed successfully!" -ForegroundColor Green
+    Write-Host "  Packages installed successfully!" -ForegroundColor Green
 }
 
 function Install-Configurations {
@@ -204,7 +175,7 @@ function Install-Configurations {
     $ocSettingsContent = Insert-Env -Path $ocSettingsSource
     Set-Content -Path $ocSettingsDestination -Value $ocSettingsContent -Force
 
-    Write-Host "Configurations installed successfully!" -ForegroundColor Green
+    Write-Host "  Configurations installed successfully!" -ForegroundColor Green
 }
 
 Install-Modules
