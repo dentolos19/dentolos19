@@ -28,15 +28,13 @@
   "autosave": "on_focus_change",
   "theme": {
     "mode": "system",
-    "light": "Ayu Light",
-    "dark": "Ayu Dark"
+    "light": "Catppuccin Latte",
+    "dark": "Catppuccin Mocha"
   },
   "project_panel": {
-    "dock": "left",
     "entry_spacing": "comfortable"
   },
   "agent": {
-    "dock": "right",
     "favorite_models": [],
     "model_parameters": []
   },

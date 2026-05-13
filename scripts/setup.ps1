@@ -4,9 +4,7 @@ function Insert-Env {
     param(
         [Parameter(Mandatory = $true)]
         [string]$Path,
-
         [hashtable]$EnvVars = @{},
-
         [string]$EnvFilePath
     )
 
@@ -168,9 +166,11 @@ function Install-Configurations {
     $agentsDirectory = Join-Path $HOME ".config" "opencode" "agents"
     $agentsFiles = Get-ChildItem -Path $agentsSource -Filter "*.md"
 
-    if (-not (Test-Path -Path $agentsDirectory)) {
-        New-Item $agentsDirectory -ItemType Directory -Force | Out-Null
+    if (Test-Path -Path $agentsDirectory) {
+        Remove-Item -Path $agentsDirectory -Recurse -Force
     }
+
+    New-Item $agentsDirectory -ItemType Directory -Force | Out-Null
 
     foreach ($file in $agentsFiles) {
         Write-Host "  Installing $($file.Name)..." -ForegroundColor Cyan
@@ -179,7 +179,7 @@ function Install-Configurations {
     }
 
     if ($IsWindows) {
-        $psDirectory = Join-Path $HOME "Documents\PowerShell"
+        $psDirectory = Join-Path $HOME "Documents" "PowerShell"
 
         if (-not (Test-Path -Path $psDirectory)) {
             New-Item $psDirectory -ItemType Directory -Force | Out-Null
@@ -199,7 +199,7 @@ function Install-Configurations {
     $zedSettingsContent = Insert-Env -Path $zedSettingsSource
     Set-Content -Path $zedSettingsDestination -Value $zedSettingsContent -Force
 
-    $ocSettingsSource = Join-Path $PSScriptRoot ".." "configs" "opencode.jsonc"
+    $ocSettingsSource = Join-Path $PSScriptRoot ".." "configs" "opencode.json"
     $ocSettingsDestination = Join-Path $HOME ".config" "opencode" "opencode.json"
     $ocSettingsContent = Insert-Env -Path $ocSettingsSource
     Set-Content -Path $ocSettingsDestination -Value $ocSettingsContent -Force
