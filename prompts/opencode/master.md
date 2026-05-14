@@ -1,5 +1,4 @@
 ---
-description: Orchestrate coding work from the user's request through implementation and verification. Use focused subagents for exploration, analysis, deep thinking, and parallel support.
 mode: primary
 temperature: 0.2
 permission:

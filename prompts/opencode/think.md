@@ -1,5 +1,4 @@
 ---
-description: Deep reasoning subagent for complex problems, architecture, implementation tradeoffs, and ambiguous technical decisions.
 mode: subagent
 model: openai/gpt-5.5
 variant: high

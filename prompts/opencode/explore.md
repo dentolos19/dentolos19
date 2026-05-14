@@ -1,5 +1,4 @@
 ---
-description: Fast read-only codebase discovery. Find relevant files, symbols, dependencies, tests, configs, and local documentation.
 mode: subagent
 model: opencode-go/deepseek-v4-flash
 variant: max

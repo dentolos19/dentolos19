@@ -1,5 +1,4 @@
 ---
-description: Focused support subagent for contained research, documentation drafting, explanation, and parallel work that does not fit explore, analyze, or think.
 mode: subagent
 model: opencode-go/deepseek-v4-flash
 variant: max

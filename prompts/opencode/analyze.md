@@ -1,5 +1,4 @@
 ---
-description: Read-only technical analysis for bugs, vulnerabilities, regressions, performance issues, edge cases, and code review findings.
 mode: subagent
 model: openai/gpt-5.5
 variant: high

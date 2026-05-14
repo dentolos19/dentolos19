@@ -1,5 +1,4 @@
 ---
-description: Implement code changes, run commands, execute tests, and iterate safely until the requested work is complete or clearly blocked.
 mode: primary
 model: opencode-go/deepseek-v4-flash
 variant: max

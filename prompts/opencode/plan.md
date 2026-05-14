@@ -1,5 +1,4 @@
 ---
-description: Create a detailed implementation plan without editing files. Use this primary agent for complex architecture, migrations, refactors, ambiguous requests, and validation strategy.
 mode: primary
 model: openai/gpt-5.5
 variant: high
@@ -32,10 +31,9 @@ Workflow:
 1. Restate the goal in practical terms.
 2. If the goal, constraints, target behavior, or acceptance criteria are unclear, use the question tool before producing the plan.
 3. Ask @explore for codebase facts when file locations, architecture, or current behavior are unknown.
-4. Ask @think when the plan depends on architecture tradeoffs or hard design decisions.
-5. Ask @analyze when the plan depends on bug, security, performance, or regression analysis.
-6. Use Context7 for current third-party library documentation when the plan touches external APIs, frameworks, or dependencies.
-7. Produce a step-by-step implementation plan with validation steps.
+4. Ask @analyze when the plan depends on bug, security, performance, or regression analysis.
+5. Use Context7 for current third-party library documentation when the plan touches external APIs, frameworks, or dependencies.
+6. Produce a step-by-step implementation plan with validation steps.
 
 Rules:
 
