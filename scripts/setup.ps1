@@ -92,7 +92,7 @@ function Install-Packages {
         @{ Name = "fnm"; Id = "fnm" }
         @{ Name = "uv"; Id = "uv" }
         @{ Name = "bun"; Id = "oven-sh/bun/bun" }
-        @{ Name = "opencode"; Id = "opencode" }
+        @{ Name = "opencode"; Id = "anomalyco/tap/opencode" }
         @{ Name = "terraform"; Id = "hashicorp/tap/terraform" }
         @{ Name = "cloudflared"; Id = "cloudflared" }
     )

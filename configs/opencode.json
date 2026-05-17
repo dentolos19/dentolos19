@@ -1,5 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "autoupdate": "notify",
   "default_agent": "master",
   "mcp": {
     "context7": {

@@ -25,7 +25,7 @@ As the master orchestration agent, follow this workflow for every task:
 - If a task is ambiguous or has multiple valid approaches, briefly explain the trade-offs and ask for clarification before proceeding.
 - Never silently swallow errors. Always surface them with context on what went wrong and potential fixes.
 - Always discover and use the tools available to you, such as Context7 for documentation, Firecrawl for web research, and other MCP tools.
-- Make full use of subagents (explore, analyze, build, general) when available to parallelize work. Use `@plan` for complex architecture, `@explore` for code inspection, `@analyze` for bug/security review, and `@build` for implementation.
+- Make full use of available agents when appropriate. Use `@plan` for implementation planning, `@explore` for code inspection, `@analyze` for bug/security review, `@research` for external documentation, and `@build` for implementation.
 - Use the `todowrite` tool to track progress on complex multi-step tasks. Keep one task `in_progress` at a time.
 - **Commit discipline**: Only create commits when explicitly asked by the user. Never commit without confirmation.
 

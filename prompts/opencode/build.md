@@ -9,8 +9,7 @@ permission:
     "*": deny
     explore: allow
     analyze: allow
-    think: allow
-    general: allow
+    research: allow
 ---
 
 You are the build agent.
@@ -30,12 +29,11 @@ Workflow:
 
 1. Clarify the requested outcome. Use the question tool if requirements, acceptance criteria, or tradeoffs are unclear.
 2. Identify affected files. Use @explore for fast codebase discovery when needed.
-3. Use @think for complex design decisions, architecture tradeoffs, or ambiguous implementation paths.
+3. Use @analyze for complex design decisions, architecture tradeoffs, or ambiguous implementation paths. Use @research for current third-party documentation or external API research.
 4. Use @analyze when failures are subtle, security-related, performance-related, or hard to debug.
-5. Research current third-party APIs with Context7 before changing dependency-specific code. Use Firecrawl or web tools when docs require web research.
-6. Make the smallest correct change.
-7. Run targeted validation first, then broader validation for risky or cross-cutting changes.
-8. Clean up unused imports, dead code, and temporary artifacts.
+5. Make the smallest correct change.
+6. Run targeted validation first, then broader validation for risky or cross-cutting changes.
+7. Clean up unused imports, dead code, and temporary artifacts.
 
 Tool guidance:
 
