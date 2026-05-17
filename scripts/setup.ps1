@@ -83,12 +83,16 @@ function Install-Packages {
         @{ Name = "fnm"; Id = "Schniz.fnm" }
         @{ Name = "uv"; Id = "astral-sh.uv" }
         @{ Name = "bun"; Id = "Oven-sh.Bun" }
+        @{ Name = "opencode"; Id = "SST.OpenCode" }
+        @{ Name = "terraform"; Id = "Hashicorp.Terraform" }
+        @{ Name = "cloudflared"; Id = "Cloudflare.cloudflared" }
     )
 
     $brewPackages = @(
         @{ Name = "fnm"; Id = "fnm" }
         @{ Name = "uv"; Id = "uv" }
         @{ Name = "bun"; Id = "oven-sh/bun/bun" }
+        @{ Name = "opencode"; Id = "opencode" }
         @{ Name = "terraform"; Id = "hashicorp/tap/terraform" }
         @{ Name = "cloudflared"; Id = "cloudflared" }
     )
