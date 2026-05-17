@@ -137,7 +137,33 @@ function Install-Packages {
 function Install-Configurations {
     Write-Host "Installing Configurations..." -ForegroundColor Yellow
 
-    $agentsSource = Join-Path $PSScriptRoot ".." "prompts" "opencode"
+    # Editor Config
+    Copy-Item `
+        -Path (Join-Path $PSScriptRoot ".." "configs" "formatters" "default.editorconfig") `
+        -Destination (Join-Path $HOME ".editorconfig") `
+        -Recurse -Force
+
+    # Biome Config
+    Copy-Item `
+        -Path (Join-Path $PSScriptRoot ".." "configs" "formatters" "biome.json") `
+        -Destination (Join-Path $HOME "biome.json") `
+        -Recurse -Force
+
+    # Zed Settings
+    $zedSettingsSource = Join-Path $PSScriptRoot ".." "configs" "editors" "zed.jsonc"
+    $zedSettingsDestination = Join-Path $HOME ".config" "zed" "settings.json"
+    $zedSettingsContent = Insert-Env -Path $zedSettingsSource
+    Set-Content -Path $zedSettingsDestination -Value $zedSettingsContent -Force
+
+    # OpenCode Settings
+    $ocSettingsSource = Join-Path $PSScriptRoot ".." "configs" "opencode" "opencode.json"
+    $ocSettingsDestination = Join-Path $HOME ".config" "opencode" "opencode.json"
+    $ocSettingsContent = Insert-Env -Path $ocSettingsSource
+    Set-Content -Path $ocSettingsDestination -Value $ocSettingsContent -Force
+
+    # OpenCode Agents
+
+    $agentsSource = Join-Path $PSScriptRoot ".." "configs" "opencode" "agents"
     $agentsDirectory = Join-Path $HOME ".config" "opencode" "agents"
     $agentsFiles = Get-ChildItem -Path $agentsSource -Filter "*.md"
 
@@ -153,6 +179,10 @@ function Install-Configurations {
         Copy-Item $file.FullName $agentDestination -Force
     }
 
+    # End of OpenCode Agents
+
+    # PowerShell Configs
+
     if ($IsWindows) {
         $psDirectory = Join-Path $HOME "Documents" "PowerShell"
 
@@ -160,24 +190,16 @@ function Install-Configurations {
             New-Item $psDirectory -ItemType Directory -Force | Out-Null
         }
 
-        $psProfileSource = Join-Path $PSScriptRoot ".." "configs" "powershell.profile.ps1"
+        $psProfileSource = Join-Path $PSScriptRoot ".." "configs" "powershell" "powershell.profile.ps1"
         $psProfileDestination = Join-Path $psDirectory "Microsoft.PowerShell_profile.ps1"
         Copy-Item $psProfileSource $psProfileDestination -Force
 
-        $psConfigSource = Join-Path $PSScriptRoot ".." "configs" "powershell.config.json"
+        $psConfigSource = Join-Path $PSScriptRoot ".." "configs" "powershell" "powershell.config.json"
         $psConfigDestination = Join-Path $psDirectory "powershell.config.json"
         Copy-Item $psConfigSource $psConfigDestination -Force
     }
 
-    $zedSettingsSource = Join-Path $PSScriptRoot ".." "configs" "zed.jsonc"
-    $zedSettingsDestination = Join-Path $HOME ".config" "zed" "settings.json"
-    $zedSettingsContent = Insert-Env -Path $zedSettingsSource
-    Set-Content -Path $zedSettingsDestination -Value $zedSettingsContent -Force
-
-    $ocSettingsSource = Join-Path $PSScriptRoot ".." "configs" "opencode.json"
-    $ocSettingsDestination = Join-Path $HOME ".config" "opencode" "opencode.json"
-    $ocSettingsContent = Insert-Env -Path $ocSettingsSource
-    Set-Content -Path $ocSettingsDestination -Value $ocSettingsContent -Force
+    # End of PowerShell Configs
 
     Write-Host "  Configurations installed successfully!" -ForegroundColor Green
 }
