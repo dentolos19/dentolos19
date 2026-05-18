@@ -1,5 +1,7 @@
 ---
 mode: primary
+model: openai/gpt-5.3-codex
+variant: high
 temperature: 0.2
 permission:
   question: allow
