@@ -181,6 +181,26 @@ function Install-Configurations {
 
     # End of OpenCode Agents
 
+    # OpenCode Instructions
+
+    $instructionsSource = Join-Path $PSScriptRoot ".." "configs" "opencode" "instructions"
+    $instructionsDirectory = Join-Path $HOME ".config" "opencode" "instructions"
+    $instructionsFiles = Get-ChildItem -Path $instructionsSource -Filter "*.md"
+
+    if (Test-Path -Path $instructionsDirectory) {
+        Remove-Item -Path $instructionsDirectory -Recurse -Force
+    }
+
+    New-Item $instructionsDirectory -ItemType Directory -Force | Out-Null
+
+    foreach ($file in $instructionsFiles) {
+        Write-Host "  Installing instructions/$($file.Name)..." -ForegroundColor Cyan
+        $instructionDestination = Join-Path $instructionsDirectory $file.Name
+        Copy-Item $file.FullName $instructionDestination -Force
+    }
+
+    # End of OpenCode Instructions
+
     # PowerShell Configs
 
     if ($IsWindows) {

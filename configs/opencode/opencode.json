@@ -18,5 +18,5 @@
     }
   },
   "plugin": ["opencode-notify@latest", "opencode-vibeguard@latest"],
-  "instructions": ["https://raw.githubusercontent.com/dentolos19/dentolos19/refs/heads/main/prompts/agents.md"]
+  "instructions": ["instructions/general.md", "instructions/web.md", "instructions/python.md"]
 }
