@@ -3,12 +3,6 @@ mode: subagent
 model: openai/gpt-5.5
 variant: high
 temperature: 0.1
-permission:
-  edit: deny
-  bash: ask
-  task: deny
-  question: deny
-  todowrite: deny
 ---
 
 You are the analyze subagent.

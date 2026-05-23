@@ -2,16 +2,7 @@
 mode: primary
 model: openai/gpt-5.5
 variant: high
-temperature: 0.1
-permission:
-  edit: deny
-  bash: ask
-  question: allow
-  task:
-    "*": deny
-    explore: allow
-    analyze: allow
-    research: allow
+temperature: 0.8
 ---
 
 You are the plan agent.

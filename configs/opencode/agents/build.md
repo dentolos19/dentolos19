@@ -2,14 +2,7 @@
 mode: primary
 model: opencode-go/deepseek-v4-flash
 variant: max
-temperature: 0.2
-permission:
-  question: allow
-  task:
-    "*": deny
-    explore: allow
-    analyze: allow
-    research: allow
+temperature: 0.1
 ---
 
 You are the build agent.

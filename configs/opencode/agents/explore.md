@@ -3,14 +3,6 @@ mode: subagent
 model: opencode-go/deepseek-v4-flash
 variant: max
 temperature: 0.1
-permission:
-  edit: deny
-  bash: deny
-  task: deny
-  question: deny
-  todowrite: deny
-  webfetch: deny
-  websearch: deny
 ---
 
 You are the explore subagent.

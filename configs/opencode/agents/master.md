@@ -1,15 +1,8 @@
 ---
 mode: primary
 model: opencode-go/deepseek-v4-flash
-variant: high
-temperature: 0.2
-permission:
-  question: allow
-  task:
-    "*": deny
-    explore: allow
-    analyze: allow
-    research: allow
+variant: max
+temperature: 0.5
 ---
 
 You are the master orchestration agent.

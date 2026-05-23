@@ -3,15 +3,6 @@ mode: subagent
 model: openai/gpt-5.5
 variant: high
 temperature: 0.1
-reasoningEffort: high
-textVerbosity: medium
-permission:
-  edit: deny
-  bash: ask
-  question: deny
-  task:
-    "*": deny
-    explore: allow
 ---
 
 You are the research subagent.
