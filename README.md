@@ -17,10 +17,8 @@
 
 | Hackathon / Competition                        | Project / Team                                                    | Stage         | Achievement      |
 | ---------------------------------------------- | ----------------------------------------------------------------- | ------------- | ---------------- |
-| National AI Student Challenge 2026             | [Logdog](https://github.com/dentolos19/logdog)                    | National      | Grand Top 8      |
-| 6th Kibo Robot Programming Challenge           | AstroVibe                                                         | International | Global Top 11    |
-| DSTA BrainHack 2025                            | Brain.exe                                                         | National      | Unplaced         |
-| hacksingapore 2024                             | [Finn](https://github.com/dentolos19/finn)                        | National      | Unplaced         |
+| National AI Student Challenge 2026             | [Logdog](https://github.com/dentolos19/logdog)                    | National      | Top 8 (Micron)   |
+| 6th Kibo Robot Programming Challenge           | AstroVibe                                                         | International | Top 11           |
 | Code Overflow 2024                             | [Pennywise](https://github.com/dentolos19/pennywise)              | School        | Committee Choice |
 | Code Overflow 2023                             | [Anywhere Fitness](https://github.com/dentolos19/anywherefitness) | School        | Top 3            |
 | National Cyberwellness Advocacy Challenge 2022 | [Faker Spotter](https://github.com/dentolos19/fakerspotter)       | National      | Silver           |

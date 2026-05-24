@@ -149,11 +149,11 @@ function Install-Configurations {
         -Destination (Join-Path $HOME "biome.json") `
         -Recurse -Force
 
-    # Zed Settings
-    $zedSettingsSource = Join-Path $PSScriptRoot ".." "configs" "editors" "zed.jsonc"
-    $zedSettingsDestination = Join-Path $HOME ".config" "zed" "settings.json"
-    $zedSettingsContent = Insert-Env -Path $zedSettingsSource
-    Set-Content -Path $zedSettingsDestination -Value $zedSettingsContent -Force
+    # # Zed Settings
+    # $zedSettingsSource = Join-Path $PSScriptRoot ".." "configs" "editors" "zed.jsonc"
+    # $zedSettingsDestination = Join-Path $HOME ".config" "zed" "settings.json"
+    # $zedSettingsContent = Insert-Env -Path $zedSettingsSource
+    # Set-Content -Path $zedSettingsDestination -Value $zedSettingsContent -Force
 
     # OpenCode Settings
     $ocSettingsSource = Join-Path $PSScriptRoot ".." "configs" "opencode" "opencode.json"
