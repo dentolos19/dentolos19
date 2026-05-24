@@ -1,7 +1,3 @@
----
-alwaysApply: true
----
-
 # Agent Instructions
 
 This is my personal coding style. This should take precedence over other instructions.

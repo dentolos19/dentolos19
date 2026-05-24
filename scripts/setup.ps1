@@ -68,8 +68,8 @@ function Install-Modules {
             Install-Module -Name $module -Force -AllowClobber -Scope CurrentUser
         }
         else {
-            Write-Host "  $module is already installed. Upgrading instead..." -ForegroundColor Cyan
-            Update-Module -Name $module -Force -Scope CurrentUser
+            Write-Host "  $module is already installed. Skipping..." -ForegroundColor Cyan
+            # Update-Module -Name $module -Force -Scope CurrentUser
         }
     }
 
@@ -105,8 +105,8 @@ function Install-Packages {
                 winget install --id $pkg.Id --exact --silent >$null
             }
             else {
-                Write-Host "  $($pkg.Name) is already installed. Upgrading instead..." -ForegroundColor Cyan
-                winget upgrade --id $pkg.Id --exact --silent >$null
+                Write-Host "  $($pkg.Name) is already installed. Skipping..." -ForegroundColor Cyan
+                # winget upgrade --id $pkg.Id --exact --silent >$null
             }
         }
     }
@@ -121,12 +121,12 @@ function Install-Packages {
         foreach ($pkg in $brewPackages) {
             $output = brew list $($pkg.Id) 2>$null
             if ($LASTEXITCODE -ne 0) {
-                Write-Host "  Installing $($pkg.Name)..." -ForegroundColor Cyan
-                brew install $($pkg.Id) >$null 2>$null
+                Write-Host "  Installing package $($pkg.Name)..." -ForegroundColor Cyan
+                brew install $($pkg.Id) >$null
             }
             else {
-                Write-Host "  $($pkg.Name) is already installed. Upgrading instead..." -ForegroundColor Cyan
-                brew upgrade $($pkg.Id) >$null 2>$null
+                Write-Host "  $($pkg.Name) is already installed. Skipping..." -ForegroundColor Cyan
+                # brew upgrade $($pkg.Id) >$null
             }
         }
     }
@@ -137,78 +137,43 @@ function Install-Packages {
 function Install-Configurations {
     Write-Host "Installing Configurations..." -ForegroundColor Yellow
 
-    # Editor Config
-    Copy-Item `
-        -Path (Join-Path $PSScriptRoot ".." "configs" "formatters" "default.editorconfig") `
-        -Destination (Join-Path $HOME ".editorconfig") `
-        -Recurse -Force
-
-    # Biome Config
-    Copy-Item `
-        -Path (Join-Path $PSScriptRoot ".." "configs" "formatters" "biome.json") `
-        -Destination (Join-Path $HOME "biome.json") `
-        -Recurse -Force
-
-    # # Zed Settings
-    # $zedSettingsSource = Join-Path $PSScriptRoot ".." "configs" "editors" "zed.jsonc"
-    # $zedSettingsDestination = Join-Path $HOME ".config" "zed" "settings.json"
-    # $zedSettingsContent = Insert-Env -Path $zedSettingsSource
-    # Set-Content -Path $zedSettingsDestination -Value $zedSettingsContent -Force
-
-    # OpenCode Settings
-    $ocSettingsSource = Join-Path $PSScriptRoot ".." "configs" "opencode" "opencode.json"
-    $ocSettingsDestination = Join-Path $HOME ".config" "opencode" "opencode.json"
-    $ocSettingsContent = Insert-Env -Path $ocSettingsSource
-    Set-Content -Path $ocSettingsDestination -Value $ocSettingsContent -Force
-
-    # OpenCode Agents
-
-    $agentsSource = Join-Path $PSScriptRoot ".." "configs" "opencode" "agents"
-    $agentsDirectory = Join-Path $HOME ".config" "opencode" "agents"
-    $agentsFiles = Get-ChildItem -Path $agentsSource -Filter "*.md"
-
-    if (Test-Path -Path $agentsDirectory) {
-        Remove-Item -Path $agentsDirectory -Recurse -Force
+    function Install-EditorConfig {
+        Write-Host "  Installing EditorConfig..." -ForegroundColor Cyan
+        Copy-Item `
+            -Path (Join-Path $PSScriptRoot ".." "configs" "formatters" "default.editorconfig") `
+            -Destination (Join-Path $HOME ".editorconfig") `
+            -Recurse -Force
     }
 
-    New-Item $agentsDirectory -ItemType Directory -Force | Out-Null
-
-    foreach ($file in $agentsFiles) {
-        Write-Host "  Installing $($file.Name)..." -ForegroundColor Cyan
-        $agentDestination = Join-Path $agentsDirectory $file.Name
-        Copy-Item $file.FullName $agentDestination -Force
+    function Install-BiomeConfig {
+        Write-Host "  Installing Biome configuration..." -ForegroundColor Cyan
+        Copy-Item `
+            -Path (Join-Path $PSScriptRoot ".." "configs" "formatters" "biome.json") `
+            -Destination (Join-Path $HOME "biome.json") `
+            -Recurse -Force
     }
 
-    # End of OpenCode Agents
-
-    # OpenCode Instructions
-
-    $instructionsSource = Join-Path $PSScriptRoot ".." "configs" "opencode" "instructions"
-    $instructionsDirectory = Join-Path $HOME ".config" "opencode" "instructions"
-    $instructionsFiles = Get-ChildItem -Path $instructionsSource -Filter "*.md"
-
-    if (Test-Path -Path $instructionsDirectory) {
-        Remove-Item -Path $instructionsDirectory -Recurse -Force
+    function Install-ZedConfig {
+        # Write-Host "  Installing Zed configuration..." -ForegroundColor Cyan
+        # $zedSettingsSource = Join-Path $PSScriptRoot ".." "configs" "editors" "zed.jsonc"
+        # $zedSettingsDestination = Join-Path $HOME ".config" "zed" "settings.json"
+        # $zedSettingsContent = Insert-Env -Path $zedSettingsSource
+        # Set-Content -Path $zedSettingsDestination -Value $zedSettingsContent -Force
     }
 
-    New-Item $instructionsDirectory -ItemType Directory -Force | Out-Null
+    function Install-PowerShellConfig {
+        if (-not $IsWindows) {
+            Write-Host "  Skipping PowerShell configuration. You are not on Windows." -ForegroundColor Cyan
+            return
+        }
 
-    foreach ($file in $instructionsFiles) {
-        Write-Host "  Installing instructions/$($file.Name)..." -ForegroundColor Cyan
-        $instructionDestination = Join-Path $instructionsDirectory $file.Name
-        Copy-Item $file.FullName $instructionDestination -Force
-    }
-
-    # End of OpenCode Instructions
-
-    # PowerShell Configs
-
-    if ($IsWindows) {
         $psDirectory = Join-Path $HOME "Documents" "PowerShell"
 
         if (-not (Test-Path -Path $psDirectory)) {
             New-Item $psDirectory -ItemType Directory -Force | Out-Null
         }
+
+        Write-Host "  Installing PowerShell configuration..." -ForegroundColor Cyan
 
         $psProfileSource = Join-Path $PSScriptRoot ".." "configs" "powershell" "powershell.profile.ps1"
         $psProfileDestination = Join-Path $psDirectory "Microsoft.PowerShell_profile.ps1"
@@ -219,7 +184,127 @@ function Install-Configurations {
         Copy-Item $psConfigSource $psConfigDestination -Force
     }
 
-    # End of PowerShell Configs
+    function Install-AgentConfig {
+        $ocSettingsSource = Join-Path $PSScriptRoot ".." "configs" "opencode" "opencode.json"
+        $ocSettingsDestination = Join-Path $HOME ".config" "opencode" "opencode.json"
+        $ocSettingsContent = Insert-Env -Path $ocSettingsSource
+        Set-Content -Path $ocSettingsDestination -Value $ocSettingsContent -Force
+
+        $agentsSource = Join-Path $PSScriptRoot ".." "configs" "opencode" "agents"
+        $agentsDirectory = Join-Path $HOME ".config" "opencode" "agents"
+        $agentsFiles = Get-ChildItem -Path $agentsSource -Filter "*.md"
+
+        $instructionsSource = Join-Path $PSScriptRoot ".." "configs" "opencode" "instructions"
+        $instructionsDirectory = Join-Path $HOME ".config" "opencode" "instructions"
+        $instructionsFiles = Get-ChildItem -Path $instructionsSource -Filter "*.md"
+
+        if (Test-Path -Path $agentsDirectory) {
+            Remove-Item -Path $agentsDirectory -Recurse -Force
+        }
+
+        if (Test-Path -Path $instructionsDirectory) {
+            Remove-Item -Path $instructionsDirectory -Recurse -Force
+        }
+
+        New-Item $agentsDirectory -ItemType Directory -Force | Out-Null
+        New-Item $instructionsDirectory -ItemType Directory -Force | Out-Null
+
+        foreach ($file in $agentsFiles) {
+            Write-Host "  Installing agent $skill..." -ForegroundColor Cyan
+            $agentDestination = Join-Path $agentsDirectory $file.Name
+            Copy-Item $file.FullName $agentDestination -Force
+        }
+
+        foreach ($file in $instructionsFiles) {
+            Write-Host "  Installing instruction $skill..." -ForegroundColor Cyan
+            $instructionDestination = Join-Path $instructionsDirectory $file.Name
+            Copy-Item $file.FullName $instructionDestination -Force
+        }
+    }
+
+    function Install-AgentSkills {
+        $agentSkills = @(
+            @{
+                Source = "vercel-labs/skills";
+                Skills = @(
+                    "find-skills"
+                )
+            }
+            @{
+                Source = "vercel-labs/agent-skills";
+                Skills = @(
+                    "vercel-composition-patterns",
+                    "vercel-react-best-practices",
+                    "vercel-react-native-skills",
+                    "vercel-react-view-transitions",
+                    "web-design-guidelines"
+                )
+            }
+            @{
+                Source = "anthropics/skills";
+                Skills = @(
+                    "canvas-design",
+                    "frontend-design",
+                    "mcp-builder",
+                    "skill-creator"
+                )
+            }
+            @{
+                Source = "pbakaus/impeccable";
+                Skills = @(
+                    "impeccable"
+                )
+            }
+            @{
+                Source = "shadcn/ui";
+                Skills = @(
+                    "shadcn"
+                )
+            }
+            @{
+                Source = "expo/skills";
+                Skills = @(
+                    "building-native-ui",
+                    "expo-module",
+                    "native-data-fetching",
+                    "upgrading-expo"
+                )
+            }
+            @{
+                Source = "cloudflare/skills";
+                Skills = @(
+                    "cloudflare",
+                    "durable-objects",
+                    "workers-best-practices",
+                    "wrangler"
+                )
+            }
+            @{
+                Source = "aws/agent-toolkit-for-aws";
+                Skills = @(
+                    "aws-cdk",
+                    "aws-iam"
+                )
+            }
+        )
+
+        if (-not (Get-Command "bunx" -ErrorAction SilentlyContinue)) {
+            Write-Host "  bunx is not available. Skipping agent skills installation." -ForegroundColor Cyan
+        }
+        else {
+            foreach ($entry in $agentSkills) {
+                Write-Host "  Installing skills from $($entry.Source)..." -ForegroundColor Cyan
+                bunx skills add $entry.Source --global --skill $entry.Skills --yes >$null
+            }
+        }
+    }
+
+    Install-EditorConfig
+    Install-BiomeConfig
+    Install-ZedConfig
+    Install-PowerShellConfig
+    Install-AgentConfig
+    Install-AgentSkills
 
     Write-Host "  Configurations installed successfully!" -ForegroundColor Green
 }
