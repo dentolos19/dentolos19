@@ -210,14 +210,16 @@ function Install-Configurations {
         New-Item $instructionsDirectory -ItemType Directory -Force | Out-Null
 
         foreach ($file in $agentsFiles) {
-            Write-Host "  Installing agent $skill..." -ForegroundColor Cyan
-            $agentDestination = Join-Path $agentsDirectory $file.Name
+            $fileName = [System.IO.Path]::GetFileName($file.Name)
+            Write-Host "  Installing agent $fileName..." -ForegroundColor Cyan
+            $agentDestination = Join-Path $agentsDirectory $fileName
             Copy-Item $file.FullName $agentDestination -Force
         }
 
         foreach ($file in $instructionsFiles) {
-            Write-Host "  Installing instruction $skill..." -ForegroundColor Cyan
-            $instructionDestination = Join-Path $instructionsDirectory $file.Name
+            $fileName = [System.IO.Path]::GetFileName($file.Name)
+            Write-Host "  Installing instruction $fileName..." -ForegroundColor Cyan
+            $instructionDestination = Join-Path $instructionsDirectory $fileName
             Copy-Item $file.FullName $instructionDestination -Force
         }
     }
