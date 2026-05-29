@@ -1,0 +1,6 @@
+{
+  "plugins": ["eslint", "import", "promise", "typescript"],
+  "rules": {
+    "sort-keys": "allow"
+  }
+}

@@ -1,14 +1,13 @@
 # Editor configurations
 .vs/
 .idea/
-*.iml
 
-# Environment files
+# Build files
 node_modules/
 dist/
 build/
 out/
-*.d.ts
+coverage/
 *.tsbuildinfo
 
 # User files

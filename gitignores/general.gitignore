@@ -1,3 +1,7 @@
+# Editor configurations
+.vs/
+.idea/
+
 # User files
 .env*
 !.env*.template

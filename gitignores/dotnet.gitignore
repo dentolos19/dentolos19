@@ -1,9 +1,8 @@
 # Editor configurations
 .vs/
 .idea/
-*.iml
 
-# Environment files
+# Build files
 bin/
 obj/
 packages/

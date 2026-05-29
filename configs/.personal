@@ -1,0 +1,12 @@
+# Bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# Starship
+if [ -n "${ZSH_VERSION:-}" ]; then
+    eval "$(starship init zsh)"
+else
+    eval "$(starship init bash)"
+fi
+
+export OPENCODE_EXPERIMENTAL_BACKGROUND_SUBAGENTS="true"

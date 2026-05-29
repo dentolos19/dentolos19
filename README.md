@@ -15,13 +15,14 @@
 
 ## 🗃️ Hackathon Projects
 
-| Hackathon / Competition                        | Project / Team                                                    | Stage         | Achievement      |
-| ---------------------------------------------- | ----------------------------------------------------------------- | ------------- | ---------------- |
-| National AI Student Challenge 2026             | [Logdog](https://github.com/dentolos19/logdog)                    | National      | Top 8 (Micron)   |
-| 6th Kibo Robot Programming Challenge           | AstroVibe                                                         | International | Top 11           |
-| Code Overflow 2024                             | [Pennywise](https://github.com/dentolos19/pennywise)              | School        | Committee Choice |
-| Code Overflow 2023                             | [Anywhere Fitness](https://github.com/dentolos19/anywherefitness) | School        | Top 3            |
-| National Cyberwellness Advocacy Challenge 2022 | [Faker Spotter](https://github.com/dentolos19/fakerspotter)       | National      | Silver           |
+| Hackathon / Competition                        | Project / Team                                                                     | Stage         | Achievement      |
+| ---------------------------------------------- | ---------------------------------------------------------------------------------- | ------------- | ---------------- |
+| 7th Kibo Robot Programming Challenge           | Anomaly                                                                            | International | *Ongoing*        |
+| National AI Student Challenge 2026             | [Logdog](https://github.com/dentolos19/logdog)                                     | National      | Top 8 (Micron)   |
+| 6th Kibo Robot Programming Challenge           | [AstroVibe](https://humans-in-space.jaxa.jp/krpc/6th/#:~:text=Astrovibe,Singapore) | International | Top 11           |
+| Code Overflow 2024                             | [Pennywise](https://github.com/dentolos19/pennywise)                               | School        | Committee Choice |
+| Code Overflow 2023                             | [Anywhere Fitness](https://github.com/dentolos19/anywherefitness)                  | School        | Top 3            |
+| National Cyberwellness Advocacy Challenge 2022 | [Faker Spotter](https://github.com/dentolos19/fakerspotter)                        | National      | Silver           |
 
 ## 📎 My Projects
 

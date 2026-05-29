@@ -1,9 +1,8 @@
 # Editor configurations
 .vs/
 .idea/
-*.iml
 
-# Environment files
+# Build files
 .gradle/
 .kotlin/
 build/
@@ -12,6 +11,8 @@ out/
 
 # User files
 local.properties
+.env*
+!.env*.template
 
 # Miscellaneous files
 .DS_Store
