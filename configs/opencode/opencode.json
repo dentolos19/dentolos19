@@ -2,7 +2,15 @@
   "$schema": "https://opencode.ai/config.json",
   "autoupdate": "notify",
   "permission": "allow",
-  "default_agent": "master",
+  "default_agent": "build",
+  "agent": {
+    "general": {
+      "model": "opencode-go/deepseek-v4-flash"
+    },
+    "explore": {
+      "model": "opencode-go/deepseek-v4-flash"
+    }
+  },
   "mcp": {
     "context7": {
       "type": "remote",
@@ -18,6 +26,6 @@
       "url": "https://mcp.firecrawl.dev/${env:FIRECRAWL_API_KEY}/v2/mcp"
     }
   },
-  "plugin": ["opencode-vibeguard", "opencode-pty"],
+  "plugin": ["opencode-vibeguard"],
   "instructions": ["instructions/general.md", "instructions/web.md", "instructions/python.md"]
 }

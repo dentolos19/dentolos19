@@ -85,7 +85,9 @@ function Install-Packages {
         @{ Name = "bun"; Id = "Oven-sh.Bun" }
         @{ Name = "opencode"; Id = "SST.OpenCode" }
         @{ Name = "terraform"; Id = "Hashicorp.Terraform" }
-        @{ Name = "cloudflared"; Id = "Cloudflare.cloudflared" }
+        @{ Name = "cloudflared"; Id = "Cloudflare.cloudflared" },
+        @{ Name = "ffmpeg"; Id = "Gyan.FFmpeg" },
+        @{ Name = "starship"; Id = "Starship.Starship" }
     )
 
     $brewPackages = @(
@@ -94,7 +96,9 @@ function Install-Packages {
         @{ Name = "bun"; Id = "oven-sh/bun/bun" }
         @{ Name = "opencode"; Id = "anomalyco/tap/opencode" }
         @{ Name = "terraform"; Id = "hashicorp/tap/terraform" }
-        @{ Name = "cloudflared"; Id = "cloudflared" }
+        @{ Name = "cloudflared"; Id = "cloudflared" },
+        @{ Name = "ffmpeg"; Id = "ffmpeg" },
+        @{ Name = "starship"; Id = "starship" }
     )
 
     if ($IsWindows) {
@@ -138,23 +142,20 @@ function Install-Configurations {
     Write-Host "Installing Configurations..." -ForegroundColor Yellow
 
     function Install-EditorConfig {
-        Write-Host "  Installing EditorConfig..." -ForegroundColor Cyan
+        Write-Host "  Installing editor configurations..." -ForegroundColor Cyan
+
+        # .editorconfig
         Copy-Item `
             -Path (Join-Path $PSScriptRoot ".." "configs" "formatters" "default.editorconfig") `
             -Destination (Join-Path $HOME ".editorconfig") `
             -Recurse -Force
-    }
 
-    function Install-BiomeConfig {
-        Write-Host "  Installing Biome configuration..." -ForegroundColor Cyan
+        # biome.json
         Copy-Item `
             -Path (Join-Path $PSScriptRoot ".." "configs" "formatters" "biome.json") `
             -Destination (Join-Path $HOME "biome.json") `
             -Recurse -Force
-    }
 
-    function Install-ZedConfig {
-        # Write-Host "  Installing Zed configuration..." -ForegroundColor Cyan
         # $zedSettingsSource = Join-Path $PSScriptRoot ".." "configs" "editors" "zed.jsonc"
         # $zedSettingsDestination = Join-Path $HOME ".config" "zed" "settings.json"
         # $zedSettingsContent = Insert-Env -Path $zedSettingsSource
@@ -252,12 +253,6 @@ function Install-Configurations {
                 )
             }
             @{
-                Source = "pbakaus/impeccable";
-                Skills = @(
-                    "impeccable"
-                )
-            }
-            @{
                 Source = "shadcn/ui";
                 Skills = @(
                     "shadcn"
@@ -302,8 +297,6 @@ function Install-Configurations {
     }
 
     Install-EditorConfig
-    Install-BiomeConfig
-    Install-ZedConfig
     Install-PowerShellConfig
     Install-AgentConfig
     Install-AgentSkills

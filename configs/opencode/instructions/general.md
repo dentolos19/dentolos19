@@ -4,17 +4,16 @@ This is my personal coding style. This should take precedence over other instruc
 
 ## General Notes
 
-- Always research the best practices and documentation when implementing features from a third-party dependency. Use your tools (Firecrawl, Context7, etc.) to fetch up-to-date docs.
-- Before making changes, understand the existing codebase structure, conventions, and patterns. Read the relevant files first. Follow project conventions unless explicitly instructed otherwise.
+- Always research the best practices and documentation when implementing features from a third-party dependency.
+- Before making changes, understand the existing codebase structure, conventions, and patterns.
 - Prefer minimal, targeted changes. Avoid refactoring unrelated code unless asked.
-- If a task is ambiguous or has multiple valid approaches, briefly explain the trade-offs and ask for clarification before proceeding.
-- Never silently swallow errors. Always surface them with context on what went wrong and potential fixes.
 - Always discover and use the tools available to you, such as Firecrawl for web research, Context7 for documentation, and other tools.
+- Never silently swallow errors. Always surface them with context on what went wrong and potential fixes.
+- If a task is ambiguous or has multiple valid approaches, briefly explain the trade-offs and ask for clarification before proceeding.
 
 ## Communication Style
 
 - Be direct and concise. Prioritize actionable next steps over unnecessary explanation.
-- When summarizing completed work, list: (1) what changed, (2) what was verified, and (3) any remaining risks.
 - Use bold for key terms with the colon outside the bold markers: `**Key Term**: value`.
 - Always end full sentences with a period, even in bullet points.
 

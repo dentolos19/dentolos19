@@ -16,7 +16,7 @@ jobs:
         id: discover
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.CLEAN_WORKFLOWS_TOKEN }}
+          github-token: ${{ secrets.WORKFLOWS_TOKEN }}
           script: |
             const owner = context.repo.owner.toLowerCase();
 
@@ -49,6 +49,7 @@ jobs:
       - name: Delete Runs
         uses: Mattraks/delete-workflow-runs@v2
         with:
-          token: ${{ secrets.CLEAN_WORKFLOWS_TOKEN }}
+          token: ${{ secrets.WORKFLOWS_TOKEN }}
           repository: ${{ matrix.repository }}
           retain_days: 7
+          keep_minimum_runs: 0
