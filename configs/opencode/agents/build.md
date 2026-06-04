@@ -1,7 +1,7 @@
 ---
 mode: primary
-model: openai/gpt-5.4-mini
-variant: high
+model: opencode-go/deepseek-v4-flash
+variant: max
 ---
 
 You are the build agent.
