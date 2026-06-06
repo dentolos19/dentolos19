@@ -1,0 +1,7 @@
+theme = Catppuccin Mocha
+font-family = FiraCode Nerd Font
+font-size = 10
+window-width = 120
+window-height = 30
+copy-on-select = clipboard
+keybind = ctrl+shift+r=reload_config

@@ -88,17 +88,19 @@ function Install-Packages {
         @{ Name = "cloudflared"; Id = "Cloudflare.cloudflared" },
         @{ Name = "ffmpeg"; Id = "Gyan.FFmpeg" },
         @{ Name = "starship"; Id = "Starship.Starship" }
+        @{ Name = "nerdfont"; Id = "DEVCOM.JetBrainsMonoNerdFont" }
     )
 
     $brewPackages = @(
-        @{ Name = "fnm"; Id = "fnm" }
-        @{ Name = "uv"; Id = "uv" }
-        @{ Name = "bun"; Id = "oven-sh/bun/bun" }
-        @{ Name = "opencode"; Id = "anomalyco/tap/opencode" }
-        @{ Name = "terraform"; Id = "hashicorp/tap/terraform" }
-        @{ Name = "cloudflared"; Id = "cloudflared" },
-        @{ Name = "ffmpeg"; Id = "ffmpeg" },
-        @{ Name = "starship"; Id = "starship" }
+        @{ Name = "fnm"; Id = "fnm"; Type = "formula" }
+        @{ Name = "uv"; Id = "uv"; Type = "formula" }
+        @{ Name = "bun"; Id = "oven-sh/bun/bun"; Type = "formula" }
+        @{ Name = "opencode"; Id = "anomalyco/tap/opencode"; Type = "formula" }
+        @{ Name = "terraform"; Id = "hashicorp/tap/terraform"; Type = "formula" }
+        @{ Name = "cloudflared"; Id = "cloudflared"; Type = "formula" }
+        @{ Name = "ffmpeg"; Id = "ffmpeg"; Type = "formula" }
+        @{ Name = "starship"; Id = "starship"; Type = "formula" }
+        @{ Name = "nerdfont"; Id = "font-jetbrains-mono-nerd-font"; Type = "cask" }
     )
 
     if ($IsWindows) {
@@ -123,14 +125,19 @@ function Install-Packages {
         }
 
         foreach ($pkg in $brewPackages) {
-            $output = brew list $($pkg.Id) 2>$null
+            $brewFlags = @()
+            if ($pkg.Type -eq "cask") {
+                $brewFlags += "--cask"
+            }
+
+            $output = brew list @brewFlags $($pkg.Id) 2>$null
             if ($LASTEXITCODE -ne 0) {
                 Write-Host "  Installing package $($pkg.Name)..." -ForegroundColor Cyan
-                brew install $($pkg.Id) >$null
+                brew install @brewFlags $($pkg.Id) >$null
             }
             else {
                 Write-Host "  $($pkg.Name) is already installed. Skipping..." -ForegroundColor Cyan
-                # brew upgrade $($pkg.Id) >$null
+                # brew upgrade @brewFlags $($pkg.Id) >$null
             }
         }
     }
@@ -141,48 +148,60 @@ function Install-Packages {
 function Install-Configurations {
     Write-Host "Installing Configurations..." -ForegroundColor Yellow
 
-    function Install-EditorConfig {
-        Write-Host "  Installing editor configurations..." -ForegroundColor Cyan
+    function Install-ShellConfig {
+        if ($IsWindows) {
+            $psDirectory = Join-Path $HOME "Documents" "PowerShell"
+
+            if (-not (Test-Path -Path $psDirectory)) {
+                New-Item $psDirectory -ItemType Directory -Force | Out-Null
+            }
+
+            Write-Host "  Installing shell configurations..." -ForegroundColor Cyan
+
+            $psProfileSource = Join-Path $PSScriptRoot ".." "configs" "powershell" "powershell.profile.ps1"
+            $psProfileDestination = Join-Path $psDirectory "Microsoft.PowerShell_profile.ps1"
+            Copy-Item $psProfileSource $psProfileDestination -Force
+
+            $psConfigSource = Join-Path $PSScriptRoot ".." "configs" "powershell" "powershell.config.json"
+            $psConfigDestination = Join-Path $psDirectory "powershell.config.json"
+            Copy-Item $psConfigSource $psConfigDestination -Force
+        }
+        elseif ($IsMacOS) {
+            Write-Host "  You are on macOS. Skipping..." -ForegroundColor Cyan
+        }
+        elseif ($IsLinux) {
+            Write-Host "  You are on Linux. Skipping..." -ForegroundColor Cyan
+        }
+        else {
+            Write-Host "  You are on an unsupported OS. Skipping..." -ForegroundColor Cyan
+        }
+    }
+
+    function Install-ToolConfig {
+        Write-Host "  Installing tool configurations..." -ForegroundColor Cyan
 
         # .editorconfig
         Copy-Item `
-            -Path (Join-Path $PSScriptRoot ".." "configs" "formatters" "default.editorconfig") `
+            -Path (Join-Path $PSScriptRoot ".." "configs" "tools" "default.editorconfig") `
             -Destination (Join-Path $HOME ".editorconfig") `
             -Recurse -Force
 
         # biome.json
         Copy-Item `
-            -Path (Join-Path $PSScriptRoot ".." "configs" "formatters" "biome.json") `
+            -Path (Join-Path $PSScriptRoot ".." "configs" "tools" "biome.json") `
             -Destination (Join-Path $HOME "biome.json") `
             -Recurse -Force
 
-        # $zedSettingsSource = Join-Path $PSScriptRoot ".." "configs" "editors" "zed.jsonc"
+        # config.ghostty
+        Copy-Item `
+            -Path (Join-Path $PSScriptRoot ".." "configs" "tools" "config.ghostty") `
+            -Destination (Join-Path $HOME ".config" "ghostty" "config.ghostty") `
+            -Recurse -Force
+
+        # $zedSettingsSource = Join-Path $PSScriptRoot ".." "configs" "tools" "zed.jsonc"
         # $zedSettingsDestination = Join-Path $HOME ".config" "zed" "settings.json"
         # $zedSettingsContent = Insert-Env -Path $zedSettingsSource
         # Set-Content -Path $zedSettingsDestination -Value $zedSettingsContent -Force
-    }
-
-    function Install-PowerShellConfig {
-        if (-not $IsWindows) {
-            Write-Host "  Skipping PowerShell configuration. You are not on Windows." -ForegroundColor Cyan
-            return
-        }
-
-        $psDirectory = Join-Path $HOME "Documents" "PowerShell"
-
-        if (-not (Test-Path -Path $psDirectory)) {
-            New-Item $psDirectory -ItemType Directory -Force | Out-Null
-        }
-
-        Write-Host "  Installing PowerShell configuration..." -ForegroundColor Cyan
-
-        $psProfileSource = Join-Path $PSScriptRoot ".." "configs" "powershell" "powershell.profile.ps1"
-        $psProfileDestination = Join-Path $psDirectory "Microsoft.PowerShell_profile.ps1"
-        Copy-Item $psProfileSource $psProfileDestination -Force
-
-        $psConfigSource = Join-Path $PSScriptRoot ".." "configs" "powershell" "powershell.config.json"
-        $psConfigDestination = Join-Path $psDirectory "powershell.config.json"
-        Copy-Item $psConfigSource $psConfigDestination -Force
     }
 
     function Install-AgentConfig {
@@ -296,8 +315,8 @@ function Install-Configurations {
         }
     }
 
-    Install-EditorConfig
-    Install-PowerShellConfig
+    Install-ShellConfig
+    Install-ToolConfig
     Install-AgentConfig
     Install-AgentSkills
 
