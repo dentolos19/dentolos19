@@ -85,10 +85,11 @@ function Install-Packages {
         @{ Name = "bun"; Id = "Oven-sh.Bun" }
         @{ Name = "opencode"; Id = "SST.OpenCode" }
         @{ Name = "terraform"; Id = "Hashicorp.Terraform" }
-        @{ Name = "cloudflared"; Id = "Cloudflare.cloudflared" },
-        @{ Name = "ffmpeg"; Id = "Gyan.FFmpeg" },
+        @{ Name = "cloudflared"; Id = "Cloudflare.cloudflared" }
+        @{ Name = "ffmpeg"; Id = "Gyan.FFmpeg" }
         @{ Name = "starship"; Id = "Starship.Starship" }
-        @{ Name = "jetbrains-mono"; Id = "DEVCOM.JetBrainsMonoNerdFont" }
+        @{ Name = "gitkraken"; Id = "gitkraken.cli" }
+        @{ Name = "font"; Id = "DEVCOM.JetBrainsMonoNerdFont" }
     )
 
     $brewPackages = @(
@@ -100,7 +101,8 @@ function Install-Packages {
         @{ Name = "cloudflared"; Id = "cloudflared"; Type = "formula" }
         @{ Name = "ffmpeg"; Id = "ffmpeg"; Type = "formula" }
         @{ Name = "starship"; Id = "starship"; Type = "formula" }
-        @{ Name = "jetbrains-mono"; Id = "font-jetbrains-mono-nerd-font"; Type = "cask" }
+        @{ Name = "gitkraken"; Id = "gitkraken-cli"; Type = "formula" }
+        @{ Name = "font"; Id = "font-jetbrains-mono-nerd-font"; Type = "cask" }
     )
 
     if ($IsWindows) {
