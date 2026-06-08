@@ -88,7 +88,7 @@ function Install-Packages {
         @{ Name = "cloudflared"; Id = "Cloudflare.cloudflared" },
         @{ Name = "ffmpeg"; Id = "Gyan.FFmpeg" },
         @{ Name = "starship"; Id = "Starship.Starship" }
-        @{ Name = "nerdfont"; Id = "DEVCOM.JetBrainsMonoNerdFont" }
+        @{ Name = "jetbrains-mono"; Id = "DEVCOM.JetBrainsMonoNerdFont" }
     )
 
     $brewPackages = @(
@@ -100,7 +100,7 @@ function Install-Packages {
         @{ Name = "cloudflared"; Id = "cloudflared"; Type = "formula" }
         @{ Name = "ffmpeg"; Id = "ffmpeg"; Type = "formula" }
         @{ Name = "starship"; Id = "starship"; Type = "formula" }
-        @{ Name = "nerdfont"; Id = "font-jetbrains-mono-nerd-font"; Type = "cask" }
+        @{ Name = "jetbrains-mono"; Id = "font-jetbrains-mono-nerd-font"; Type = "cask" }
     )
 
     if ($IsWindows) {
@@ -197,11 +197,6 @@ function Install-Configurations {
             -Path (Join-Path $PSScriptRoot ".." "configs" "tools" "config.ghostty") `
             -Destination (Join-Path $HOME ".config" "ghostty" "config.ghostty") `
             -Recurse -Force
-
-        # $zedSettingsSource = Join-Path $PSScriptRoot ".." "configs" "tools" "zed.jsonc"
-        # $zedSettingsDestination = Join-Path $HOME ".config" "zed" "settings.json"
-        # $zedSettingsContent = Insert-Env -Path $zedSettingsSource
-        # Set-Content -Path $zedSettingsDestination -Value $zedSettingsContent -Force
     }
 
     function Install-AgentConfig {
