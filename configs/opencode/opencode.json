@@ -13,17 +13,22 @@
   },
   "mcp": {
     "context7": {
-      "type": "remote",
       "enabled": true,
+      "type": "remote",
       "url": "https://mcp.context7.com/mcp",
       "headers": {
         "Authorization": "Bearer ${env:CONTEXT7_API_KEY}"
       }
     },
     "firecrawl": {
-      "type": "remote",
       "enabled": true,
+      "type": "remote",
       "url": "https://mcp.firecrawl.dev/${env:FIRECRAWL_API_KEY}/v2/mcp"
+    },
+    "gitkraken": {
+      "enabled": true,
+      "type": "local",
+      "command": ["gk", "mcp"]
     }
   },
   "plugin": ["opencode-vibeguard"],

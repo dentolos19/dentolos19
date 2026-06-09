@@ -88,8 +88,8 @@ function Install-Packages {
         @{ Name = "cloudflared"; Id = "Cloudflare.cloudflared" }
         @{ Name = "ffmpeg"; Id = "Gyan.FFmpeg" }
         @{ Name = "starship"; Id = "Starship.Starship" }
-        @{ Name = "gitkraken"; Id = "gitkraken.cli" }
-        @{ Name = "font"; Id = "DEVCOM.JetBrainsMonoNerdFont" }
+        @{ Name = "gitkraken-cli"; Id = "gitkraken.cli" }
+        @{ Name = "jetbrains-mono"; Id = "DEVCOM.JetBrainsMonoNerdFont" }
     )
 
     $brewPackages = @(
@@ -101,8 +101,8 @@ function Install-Packages {
         @{ Name = "cloudflared"; Id = "cloudflared"; Type = "formula" }
         @{ Name = "ffmpeg"; Id = "ffmpeg"; Type = "formula" }
         @{ Name = "starship"; Id = "starship"; Type = "formula" }
-        @{ Name = "gitkraken"; Id = "gitkraken-cli"; Type = "formula" }
-        @{ Name = "font"; Id = "font-jetbrains-mono-nerd-font"; Type = "cask" }
+        @{ Name = "gitkraken-cli"; Id = "gitkraken-cli"; Type = "formula" }
+        @{ Name = "jetbrains-mono"; Id = "font-jetbrains-mono-nerd-font"; Type = "cask" }
     )
 
     if ($IsWindows) {
@@ -226,16 +226,15 @@ function Install-Configurations {
         New-Item $agentsDirectory -ItemType Directory -Force | Out-Null
         New-Item $instructionsDirectory -ItemType Directory -Force | Out-Null
 
+        Write-Host "  Installing agents..." -ForegroundColor Cyan
         foreach ($file in $agentsFiles) {
             $fileName = [System.IO.Path]::GetFileName($file.Name)
-            Write-Host "  Installing agent $fileName..." -ForegroundColor Cyan
             $agentDestination = Join-Path $agentsDirectory $fileName
             Copy-Item $file.FullName $agentDestination -Force
         }
 
+        Write-Host "  Installing instructions..." -ForegroundColor Cyan
         foreach ($file in $instructionsFiles) {
-            $fileName = [System.IO.Path]::GetFileName($file.Name)
-            Write-Host "  Installing instruction $fileName..." -ForegroundColor Cyan
             $instructionDestination = Join-Path $instructionsDirectory $fileName
             Copy-Item $file.FullName $instructionDestination -Force
         }
@@ -305,8 +304,9 @@ function Install-Configurations {
             Write-Host "  bunx is not available. Skipping agent skills installation." -ForegroundColor Cyan
         }
         else {
+            Write-Host "  Installing skills..." -ForegroundColor Cyan
             foreach ($entry in $agentSkills) {
-                Write-Host "  Installing skills from $($entry.Source)..." -ForegroundColor Cyan
+                # Write-Host "  Installing skills from $($entry.Source)..." -ForegroundColor Cyan
                 bunx skills add $entry.Source --global --skill $entry.Skills --yes >$null
             }
         }
