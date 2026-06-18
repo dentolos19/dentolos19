@@ -184,19 +184,25 @@ function Install-Configurations {
 
         # .editorconfig
         Copy-Item `
-            -Path (Join-Path $PSScriptRoot ".." "configs" "tools" "default.editorconfig") `
+            -Path (Join-Path $PSScriptRoot ".." "configs" "tools" ".editorconfig") `
             -Destination (Join-Path $HOME ".editorconfig") `
             -Recurse -Force
 
-        # biome.json
+        # .oxlintrc.json
         Copy-Item `
-            -Path (Join-Path $PSScriptRoot ".." "configs" "tools" "biome.json") `
-            -Destination (Join-Path $HOME "biome.json") `
+            -Path (Join-Path $PSScriptRoot ".." "configs" "tools" ".oxlintrc.json") `
+            -Destination (Join-Path $HOME ".oxlintrc.json") `
+            -Recurse -Force
+
+        # .oxfmtrc.json
+        Copy-Item `
+            -Path (Join-Path $PSScriptRoot ".." "configs" "tools" ".oxfmtrc.json") `
+            -Destination (Join-Path $HOME ".oxfmtrc.json") `
             -Recurse -Force
 
         # config.ghostty
         Copy-Item `
-            -Path (Join-Path $PSScriptRoot ".." "configs" "tools" "config.ghostty") `
+            -Path (Join-Path $PSScriptRoot ".." "configs" "tools" "ghostty.config") `
             -Destination (Join-Path $HOME ".config" "ghostty" "config.ghostty") `
             -Recurse -Force
     }

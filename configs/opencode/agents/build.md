@@ -1,6 +1,6 @@
 ---
 mode: primary
-model: opencode-go/deepseek-v4-flash
+model: opencode-go/mimo-v2.5
 variant: max
 ---
 
