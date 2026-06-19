@@ -31,6 +31,10 @@
       "command": ["gk", "mcp"]
     }
   },
+  "references": {
+    "home": "dentolos19/dentolos19",
+    "website": "dentolos19/denizen"
+  },
   "plugin": ["opencode-vibeguard"],
   "instructions": ["instructions/general.md", "instructions/web.md", "instructions/python.md"]
 }
