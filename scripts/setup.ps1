@@ -30,7 +30,7 @@ function Insert-Env {
         return ""
     }
 
-    $pattern = '\$\{env:([^}]+)\}'
+    $pattern = '\{env:([^}]+)\}'
     return [regex]::Replace($content, $pattern, {
             param($match)
 

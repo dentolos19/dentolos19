@@ -1,8 +1,5 @@
 {
-  "categories": {
-    "correctness": "error",
-    "suspicious": "warn",
-    "perf": "warn",
-    "style": "warn"
+  "rules": {
+    "sort-keys": "allow"
   }
 }

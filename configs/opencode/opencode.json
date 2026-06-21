@@ -11,19 +11,36 @@
       "model": "opencode-go/deepseek-v4-flash"
     }
   },
+  "provider": {
+    "alibaba": {
+      "name": "Alibaba",
+      "options": {
+        "baseURL": "https://token-plan.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1",
+        "apiKey": "{env:ALIBABA_API_KEY}"
+      }
+    }
+  },
   "mcp": {
     "context7": {
       "enabled": true,
       "type": "remote",
       "url": "https://mcp.context7.com/mcp",
       "headers": {
-        "Authorization": "Bearer ${env:CONTEXT7_API_KEY}"
+        "Authorization": "Bearer {env:CONTEXT7_API_KEY}"
       }
     },
     "firecrawl": {
       "enabled": true,
       "type": "remote",
-      "url": "https://mcp.firecrawl.dev/${env:FIRECRAWL_API_KEY}/v2/mcp"
+      "url": "https://mcp.firecrawl.dev/{env:FIRECRAWL_API_KEY}/v2/mcp"
+    },
+    "github": {
+      "enabled": true,
+      "type": "remote",
+      "url": "https://api.githubcopilot.com/mcp",
+      "headers": {
+        "Authorization": "Bearer {env:GITHUB_API_KEY}"
+      }
     },
     "gitkraken": {
       "enabled": true,
