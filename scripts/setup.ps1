@@ -103,6 +103,7 @@ function Install-Packages {
         @{ Name = "starship"; Id = "starship"; Type = "formula" }
         @{ Name = "gitkraken-cli"; Id = "gitkraken-cli"; Type = "formula" }
         @{ Name = "jetbrains-mono"; Id = "font-jetbrains-mono-nerd-font"; Type = "cask" }
+        @{ Name = "floci"; Id = "floci-io/floci/floci"; Type = "formula" }
     )
 
     if ($IsWindows) {
@@ -302,6 +303,13 @@ function Install-Configurations {
                 Skills = @(
                     "aws-cdk",
                     "aws-iam"
+                )
+            }
+            @{
+                Source = "roboflow/computer-vision-skills";
+                Skills = @(
+                    "roboflow-inference",
+                    "roboflow-api-reference"
                 )
             }
         )
