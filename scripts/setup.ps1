@@ -79,43 +79,37 @@ function Install-Modules {
 function Install-Packages {
     Write-Host "Installing Packages..." -ForegroundColor Yellow
 
-    $windowsPackages = @(
-        @{ Name = "fnm"; Id = "Schniz.fnm" }
-        @{ Name = "uv"; Id = "astral-sh.uv" }
-        @{ Name = "bun"; Id = "Oven-sh.Bun" }
-        @{ Name = "opencode"; Id = "SST.OpenCode" }
-        @{ Name = "terraform"; Id = "Hashicorp.Terraform" }
-        @{ Name = "cloudflared"; Id = "Cloudflare.cloudflared" }
-        @{ Name = "ffmpeg"; Id = "Gyan.FFmpeg" }
-        @{ Name = "starship"; Id = "Starship.Starship" }
-        @{ Name = "gitkraken-cli"; Id = "gitkraken.cli" }
-        @{ Name = "jetbrains-mono"; Id = "DEVCOM.JetBrainsMonoNerdFont" }
-    )
-
-    $brewPackages = @(
-        @{ Name = "fnm"; Id = "fnm"; Type = "formula" }
-        @{ Name = "uv"; Id = "uv"; Type = "formula" }
-        @{ Name = "bun"; Id = "oven-sh/bun/bun"; Type = "formula" }
-        @{ Name = "opencode"; Id = "anomalyco/tap/opencode"; Type = "formula" }
-        @{ Name = "terraform"; Id = "hashicorp/tap/terraform"; Type = "formula" }
-        @{ Name = "cloudflared"; Id = "cloudflared"; Type = "formula" }
-        @{ Name = "ffmpeg"; Id = "ffmpeg"; Type = "formula" }
-        @{ Name = "starship"; Id = "starship"; Type = "formula" }
-        @{ Name = "gitkraken-cli"; Id = "gitkraken-cli"; Type = "formula" }
-        @{ Name = "jetbrains-mono"; Id = "font-jetbrains-mono-nerd-font"; Type = "cask" }
-        @{ Name = "floci"; Id = "floci-io/floci/floci"; Type = "formula" }
+    $packages = @(
+        @{ Name = "fnm"; WinGetId = "Schniz.fnm"; BrewId = "fnm"; BrewType = "formula" }
+        @{ Name = "uv"; WinGetId = "astral-sh.uv"; BrewId = "uv"; BrewType = "formula" }
+        @{ Name = "bun"; WinGetId = "Oven-sh.Bun"; BrewId = "oven-sh/bun/bun"; BrewType = "formula" }
+        @{ Name = "opencode"; WinGetId = "SST.OpenCode"; BrewId = "anomalyco/tap/opencode"; BrewType = "formula" }
+        @{ Name = "terraform"; WinGetId = "Hashicorp.Terraform"; BrewId = "hashicorp/tap/terraform"; BrewType = "formula" }
+        @{ Name = "cloudflared"; WinGetId = "Cloudflare.cloudflared"; BrewId = "cloudflared"; BrewType = "formula" }
+        @{ Name = "ffmpeg"; WinGetId = "Gyan.FFmpeg"; BrewId = "ffmpeg"; BrewType = "formula" }
+        @{ Name = "starship"; WinGetId = "Starship.Starship"; BrewId = "starship"; BrewType = "formula" }
+        @{ Name = "floci"; WinGetId = $null; BrewId = "floci-io/floci/floci"; BrewType = "formula" }
+        @{ Name = "jetbrains-mono"; WinGetId = "DEVCOM.JetBrainsMonoNerdFont"; BrewId = "font-jetbrains-mono-nerd-font"; BrewType = "cask" }
+        @{ Name = "gitkraken-cli"; WinGetId = "gitkraken.cli"; BrewId = "gitkraken-cli"; BrewType = "formula" }
+        @{ Name = "aws-cli"; WinGetId = "Amazon.AWSCLI"; BrewId = "awscli"; BrewType = "formula" }
+        @{ Name = "github-cli"; WinGetId = "GitHub.cli"; BrewId = "gh"; BrewType = "formula" }
     )
 
     if ($IsWindows) {
-        foreach ($pkg in $windowsPackages) {
-            $output = winget list --id $pkg.Id --exact 2>$null
+        foreach ($pkg in $packages) {
+            if (-not $pkg.WinGetId) {
+                Write-Host "  $($pkg.Name) is not available for WinGet. Skipping..." -ForegroundColor Cyan
+                continue
+            }
+
+            $output = winget list --id $pkg.WinGetId --exact 2>$null
             if ($LASTEXITCODE -ne 0) {
                 Write-Host "  Installing $($pkg.Name)..." -ForegroundColor Cyan
-                winget install --id $pkg.Id --exact --silent >$null
+                winget install --id $pkg.WinGetId --exact --silent >$null
             }
             else {
                 Write-Host "  $($pkg.Name) is already installed. Skipping..." -ForegroundColor Cyan
-                # winget upgrade --id $pkg.Id --exact --silent >$null
+                # winget upgrade --id $pkg.WinGetId --exact --silent >$null
             }
         }
     }
@@ -127,20 +121,20 @@ function Install-Packages {
             return
         }
 
-        foreach ($pkg in $brewPackages) {
+        foreach ($pkg in $packages) {
             $brewFlags = @()
-            if ($pkg.Type -eq "cask") {
+            if ($pkg.BrewType -eq "cask") {
                 $brewFlags += "--cask"
             }
 
-            $output = brew list @brewFlags $($pkg.Id) 2>$null
+            $output = brew list @brewFlags $($pkg.BrewId) 2>$null
             if ($LASTEXITCODE -ne 0) {
                 Write-Host "  Installing package $($pkg.Name)..." -ForegroundColor Cyan
-                brew install @brewFlags $($pkg.Id) >$null
+                brew install @brewFlags $($pkg.BrewId) >$null
             }
             else {
                 Write-Host "  $($pkg.Name) is already installed. Skipping..." -ForegroundColor Cyan
-                # brew upgrade @brewFlags $($pkg.Id) >$null
+                # brew upgrade @brewFlags $($pkg.BrewId) >$null
             }
         }
     }
@@ -159,7 +153,7 @@ function Install-Configurations {
                 New-Item $psDirectory -ItemType Directory -Force | Out-Null
             }
 
-            Write-Host "  Installing shell configurations..." -ForegroundColor Cyan
+            Write-Host "  Installing shell..." -ForegroundColor Cyan
 
             $psProfileSource = Join-Path $PSScriptRoot ".." "configs" "powershell" "powershell.profile.ps1"
             $psProfileDestination = Join-Path $psDirectory "Microsoft.PowerShell_profile.ps1"
@@ -181,7 +175,7 @@ function Install-Configurations {
     }
 
     function Install-ToolConfig {
-        Write-Host "  Installing tool configurations..." -ForegroundColor Cyan
+        Write-Host "  Installing tools..." -ForegroundColor Cyan
 
         # .editorconfig
         Copy-Item `

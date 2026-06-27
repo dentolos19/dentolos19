@@ -1,7 +1,7 @@
 ---
 mode: primary
 model: opencode-go/mimo-v2.5
-variant: max
+variant: high
 ---
 
 You are the build agent.
