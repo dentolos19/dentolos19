@@ -35,11 +35,9 @@
     "gitkraken": {
       "enabled": true,
       "type": "local",
-      "command": [
-        "gk",
-        "mcp"
-      ]
+      "command": ["gk", "mcp"]
     },
+
     // Context
     "context7": {
       "enabled": true,
@@ -54,22 +52,28 @@
       "type": "remote",
       "url": "https://mcp.firecrawl.dev/{env:FIRECRAWL_TOKEN}/v2/mcp"
     },
+    "notion": {
+      "enabled": true,
+      "type": "local",
+      "command": ["bunx", "--bun", "@notionhq/notion-mcp-server"],
+      "environment": {
+        "NOTION_TOKEN": "{env:NOTION_TOKEN}"
+      }
+    },
+
     // Automation
     "playwright": {
       "enabled": true,
       "type": "local",
-      "command": [
-        "bunx",
-        "--bun",
-        "@playwright/mcp@latest"
-      ]
+      "command": ["bunx", "--bun", "@playwright/mcp@latest"]
     },
     "browserbase": {
       "enabled": true,
       "type": "remote",
       "url": "https://mcp.browserbase.com/mcp?browserbaseApiKey={env:BROWSERBASE_TOKEN}"
     },
-    // Services
+
+    // API Services
     "cloudflare": {
       "enabled": true,
       "type": "remote",
@@ -79,12 +83,12 @@
       }
     },
     "aws": {
-      "enabled": true,
+      "enabled": false,
       "type": "local",
       "command": [
         "uvx",
         "mcp-proxy-for-aws@latest",
-        "https://aws-mcp.us-east-1.api.aws/mcp",
+        "https://aws-mcp.ap-southeast-1.api.aws/mcp",
         "--metadata",
         "AWS_REGION=ap-southeast-1"
       ]
@@ -114,6 +118,8 @@
         "Accept": "application/json, text/event-stream"
       }
     },
+
+    // OAuth Services
     "sentry": {
       "enabled": false,
       "type": "remote",
@@ -134,9 +140,18 @@
       "type": "remote",
       "url": "https://mcp.openrouter.ai/mcp"
     },
+
     // Other
+    "coolify": {
+      "enabled": false,
+      "type": "remote",
+      "url": "https://andromeda.dennise.me/mcp",
+      "headers": {
+        "Authorization": "Bearer {env:COOLIFY_TOKEN}"
+      }
+    },
     "n8n": {
-      "enabled": true,
+      "enabled": false,
       "type": "remote",
       "url": "https://n8n.dennise.me/mcp-server/http",
       "headers": {
@@ -148,10 +163,7 @@
     "home": "dentolos19/dentolos19",
     "website": "dentolos19/denizen"
   },
-  "plugin": [
-    "opencode-notify",
-    "opencode-vibeguard"
-  ],
+  "plugin": ["opencode-notify", "opencode-vibeguard"],
   "instructions": [
     "instructions/general.md",
     "instructions/web.md",
