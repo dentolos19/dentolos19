@@ -4,8 +4,6 @@ This is my personal agent instructions.
 
 ## General
 
-- Before making changes, understand the existing codebase structure, conventions, and patterns.
-- Prefer minimal, targeted changes. Avoid refactoring unrelated code unless asked.
 - Do not write unit tests or do browser testing unless explictly told to do so.
 - When writing `.env` files, always enclose strings with double quotes, even if it is empty.
 - Use `.env.template` for environment variable templates.

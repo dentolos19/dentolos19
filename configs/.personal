@@ -8,5 +8,3 @@ if [ -n "${ZSH_VERSION:-}" ]; then
 else
     eval "$(starship init bash)"
 fi
-
-export OPENCODE_EXPERIMENTAL_BACKGROUND_SUBAGENTS="true"

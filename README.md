@@ -1,10 +1,21 @@
 <div align="center">
-  <img src="assets/banner.png" alt="Banner">
+  <img alt="Banner" src="assets/banner.png">
   <br>
   <br>
-  <a href="https://dennise.me"><kbd> <br> <span>🌐 My Website</span> <br> </kbd></a> &bullet;
-  <a href="https://dennise.me/go/linkedin"><kbd> <br> <span>👨‍👩‍👧‍👦 Let's Connect</span> <br> </kbd></a> &bullet;
+  <a href="https://dennise.me"><kbd> <br> <span>🌐 My Website</span> <br> </kbd></a> •
+  <a href="https://dennise.me/go/linkedin"><kbd> <br> <span>👨‍👩‍👧‍👦 Let's Connect</span> <br> </kbd></a> •
   <a href="https://dennise.me/go/sponsor"><kbd> <br> <span>💵 Sponsor Me</span> <br> </kbd></a>
+</div>
+
+---
+
+<div align="center">
+  <a href="https://commit-history.com/dentolos19">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://commit-history.com/embed/dentolos19?theme=dark" />
+      <img alt="Commit History" src="https://commit-history.com/embed/dentolos19" />
+    </picture>
+  </a>
 </div>
 
 ---
@@ -15,9 +26,9 @@
 
 ## 🗃️ Hackathon Projects
 
-| Hackathon / Competition                        | Project / Team                                                                     | Stage         | Achievement      |
-| ---------------------------------------------- | ---------------------------------------------------------------------------------- | ------------- | ---------------- |
-| 7th Kibo Robot Programming Challenge           | Anomaly                                                                            | International | *Ongoing*        |
+| Hackathon / Competition                        | Project / Team                                                                    | Stage         | Achievement      |
+| ---------------------------------------------- | --------------------------------------------------------------------------------- | ------------- | ---------------- |
+| 7th Kibo Robot Programming Challenge           | Anomaly                                                                           | International | *Ongoing*      |
 | National AI Student Challenge 2026             | [Logdog](https://github.com/dentolos19/logdog)                                     | National      | Top 8 (Micron)   |
 | 6th Kibo Robot Programming Challenge           | [AstroVibe](https://humans-in-space.jaxa.jp/krpc/6th/#:~:text=Astrovibe,Singapore) | International | Top 11           |
 | Code Overflow 2024                             | [Pennywise](https://github.com/dentolos19/pennywise)                               | School        | Committee Choice |

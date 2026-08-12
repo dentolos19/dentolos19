@@ -46,7 +46,6 @@ AGENT_SKILLS = (
     ("cloudflare/skills", "cloudflare-email-service"),
     ("cloudflare/skills", "cloudflare"),
     ("cloudflare/skills", "durable-objects"),
-    ("cloudflare/skills", "sandbox-sdk"),
     ("cloudflare/skills", "turnstile-spin"),
     ("cloudflare/skills", "web-perf"),
     ("cloudflare/skills", "workers-best-practices"),
@@ -189,23 +188,30 @@ def install_packages():
 def install_tools():
     print_message("  Installing tools...")
 
+    home_path = Path.home()
+
     for file in (".editorconfig", ".oxlintrc.json", ".oxfmtrc.json", ".personal"):
-        shutil.copy2(CONFIG_DIR / file, Path.home() / file)
+        shutil.copy2(CONFIG_DIR / file, home_path / file)
+
+    (home_path / ".wakatime.cfg").write_text(
+        replace_environment(CONFIG_DIR / ".wakatime.cfg"),
+        encoding="utf-8",
+    )
 
 
-def install_agents():
-    print_message("  Installing agents...")
+def install_harness():
+    print_message("  Installing harness...")
 
-    agent_path = Path.home() / ".config" / "opencode"
-    agent_path.mkdir(parents=True, exist_ok=True)
+    harness_path = Path.home() / ".config" / "opencode"
+    harness_path.mkdir(parents=True, exist_ok=True)
 
-    (agent_path / "opencode.json").write_text(
+    (harness_path / "opencode.json").write_text(
         replace_environment(CONFIG_DIR / "opencode.json"),
         encoding="utf-8",
     )
 
     instruction_paths = (
-        agent_path / "AGENTS.md",
+        harness_path / "AGENTS.md",
         Path.home() / ".claude" / "CLAUDE.md",
         Path.home() / ".codex" / "AGENTS.md",
     )
@@ -236,7 +242,7 @@ def install_skills():
 def install_configurations():
     print_message("Installing configurations...")
     install_tools()
-    install_agents()
+    install_harness()
     install_skills()
     print_message("  Configurations installed successfully!")
 

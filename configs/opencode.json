@@ -16,9 +16,19 @@
     },
     "general": {
       "model": "opencode-go/deepseek-v4-flash",
-      "variant": "max"
+      "variant": "max",
+      "hidden": true
     },
     "explore": {
+      "model": "opencode-go/deepseek-v4-flash",
+      "variant": "max",
+      "hidden": true
+    },
+    "title": {
+      "model": "opencode-go/deepseek-v4-flash",
+      "variant": "max"
+    },
+    "summary": {
       "model": "opencode-go/deepseek-v4-flash",
       "variant": "max"
     },
@@ -32,15 +42,17 @@
       "agent": "build",
       "model": "openai/gpt-5.6-sol",
       "variant": "high",
-      "template": "Perform a thorough code review of the current changes (unless stated otherwise). Inspect both staged and unstaged changes. Focus on correctness, bugs, vulnerabilities, performance, maintainability, and error handling. Additional review instructions: $ARGUMENTS",
-      "description": "Run a thorough code review of the current staged and unstaged changes."
+      "subtask": true,
+      "description": "Run a thorough code review of the current staged and unstaged changes.",
+      "template": "Perform a thorough code review of the current changes (unless stated otherwise). Inspect both staged and unstaged changes. Focus on correctness, bugs, vulnerabilities, performance, maintainability, and error handling. Additional review instructions: $ARGUMENTS"
     },
     "export": {
       "agent": "build",
       "model": "opencode-go/deepseek-v4-flash",
       "variant": "high",
-      "template": "Take in the entire context of this session or conversation, compact it, and export it into a markdown file in the current directory. Name the file appropriately. Additional export instructions: $ARGUMENTS",
-      "description": "Export the session context into a markdown file."
+      "subtask": true,
+      "description": "Export the session context into a markdown file.",
+      "template": "Take in the entire context of this session or conversation, compact it, and export it into a markdown file in the current directory. Name the file appropriately. Additional export instructions: $ARGUMENTS"
     }
   },
   "provider": {
@@ -57,6 +69,12 @@
     "openrouter": {
       "options": {
         "apiKey": "{env:OPENROUTER_API_KEY}"
+      }
+    },
+    "hetzner": {
+      "options": {
+        "baseURL": "https://inference.hetzner.com/api/v1",
+        "apiKey": "{env:HETZNER_API_KEY}"
       }
     },
     "platformai": {
@@ -84,13 +102,6 @@
         "CF-Access-Client-Secret": "{env:CLOUDFLARE_CLIENT_SECRET}"
       }
     },
-    "composio": {
-      "type": "remote",
-      "url": "https://connect.composio.dev/mcp",
-      "headers": {
-        "X-Consumer-Api-Key": "{env:COMPOSIO_API_KEY}"
-      }
-    },
     "gitkraken": {
       "type": "local",
       "command": ["gk", "mcp"]
@@ -103,5 +114,6 @@
       "type": "local",
       "command": ["bunx", "--bun", "@playwright/mcp"]
     }
-  }
+  },
+  "plugin": ["opencode-pty", "opencode-vibeguard", "opencode-wakatime"]
 }
