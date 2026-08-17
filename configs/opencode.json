@@ -15,26 +15,26 @@
       "description": "Researches the codebase and plans changes without modifying files."
     },
     "general": {
-      "model": "opencode-go/deepseek-v4-flash",
-      "variant": "max",
+      "model": "openai/gpt-5.6-luna",
+      "variant": "high",
       "hidden": true
     },
     "explore": {
-      "model": "opencode-go/deepseek-v4-flash",
-      "variant": "max",
+      "model": "openai/gpt-5.6-luna",
+      "variant": "high",
       "hidden": true
     },
     "title": {
-      "model": "opencode-go/deepseek-v4-flash",
-      "variant": "max"
+      "model": "openai/gpt-5.6-luna",
+      "variant": "high"
     },
     "summary": {
-      "model": "opencode-go/deepseek-v4-flash",
-      "variant": "max"
+      "model": "openai/gpt-5.6-luna",
+      "variant": "high"
     },
     "compaction": {
-      "model": "opencode-go/deepseek-v4-flash",
-      "variant": "max"
+      "model": "openai/gpt-5.6-luna",
+      "variant": "high"
     }
   },
   "command": {
@@ -48,24 +48,21 @@
     },
     "export": {
       "agent": "build",
-      "model": "opencode-go/deepseek-v4-flash",
+      "model": "openai/gpt-5.6-luna",
       "variant": "high",
       "subtask": true,
       "description": "Export the session context into a markdown file.",
       "template": "Take in the entire context of this session or conversation, compact it, and export it into a markdown file in the current directory. Name the file appropriately. Additional export instructions: $ARGUMENTS"
+    },
+    "resolve": {
+      "agent": "build",
+      "model": "openai/gpt-5.6-luna",
+      "variant": "high",
+      "description": "Automatically resolve Git merge conflicts in the current repository.",
+      "template": "Resolve all current Git merge conflicts automatically. Inspect the repository status and every conflicted file, understand both sides and the intended code behavior, resolve all conflict markers without discarding valid changes, and verify that no conflicts remain. Run the most relevant available checks after resolution. Do not stop at explaining the conflicts: make the edits. If there are no conflicts, report that clearly. Additional conflict-resolution instructions: $ARGUMENTS"
     }
   },
   "provider": {
-    "opencode": {
-      "options": {
-        "apiKey": "{env:OPENCODE_API_KEY}"
-      }
-    },
-    "opencode-go": {
-      "options": {
-        "apiKey": "{env:OPENCODE_API_KEY}"
-      }
-    },
     "openrouter": {
       "options": {
         "apiKey": "{env:OPENROUTER_API_KEY}"
