@@ -4,73 +4,11 @@ This is my personal agent instructions.
 
 ## General
 
+- Make full use of the tools and MCPs to help you to retrieve documentations and information.
+- Before making changes, understand the existing codebase structure, conventions, and patterns.
+- Prefer minimal, targeted changes. Avoid refactoring unrelated code unless asked.
 - Do not write unit tests or do browser testing unless explictly told to do so.
-- When writing `.env` files, always enclose strings with double quotes, even if it is empty.
-- Use `.env.template` for environment variable templates.
+- Do not invent things on your own, perform research and find dependencies that can help you do it.
 - If administrator access is required on macOS, request authorization with `osascript`.
 - If administrator access is required on Linux, request authorization with `pkexec`.
-
-## Defaults
-
-- When linking privacy policies, default to https://dennise.me/privacy.
-- When linking terms of service, default to https://dennise.me/terms.
-- For copyright labels, default to `© <YEAR> Dennise Catolos`.
-
-## Writing Style
-
-- Use American English spelling.
-- Use bold for key terms with the colon outside the bold markers, e.g., `**Key Term**: value`.
-- Always end full sentences with a period, even in bullet points.
-- For short phrases or headings, always capitalize all words.
-- Use Mermaid syntax when displaying diagrams.
-
-## Coding
-
-## Git
-
-- Write commit messages as past-tense actions, e.g., `Added README.md`, `Updated authentication system`, etc.
-- Only create commits when the user explicitly asks.
-- Do not push anything to remote.
-
-### Python
-
-- Always use `uv` as your package manager, especially when handling requirements or dependencies.
-- Variables read from `.env` file may have enclosed double quotes, ensure that the values are read properly.
-
-### JavaScript
-
-- Detect the package manager currently used by the project before running package-related commands.
-- Use `bun` by default when no package manager is detected, with `pnpm` as the fallback.
-- Use `bunx` for one-off scripts that do not need to be installed.
-
-### TypeScript
-
-- Throw exceptions with descriptive messages instead of returning error messages.
-- Use `try`/`catch` where appropriate and include context that helps with debugging.
-- Omit explicit function return type annotations when TypeScript can infer them clearly.
-
-### React
-
-- Prefer arrow functions for functions inside components and callbacks.
-- Keep components small and focused. Split large components into smaller sub-components.
-- Do not apply the same classes to a component if the component already applies them internally.
-- Co-locate related files, such as components, styles, and tests, in the same directory where applicable.
-
-### React (State Management)
-
-- Prefer URL state, including search params and route params, for shareable or persistent UI state.
-- Use React context sparingly and only for truly global state, such as theme, auth, or locale.
-- Co-locate state as close as possible to where it is used. Lift state up only when multiple children need it.
-- Use server state tools, such as React Query, TanStack Query, or server actions, for data fetching and mutations instead of storing server data in client state.
-
-### Next.js
-
-- Store related components for a page in a `_components` folder in the same directory as the page.
-- Store route helper functions in a `_helpers` folder in the same directory as the page.
-- For server actions, create an `actions.ts` file in the same directory as the page or component that uses them.
-- Fetch data in server components when possible. Pass data down as props rather than fetching in client components.
-
-### TanStack Start
-
-- Store related components for a route in a `-components` folder in the same directory as the route.
-- Store route helper functions in a `-helpers` folder in the same directory as the route.
+- Read skills that must always apply: `dennise`, `unslop`.

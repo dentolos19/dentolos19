@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="title">
+  <title id="title">Unslop</title>
+  <rect width="96" height="96" rx="24" fill="#FEFCE8"/>
+  <path d="M22 29h29M22 42h38M22 55h20" stroke="#A16207" stroke-width="6" stroke-linecap="round"/>
+  <path d="m52 70-11-11 24-24 11 11Z" fill="#FDE047"/><path d="m41 59 11 11-17 4Z" fill="#713F12"/><path d="m65 35 6-6c3-3 9 3 6 6l-6 6" fill="#CA8A04"/>
+</svg>

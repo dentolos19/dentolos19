@@ -20,21 +20,21 @@
       "hidden": true
     },
     "explore": {
-      "model": "openai/gpt-5.6-luna",
-      "variant": "high",
+      "model": "openrouter/~deepseek/deepseek-v4-flash-latest",
+      "variant": "max",
       "hidden": true
     },
     "title": {
-      "model": "openai/gpt-5.6-luna",
-      "variant": "high"
+      "model": "openrouter/~deepseek/deepseek-v4-flash-latest",
+      "variant": "max"
     },
     "summary": {
-      "model": "openai/gpt-5.6-luna",
-      "variant": "high"
+      "model": "openrouter/~deepseek/deepseek-v4-flash-latest",
+      "variant": "max"
     },
     "compaction": {
-      "model": "openai/gpt-5.6-luna",
-      "variant": "high"
+      "model": "openrouter/~deepseek/deepseek-v4-flash-latest",
+      "variant": "max"
     }
   },
   "command": {
@@ -112,5 +112,5 @@
       "command": ["bunx", "--bun", "@playwright/mcp"]
     }
   },
-  "plugin": ["opencode-pty", "opencode-vibeguard", "opencode-wakatime"]
+  "plugin": ["opencode-vibeguard", "opencode-wakatime"]
 }

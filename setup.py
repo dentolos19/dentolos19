@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import json
 import os
 import platform
 import re
@@ -77,13 +78,14 @@ AGENT_SKILLS = (
 ### Utilities ###
 
 
-def print_message(message: str, *, stream=sys.stdout, color=None):
+def print_message(message: str, *, indent_size: int = 0, stream=sys.stdout, color=None):
+    message = f"{' ' * indent_size}{message}"
+
     if not stream.isatty():
         print(message, file=stream)
         return
 
-    indent = len(message) - len(message.lstrip())
-    print(f"{color or INDENT_COLORS.get(indent, INDENT_COLORS[0])}{message}{RESET_COLOR}", file=stream)
+    print(f"{color or INDENT_COLORS.get(indent_size, INDENT_COLORS[0])}{message}{RESET_COLOR}", file=stream)
 
 
 def inject_environment():
@@ -128,7 +130,7 @@ def inject_environment():
         if re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", key):
             os.environ[key] = value
 
-    print_message("  Environment injected successfully!")
+    print_message("Environment injected successfully!", indent_size=2)
 
 
 def replace_environment(path: Path):
@@ -154,7 +156,7 @@ def install_packages():
     print_message("Installing packages...")
 
     if not shutil.which("brew"):
-        print_message("  Homebrew is not available. Skipping package installation.")
+        print_message("Homebrew is not available. Skipping package installation.", indent_size=2)
         return
 
     def is_installed(package: str, cask: bool = False):
@@ -175,18 +177,18 @@ def install_packages():
 
     for brew_id in BREW_PACKAGES:
         if is_installed(brew_id):
-            print_message(f"  {brew_id} is already installed. Skipping...")
+            print_message(f"{brew_id} is already installed. Skipping...", indent_size=2)
             continue
         run_command(["brew", "install", brew_id])
 
-    print_message("  Packages installed successfully!")
+    print_message("Packages installed successfully!", indent_size=2)
 
 
 ### Configurations ###
 
 
 def install_tools():
-    print_message("  Installing tools...")
+    print_message("Installing tools...", indent_size=2)
 
     home_path = Path.home()
 
@@ -200,7 +202,7 @@ def install_tools():
 
 
 def install_harness():
-    print_message("  Installing harness...")
+    print_message("Installing harness...", indent_size=2)
 
     harness_path = Path.home() / ".config" / "opencode"
     harness_path.mkdir(parents=True, exist_ok=True)
@@ -222,21 +224,68 @@ def install_harness():
 
 
 def install_skills():
-    bunx = shutil.which("bunx")
-    if not bunx:
-        print_message("  bunx is not available. Skipping...")
+    bun = shutil.which("bun")
+    if not bun:
+        print_message("Bun is not available. Skipping...", indent_size=2)
         return
 
-    skills_path = Path.home() / ".agents" / "skills"
-    print_message("  Installing skills...")
+    print_message("Installing skills...", indent_size=2)
+    print_message("Updating skills CLI...", indent_size=4)
+    run_command([bun, "add", "--global", "skills@latest"])
+
+    skills = shutil.which("skills")
+    if not skills:
+        raise OSError("The skills CLI is not available after installation.")
+
+    try:
+        installed_skills = {
+            entry["name"]
+            for entry in json.loads(
+                subprocess.run(
+                    [skills, "list", "--global", "--agent", "codex", "--json"],
+                    check=True,
+                    capture_output=True,
+                    text=True,
+                ).stdout
+            )
+            if isinstance(entry, dict) and isinstance(entry.get("name"), str)
+        }
+    except json.JSONDecodeError as error:
+        raise OSError("Failed to read installed skills from the skills CLI.") from error
 
     for source, skill in AGENT_SKILLS:
-        if (skills_path / skill).is_dir():
-            print_message(f"    {skill} is already installed. Skipping...")
+        if skill in installed_skills:
+            print_message(f"{skill} is already installed. Skipping...", indent_size=4)
             continue
 
-        print_message(f"    Installing {skill}...")
-        run_command([bunx, "skills", "add", source, "--global", "--skill", skill, "--yes"])
+        print_message(f"Installing {skill}...", indent_size=4)
+        run_command([skills, "add", source, "--global", "--agent", "codex", "--skill", skill, "--yes"])
+
+    local_skills_path = SCRIPT_DIR / "skills"
+    harness_skill_paths = (
+        Path.home() / ".agents" / "skills",
+        Path.home() / ".codex" / "skills",
+    )
+
+    for skill_path in local_skills_path.iterdir():
+        if not skill_path.is_dir() or not (skill_path / "SKILL.md").is_file():
+            continue
+
+        print_message(f"Installing {skill_path.name} (local)...", indent_size=4)
+
+        for harness_skill_path in harness_skill_paths:
+            harness_skill_path.mkdir(parents=True, exist_ok=True)
+            target_path = harness_skill_path / skill_path.name
+
+            if target_path.is_symlink() and target_path.resolve() == skill_path.resolve():
+                print_message(f"{target_path} is already installed. Skipping...", indent_size=6)
+                continue
+            if target_path.exists() or target_path.is_symlink():
+                raise OSError(
+                    f"Cannot install {skill_path.name}: {target_path} exists but is not linked to the local skill."
+                )
+
+            target_path.symlink_to(skill_path, target_is_directory=True)
 
 
 def install_configurations():
@@ -244,7 +293,7 @@ def install_configurations():
     install_tools()
     install_harness()
     install_skills()
-    print_message("  Configurations installed successfully!")
+    print_message("Configurations installed successfully!", indent_size=2)
 
 
 ### Main ###
