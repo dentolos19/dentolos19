@@ -11,4 +11,4 @@ This is my personal agent instructions.
 - Do not invent things on your own, perform research and find dependencies that can help you do it.
 - If administrator access is required on macOS, request authorization with `osascript`.
 - If administrator access is required on Linux, request authorization with `pkexec`.
-- Read skills that must always apply: `dennise`, `unslop`.
+- Use skills that must always apply.

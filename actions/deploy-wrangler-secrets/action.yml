@@ -1,0 +1,40 @@
+name: Deploy Wrangler Secrets
+description: Bulk upload selected environment variables as Cloudflare Worker secrets.
+inputs:
+  secrets:
+    description: Comma-separated or newline-separated environment variable names to upload.
+    required: true
+  working-directory:
+    description: Directory containing the Wrangler configuration and installed Wrangler package.
+    required: false
+    default: .
+  worker-name:
+    description: Worker name. Wrangler uses the configured name when omitted.
+    required: false
+    default: ""
+  environment:
+    description: Wrangler environment to target.
+    required: false
+    default: ""
+  config:
+    description: Path to a Wrangler configuration file, relative to the working directory.
+    required: false
+    default: ""
+  prune:
+    description: Delete secrets that are not included in this upload before uploading the new values.
+    required: false
+    default: "true"
+runs:
+  using: composite
+  steps:
+    - name: Upload Secrets
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        ACTION_PATH: ${{ github.action_path }}
+        INPUT_CONFIG: ${{ inputs.config }}
+        INPUT_ENVIRONMENT: ${{ inputs.environment }}
+        INPUT_PRUNE: ${{ inputs.prune }}
+        INPUT_SECRETS: ${{ inputs.secrets }}
+        INPUT_WORKER_NAME: ${{ inputs.worker-name }}
+      run: bash "$ACTION_PATH/entrypoint.sh"
