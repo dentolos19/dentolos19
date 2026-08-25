@@ -1,0 +1,37 @@
+#:schema https://developers.openai.com/codex/config-schema.json
+
+model = "gpt-5.6-sol"
+model_reasoning_effort = "high"
+review_model = "gpt-5.6-sol"
+approval_policy = "never"
+sandbox_mode = "danger-full-access"
+
+[agents]
+default_subagent_model = "gpt-5.6-luna"
+default_subagent_reasoning_effort = "high"
+
+[desktop.appearanceLightChromeTheme.fonts]
+code = '"JetBrainsMono Nerd Font Mono"'
+
+[desktop.appearanceDarkChromeTheme.fonts]
+code = '"JetBrainsMono Nerd Font Mono"'
+
+[model_providers.openrouter]
+name = "OpenRouter"
+base_url = "https://openrouter.ai/api/v1"
+wire_api = "responses"
+http_headers = { "Authorization" = "Bearer {env:OPENROUTER_API_KEY}" }
+
+[mcp_servers.monolith]
+enabled = true
+url = "https://monolith.dennise.me/mcp"
+http_headers = { "CF-Access-Client-Id" = "{env:CLOUDFLARE_CLIENT_ID}", "CF-Access-Client-Secret" = "{env:CLOUDFLARE_CLIENT_SECRET}" }
+
+[mcp_servers.gitkraken]
+enabled = true
+command = "gk"
+args = ["mcp"]
+
+[mcp_servers."1password"]
+enabled = true
+command = "1password-mcp"

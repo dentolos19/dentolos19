@@ -22,7 +22,6 @@ INDENT_COLORS = {
 }
 
 BREW_PACKAGES = (
-    "anomalyco/tap/opencode",
     "ffmpeg",
     "font-jetbrains-mono-nerd-font",
     "gh",
@@ -195,32 +194,18 @@ def install_tools():
     for file in (".editorconfig", ".oxlintrc.json", ".oxfmtrc.json", ".personal"):
         shutil.copy2(CONFIG_DIR / file, home_path / file)
 
-    (home_path / ".wakatime.cfg").write_text(
-        replace_environment(CONFIG_DIR / ".wakatime.cfg"),
+
+def install_codex():
+    print_message("Installing Codex...", indent_size=2)
+
+    codex_home = Path.home() / ".codex"
+    codex_home.mkdir(parents=True, exist_ok=True)
+
+    shutil.copy2(SCRIPT_DIR / "AGENTS.md", codex_home / "AGENTS.md")
+    (codex_home / "config.toml").write_text(
+        replace_environment(CONFIG_DIR / "codex.toml"),
         encoding="utf-8",
     )
-
-
-def install_harness():
-    print_message("Installing harness...", indent_size=2)
-
-    harness_path = Path.home() / ".config" / "opencode"
-    harness_path.mkdir(parents=True, exist_ok=True)
-
-    (harness_path / "opencode.json").write_text(
-        replace_environment(CONFIG_DIR / "opencode.json"),
-        encoding="utf-8",
-    )
-
-    instruction_paths = (
-        harness_path / "AGENTS.md",
-        Path.home() / ".claude" / "CLAUDE.md",
-        Path.home() / ".codex" / "AGENTS.md",
-    )
-
-    for path in instruction_paths:
-        path.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(SCRIPT_DIR / "AGENTS.md", path)
 
 
 def install_skills():
@@ -262,7 +247,7 @@ def install_skills():
         run_command([skills, "add", source, "--global", "--agent", "codex", "--skill", skill, "--yes"])
 
     local_skills_path = SCRIPT_DIR / "skills"
-    harness_skill_paths = (
+    agent_skill_paths = (
         Path.home() / ".agents" / "skills",
         Path.home() / ".codex" / "skills",
     )
@@ -271,16 +256,26 @@ def install_skills():
         if not skill_path.is_dir() or not (skill_path / "SKILL.md").is_file():
             continue
 
+        target_paths = tuple(agent_skill_path / skill_path.name for agent_skill_path in agent_skill_paths)
+
+        for agent_skill_path in agent_skill_paths:
+            agent_skill_path.mkdir(parents=True, exist_ok=True)
+
+        if all(
+            target_path.is_symlink() and target_path.resolve() == skill_path.resolve()
+            for target_path in target_paths
+        ):
+            print_message(f"{skill_path.name} is already installed. Skipping...", indent_size=4)
+            continue
+
         print_message(f"Installing {skill_path.name} (local)...", indent_size=4)
 
-        for harness_skill_path in harness_skill_paths:
-            harness_skill_path.mkdir(parents=True, exist_ok=True)
-            target_path = harness_skill_path / skill_path.name
-
-            if target_path.is_symlink() and target_path.resolve() == skill_path.resolve():
-                print_message(f"{target_path} is already installed. Skipping...", indent_size=6)
-                continue
-            if target_path.exists() or target_path.is_symlink():
+        for target_path in target_paths:
+            if target_path.is_symlink():
+                if target_path.resolve() == skill_path.resolve():
+                    continue
+                target_path.unlink()
+            elif target_path.exists():
                 raise OSError(
                     f"Cannot install {skill_path.name}: {target_path} exists but is not linked to the local skill."
                 )
@@ -291,7 +286,7 @@ def install_skills():
 def install_configurations():
     print_message("Installing configurations...")
     install_tools()
-    install_harness()
+    install_codex()
     install_skills()
     print_message("Configurations installed successfully!", indent_size=2)
 
