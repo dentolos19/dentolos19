@@ -1,20 +1,27 @@
 #:schema https://developers.openai.com/codex/config-schema.json
 
 model = "gpt-5.6-sol"
-model_reasoning_effort = "high"
 review_model = "gpt-5.6-sol"
+model_verbosity = "low"
+model_reasoning_effort = "low"
+plan_mode_reasoning_effort = "high"
 approval_policy = "never"
 sandbox_mode = "danger-full-access"
 
-[agents]
-default_subagent_model = "gpt-5.6-luna"
-default_subagent_reasoning_effort = "high"
+[desktop]
+selected-avatar-id = "custom:dennise"
+avatar-overlay-mascot-width-px = 120
 
 [desktop.appearanceLightChromeTheme.fonts]
 code = '"JetBrainsMono Nerd Font Mono"'
 
 [desktop.appearanceDarkChromeTheme.fonts]
 code = '"JetBrainsMono Nerd Font Mono"'
+
+[agents]
+enabled = true
+default_subagent_model = "gpt-5.6-luna"
+default_subagent_reasoning_effort = "high"
 
 [model_providers.openrouter]
 name = "OpenRouter"

@@ -198,14 +198,30 @@ def install_tools():
 def install_codex():
     print_message("Installing Codex...", indent_size=2)
 
+    codex_config_dir = CONFIG_DIR / "codex"
     codex_home = Path.home() / ".codex"
     codex_home.mkdir(parents=True, exist_ok=True)
 
     shutil.copy2(SCRIPT_DIR / "AGENTS.md", codex_home / "AGENTS.md")
     (codex_home / "config.toml").write_text(
-        replace_environment(CONFIG_DIR / "codex.toml"),
+        replace_environment(codex_config_dir / "codex.toml"),
         encoding="utf-8",
     )
+
+    pets_path = codex_home / "pets"
+    pets_path.mkdir(parents=True, exist_ok=True)
+
+    for pet_path in (codex_config_dir / "pets").iterdir():
+        if not pet_path.is_dir():
+            continue
+
+        target_path = pets_path / pet_path.name
+        if target_path.is_symlink():
+            target_path.unlink()
+        elif target_path.exists():
+            shutil.rmtree(target_path)
+
+        shutil.copytree(pet_path, target_path)
 
 
 def install_skills():
