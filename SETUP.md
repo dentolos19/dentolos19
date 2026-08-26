@@ -1,9 +1,5 @@
 # Setup
 
-This is my personal setup.
-
-## Instructions
-
 Firstly, run the setup script:
 
 ```bash

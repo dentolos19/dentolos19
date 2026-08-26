@@ -2,6 +2,7 @@
 name: dennise
 description: Do things like Dennise. Must always apply.
 ---
+
 # Dennise
 
 Perform tasks and write stuff according to Dennise's preferences. This skill's guidelines takes precedence over all other skills.
@@ -56,22 +57,12 @@ Perform tasks and write stuff according to Dennise's preferences. This skill's g
 - Keep components small and focused. Split large components into smaller sub-components.
 - Do not apply the same classes to a component if the component already applies them internally.
 - Co-locate related files, such as components, styles, and tests, in the same directory where applicable.
-
-### React (State Management)
-
 - Prefer URL state, including search params and route params, for shareable or persistent UI state.
-- Use React context sparingly and only for truly global state, such as theme, auth, or locale.
-- Co-locate state as close as possible to where it is used. Lift state up only when multiple children need it.
-- Use server state tools, such as React Query, TanStack Query, or server actions, for data fetching and mutations instead of storing server data in client state.
 
-### Next.js
+### Drizzle ORM
 
-- Store related components for a page in a `_components` folder in the same directory as the page.
-- Store route helper functions in a `_helpers` folder in the same directory as the page.
-- For server actions, create an `actions.ts` file in the same directory as the page or component that uses them.
-- Fetch data in server components when possible. Pass data down as props rather than fetching in client components.
-
-### TanStack Start
-
-- Store related components for a route in a `-components` folder in the same directory as the route.
-- Store route helper functions in a `-helpers` folder in the same directory as the route.
+- Migrations should be stored in a `migrations` folder in the root of the project.
+- Table names should be pluralized, e.g., `users`, `posts`, etc.
+- Table variable assigned to a table should be singular, e.g., `user`, `post`, etc.
+- If the migration is not pushed to remote yet, you may overwrite or recreate the migration file.
+- If overwriting the migration file, check the development database to revert or change it.
