@@ -9,6 +9,7 @@ approval_policy = "never"
 sandbox_mode = "danger-full-access"
 
 [desktop]
+enabled-reasoning-efforts = ["low", "medium", "high", "xhigh", "max", "ultra"]
 selected-avatar-id = "custom:dennise"
 avatar-overlay-mascot-width-px = 120
 

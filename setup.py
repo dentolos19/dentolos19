@@ -9,8 +9,8 @@ import subprocess
 import sys
 from pathlib import Path
 
-SCRIPT_DIR = Path(__file__).resolve().parent
-CONFIG_DIR = SCRIPT_DIR / "configs"
+SCRIPT_PATH = Path(__file__).resolve().parent
+CONFIG_PATH = SCRIPT_PATH / "configs"
 ENVIRONMENT_ID = "s4tychpwlg53m7bozmbqs3cvz4"
 
 RESET_COLOR = "\033[0m"
@@ -154,31 +154,27 @@ def run_command(command: list[str]):
 def install_packages():
     print_message("Installing packages...")
 
-    if not shutil.which("brew"):
+    brew = shutil.which("brew")
+    if not brew:
         print_message("Homebrew is not available. Skipping package installation.", indent_size=2)
         return
 
-    def is_installed(package: str, cask: bool = False):
-        command = ["brew", "list"]
-        if cask:
-            command.append("--cask")
-        command.append(package)
+    installed_packages = set(
+        subprocess.run(
+            [brew, "list", "--full-name"],
+            check=True,
+            capture_output=True,
+            text=True,
+        ).stdout.split()
+    )
 
-        return (
-            subprocess.run(
-                command,
-                check=False,
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL,
-            ).returncode
-            == 0
-        )
-
-    for brew_id in BREW_PACKAGES:
-        if is_installed(brew_id):
-            print_message(f"{brew_id} is already installed. Skipping...", indent_size=2)
+    for package in BREW_PACKAGES:
+        if package in installed_packages:
+            print_message(f"{package} is already installed. Skipping...", indent_size=2)
             continue
-        run_command(["brew", "install", brew_id])
+
+        print_message(f"Installing {package}...", indent_size=2)
+        run_command([brew, "install", package])
 
     print_message("Packages installed successfully!", indent_size=2)
 
@@ -192,36 +188,13 @@ def install_tools():
     home_path = Path.home()
 
     for file in (".editorconfig", ".oxlintrc.json", ".oxfmtrc.json", ".personal"):
-        shutil.copy2(CONFIG_DIR / file, home_path / file)
+        shutil.copy2(CONFIG_PATH / file, home_path / file)
 
 
 def install_codex():
     print_message("Installing Codex...", indent_size=2)
 
-    codex_config_dir = CONFIG_DIR / "codex"
-    codex_home = Path.home() / ".codex"
-    codex_home.mkdir(parents=True, exist_ok=True)
-
-    shutil.copy2(SCRIPT_DIR / "AGENTS.md", codex_home / "AGENTS.md")
-    (codex_home / "config.toml").write_text(
-        replace_environment(codex_config_dir / "codex.toml"),
-        encoding="utf-8",
-    )
-
-    pets_path = codex_home / "pets"
-    pets_path.mkdir(parents=True, exist_ok=True)
-
-    for pet_path in (codex_config_dir / "pets").iterdir():
-        if not pet_path.is_dir():
-            continue
-
-        target_path = pets_path / pet_path.name
-        if target_path.is_symlink():
-            target_path.unlink()
-        elif target_path.exists():
-            shutil.rmtree(target_path)
-
-        shutil.copytree(pet_path, target_path)
+    shutil.copytree(CONFIG_PATH / "codex", Path.home() / ".codex", dirs_exist_ok=True)
 
 
 def install_skills():
@@ -238,21 +211,17 @@ def install_skills():
     if not skills:
         raise OSError("The skills CLI is not available after installation.")
 
-    try:
-        installed_skills = {
-            entry["name"]
-            for entry in json.loads(
-                subprocess.run(
-                    [skills, "list", "--global", "--agent", "codex", "--json"],
-                    check=True,
-                    capture_output=True,
-                    text=True,
-                ).stdout
-            )
-            if isinstance(entry, dict) and isinstance(entry.get("name"), str)
-        }
-    except json.JSONDecodeError as error:
-        raise OSError("Failed to read installed skills from the skills CLI.") from error
+    installed_skills = {
+        entry["name"]
+        for entry in json.loads(
+            subprocess.run(
+                [skills, "list", "--global", "--agent", "codex", "--json"],
+                check=True,
+                capture_output=True,
+                text=True,
+            ).stdout
+        )
+    }
 
     for source, skill in AGENT_SKILLS:
         if skill in installed_skills:
@@ -262,40 +231,33 @@ def install_skills():
         print_message(f"Installing {skill}...", indent_size=4)
         run_command([skills, "add", source, "--global", "--agent", "codex", "--skill", skill, "--yes"])
 
-    local_skills_path = SCRIPT_DIR / "skills"
-    agent_skill_paths = (
+    skill_paths = (
         Path.home() / ".agents" / "skills",
         Path.home() / ".codex" / "skills",
     )
+    for path in skill_paths:
+        path.mkdir(parents=True, exist_ok=True)
 
-    for skill_path in local_skills_path.iterdir():
+    for skill_path in (SCRIPT_PATH / "skills").iterdir():
         if not skill_path.is_dir() or not (skill_path / "SKILL.md").is_file():
             continue
 
-        target_paths = tuple(agent_skill_path / skill_path.name for agent_skill_path in agent_skill_paths)
-
-        for agent_skill_path in agent_skill_paths:
-            agent_skill_path.mkdir(parents=True, exist_ok=True)
-
-        if all(
-            target_path.is_symlink() and target_path.resolve() == skill_path.resolve()
-            for target_path in target_paths
-        ):
+        target_paths = tuple(path / skill_path.name for path in skill_paths)
+        if all(target.is_symlink() and target.resolve() == skill_path.resolve() for target in target_paths):
             print_message(f"{skill_path.name} is already installed. Skipping...", indent_size=4)
             continue
 
         print_message(f"Installing {skill_path.name} (local)...", indent_size=4)
 
         for target_path in target_paths:
-            if target_path.is_symlink():
-                if target_path.resolve() == skill_path.resolve():
-                    continue
-                target_path.unlink()
-            elif target_path.exists():
+            if target_path.is_symlink() and target_path.resolve() == skill_path.resolve():
+                continue
+            if target_path.exists() and not target_path.is_symlink():
                 raise OSError(
                     f"Cannot install {skill_path.name}: {target_path} exists but is not linked to the local skill."
                 )
 
+            target_path.unlink(missing_ok=True)
             target_path.symlink_to(skill_path, target_is_directory=True)
 
 
