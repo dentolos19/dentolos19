@@ -1,6 +1,6 @@
 ---
 name: dennise
-description: Do things like Dennise. Must always apply.
+description: Apply Dennise's personal conventions for writing, environment files, Git, Python, JavaScript, TypeScript, React, and Drizzle ORM. Use for every task and let these preferences override conflicting skill guidance.
 ---
 
 # Dennise

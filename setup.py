@@ -32,47 +32,55 @@ BREW_PACKAGES = (
     "uv",
 )
 
-AGENT_SKILLS = (
-    # Repo, Skill
-    ("anthropics/skills", "canvas-design"),
-    ("anthropics/skills", "docx"),
-    ("anthropics/skills", "frontend-design"),
-    ("anthropics/skills", "mcp-builder"),
-    ("anthropics/skills", "pdf"),
-    ("anthropics/skills", "pptx"),
-    ("anthropics/skills", "skill-creator"),
-    ("anthropics/skills", "xlsx"),
-    ("cloudflare/skills", "agents-sdk"),
-    ("cloudflare/skills", "cloudflare-email-service"),
-    ("cloudflare/skills", "cloudflare"),
-    ("cloudflare/skills", "durable-objects"),
-    ("cloudflare/skills", "turnstile-spin"),
-    ("cloudflare/skills", "web-perf"),
-    ("cloudflare/skills", "workers-best-practices"),
-    ("cloudflare/skills", "wrangler"),
-    ("coreyhaines31/marketingskills", "copywriting"),
-    ("coreyhaines31/marketingskills", "marketing-psychology"),
-    ("coreyhaines31/marketingskills", "programmatic-seo"),
-    ("coreyhaines31/marketingskills", "seo-audit"),
-    ("freshtechbro/claudedesignskills", "animated-component-libraries"),
-    ("freshtechbro/claudedesignskills", "animejs"),
-    ("freshtechbro/claudedesignskills", "gsap-scrolltrigger"),
-    ("freshtechbro/claudedesignskills", "modern-web-design"),
-    ("freshtechbro/claudedesignskills", "motion-framer"),
-    ("freshtechbro/claudedesignskills", "react-three-fiber"),
-    ("freshtechbro/claudedesignskills", "threejs-webgl"),
-    ("freshtechbro/claudedesignskills", "web3d-integration-patterns"),
-    ("microsoft/playwright-cli", "playwright-cli"),
-    ("roboflow/computer-vision-skills", "roboflow-api-reference"),
-    ("roboflow/computer-vision-skills", "roboflow-inference"),
-    ("shadcn/ui", "shadcn"),
-    ("vercel-labs/agent-skills", "vercel-composition-patterns"),
-    ("vercel-labs/agent-skills", "vercel-react-best-practices"),
-    ("vercel-labs/agent-skills", "vercel-react-native-skills"),
-    ("vercel-labs/agent-skills", "vercel-react-view-transitions"),
-    ("vercel-labs/agent-skills", "web-design-guidelines"),
-    ("vercel-labs/skills", "find-skills"),
-)
+AGENT_SKILLS = {
+    "anthropics/skills": (
+        "canvas-design",
+        "docx",
+        "frontend-design",
+        "mcp-builder",
+        "pdf",
+        "pptx",
+        "skill-creator",
+        "xlsx",
+    ),
+    "cloudflare/skills": (
+        "agents-sdk",
+        "cloudflare-email-service",
+        "cloudflare",
+        "durable-objects",
+        "turnstile-spin",
+        "web-perf",
+        "workers-best-practices",
+        "wrangler",
+    ),
+    "coreyhaines31/marketingskills": (
+        "copywriting",
+        "marketing-psychology",
+        "programmatic-seo",
+        "seo-audit",
+    ),
+    "freshtechbro/claudedesignskills": (
+        "animated-component-libraries",
+        "animejs",
+        "gsap-scrolltrigger",
+        "modern-web-design",
+        "motion-framer",
+        "react-three-fiber",
+        "threejs-webgl",
+        "web3d-integration-patterns",
+    ),
+    "microsoft/playwright-cli": ("playwright-cli",),
+    "roboflow/computer-vision-skills": ("roboflow-api-reference", "roboflow-inference"),
+    "shadcn/ui": ("shadcn",),
+    "vercel-labs/agent-skills": (
+        "vercel-composition-patterns",
+        "vercel-react-best-practices",
+        "vercel-react-native-skills",
+        "vercel-react-view-transitions",
+        "web-design-guidelines",
+    ),
+    "vercel-labs/skills": ("find-skills",),
+}
 
 ### Utilities ###
 
@@ -148,6 +156,18 @@ def run_command(command: list[str]):
     subprocess.run(command, check=True, stdout=subprocess.DEVNULL)
 
 
+def link_file(source: Path, target: Path):
+    target.parent.mkdir(parents=True, exist_ok=True)
+
+    if target.is_symlink() and target.resolve() == source.resolve():
+        return
+    if target.is_dir():
+        raise OSError(f"Cannot link {source}: {target} is a directory.")
+
+    target.unlink(missing_ok=True)
+    target.symlink_to(source)
+
+
 ### Packages ###
 
 
@@ -179,24 +199,6 @@ def install_packages():
     print_message("Packages installed successfully!", indent_size=2)
 
 
-### Configurations ###
-
-
-def install_tools():
-    print_message("Installing tools...", indent_size=2)
-
-    home_path = Path.home()
-
-    for file in (".editorconfig", ".oxlintrc.json", ".oxfmtrc.json", ".personal"):
-        shutil.copy2(CONFIG_PATH / file, home_path / file)
-
-
-def install_codex():
-    print_message("Installing Codex...", indent_size=2)
-
-    shutil.copytree(CONFIG_PATH / "codex", Path.home() / ".codex", dirs_exist_ok=True)
-
-
 def install_skills():
     bun = shutil.which("bun")
     if not bun:
@@ -223,13 +225,14 @@ def install_skills():
         )
     }
 
-    for source, skill in AGENT_SKILLS:
-        if skill in installed_skills:
-            print_message(f"{skill} is already installed. Skipping...", indent_size=4)
-            continue
+    for source, source_skills in AGENT_SKILLS.items():
+        for skill in source_skills:
+            if skill in installed_skills:
+                print_message(f"{skill} is already installed. Skipping...", indent_size=4)
+                continue
 
-        print_message(f"Installing {skill}...", indent_size=4)
-        run_command([skills, "add", source, "--global", "--agent", "codex", "--skill", skill, "--yes"])
+            print_message(f"Installing {skill}...", indent_size=4)
+            run_command([skills, "add", source, "--global", "--agent", "codex", "--skill", skill, "--yes"])
 
     skill_paths = (
         Path.home() / ".agents" / "skills",
@@ -263,8 +266,16 @@ def install_skills():
 
 def install_configurations():
     print_message("Installing configurations...")
-    install_tools()
-    install_codex()
+
+    home_path = Path.home()
+
+    print_message("Installing tools...", indent_size=2)
+    for file in (".editorconfig", ".oxlintrc.json", ".oxfmtrc.json", ".personal"):
+        link_file(CONFIG_PATH / file, home_path / file)
+
+    print_message("Installing Codex...", indent_size=2)
+    shutil.copytree(CONFIG_PATH / "codex", home_path / ".codex", dirs_exist_ok=True)
+
     install_skills()
     print_message("Configurations installed successfully!", indent_size=2)
 
