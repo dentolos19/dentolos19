@@ -1,0 +1,135 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "autoupdate": "notify",
+  "permission": "allow",
+  "default_agent": "build",
+  "agent": {
+    "build": {
+      "model": "openrouter/z-ai/glm-5.3-flash",
+      "variant": "high",
+      "description": "Writes, edits, and tests code to implement features and fix bugs."
+    },
+    "plan": {
+      "model": "openrouter/pareto-code",
+      "variant": "high",
+      "description": "Researches the codebase and plans changes without modifying files.",
+      "hidden": true // Not used.
+    },
+    "general": {
+      "model": "openrouter/pareto-code",
+      "variant": "medium",
+      "hidden": true
+    },
+    "explore": {
+      "model": "openrouter/pareto-code",
+      "variant": "medium",
+      "hidden": true
+    },
+    "title": {
+      "model": "openrouter/pareto-code",
+      "variant": "low"
+    },
+    "summary": {
+      "model": "openrouter/pareto-code",
+      "variant": "low"
+    },
+    "compaction": {
+      "model": "openrouter/pareto-code",
+      "variant": "low"
+    }
+  },
+  "command": {
+    "review": {
+      "agent": "build",
+      "model": "openrouter/pareto-code",
+      "variant": "high",
+      "subtask": true,
+      "description": "Run a thorough code review of the current staged and unstaged changes.",
+      "template": "Perform a thorough code review of the current changes (unless stated otherwise). Inspect both staged and unstaged changes. Focus on correctness, bugs, vulnerabilities, performance, maintainability, and error handling. Additional review instructions: $ARGUMENTS"
+    },
+    "resolve": {
+      "agent": "build",
+      "model": "openrouter/pareto-code",
+      "variant": "medium",
+      "description": "Automatically resolve Git merge conflicts in the current repository.",
+      "template": "Resolve all current Git merge conflicts automatically. Inspect the repository status and every conflicted file, understand both sides and the intended code behavior, resolve all conflict markers without discarding valid changes, and verify that no conflicts remain. Run the most relevant available checks after resolution. Do not stop at explaining the conflicts: make the edits. If there are no conflicts, report that clearly. Additional conflict-resolution instructions: $ARGUMENTS"
+    },
+    "export": {
+      "agent": "build",
+      "model": "openrouter/pareto-code",
+      "variant": "low",
+      "subtask": true,
+      "description": "Export the session context into a markdown file.",
+      "template": "Take in the entire context of this session or conversation, compact it, and export it into a markdown file in the current directory. Name the file appropriately. Additional export instructions: $ARGUMENTS"
+    }
+  },
+  "provider": {
+    "openrouter": {
+      "models": {
+        "pareto-code": {
+          "id": "openrouter/pareto-code",
+          "name": "Pareto Code Router",
+          "reasoning": true,
+          "tool_call": true,
+          "variants": {
+            "high": {
+              "plugins": [{ "id": "pareto-router", "min_coding_score": 0.8 }]
+            },
+            "medium": {
+              "plugins": [{ "id": "pareto-router", "min_coding_score": 0.5 }]
+            },
+            "low": {
+              "plugins": [{ "id": "pareto-router", "min_coding_score": 0.25 }]
+            }
+          }
+        }
+      },
+      "options": {
+        "apiKey": "{env:OPENROUTER_API_KEY}"
+      }
+    },
+    "hetzner": {
+      "options": {
+        "baseURL": "https://inference.hetzner.com/api/v1",
+        "apiKey": "{env:HETZNER_API_KEY}"
+      }
+    },
+    "platformai": {
+      "name": "Platform AI",
+      "models": {
+        "bedrock.claude-opus-4-8": {
+          "name": "Claude Opus 4.8"
+        },
+        "bedrock.claude-sonnet-5": {
+          "name": "Claude Sonnet 5"
+        }
+      },
+      "options": {
+        "baseURL": "https://api.ai.tech.gov.sg/platform/models/v1",
+        "apiKey": "{env:PLATFORMAI_API_KEY}"
+      }
+    }
+  },
+  "mcp": {
+    "monolith": {
+      "type": "remote",
+      "url": "https://mcp.dennise.dev/mcp",
+      "headers": {
+        "CF-Access-Client-Id": "{env:CLOUDFLARE_CLIENT_ID}",
+        "CF-Access-Client-Secret": "{env:CLOUDFLARE_CLIENT_SECRET}"
+      }
+    },
+    "gitkraken": {
+      "type": "local",
+      "command": ["gk", "mcp"]
+    },
+    "1password": {
+      "type": "local",
+      "command": ["1password-mcp"]
+    },
+    "playwright": {
+      "type": "local",
+      "command": ["bunx", "--bun", "@playwright/mcp"]
+    }
+  }
+}

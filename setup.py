@@ -29,6 +29,7 @@ INDENT_COLORS = {
 }
 
 BREW_PACKAGES = (
+    "anomalyco/tap/opencode",
     "ffmpeg",
     "font-jetbrains-mono-nerd-font",
     "gh",
@@ -159,23 +160,10 @@ def replace_environment(path: Path):
     return configuration
 
 
-def run_command(command: list[str]):
-    subprocess.run(command, check=True, stdout=subprocess.DEVNULL)
-
-
-def link_file(source: Path, target: Path):
+def copy_configuration(source: Path, target: Path):
     target.parent.mkdir(parents=True, exist_ok=True)
-
-    if target.is_symlink() and target.resolve() == source.resolve():
-        return
-    if target.is_dir():
-        raise OSError(f"Cannot link {source}: {target} is a directory.")
-
-    target.unlink(missing_ok=True)
-    target.symlink_to(source)
-
-
-### Packages ###
+    target.write_text(replace_environment(source), encoding="utf-8")
+    target.chmod(0o600)
 
 
 def get_homebrew():
@@ -209,6 +197,25 @@ def get_homebrew():
             return str(brew_path)
 
     raise OSError("Homebrew installation completed, but the brew executable could not be found.")
+
+
+def run_command(command: list[str]):
+    subprocess.run(command, check=True, stdout=subprocess.DEVNULL)
+
+
+def link_file(source: Path, target: Path):
+    target.parent.mkdir(parents=True, exist_ok=True)
+
+    if target.is_symlink() and target.resolve() == source.resolve():
+        return
+    if target.is_dir():
+        raise OSError(f"Cannot link {source}: {target} is a directory.")
+
+    target.unlink(missing_ok=True)
+    target.symlink_to(source)
+
+
+### Packages ###
 
 
 def install_packages():
@@ -314,8 +321,11 @@ def install_configurations():
     for file in (".editorconfig", ".oxlintrc.json", ".oxfmtrc.json", ".personal"):
         link_file(CONFIG_PATH / file, home_path / file)
 
-    print_message("Installing Codex...", indent_size=2)
+    print_message("Installing Codex config...", indent_size=2)
     shutil.copytree(CONFIG_PATH / "codex", home_path / ".codex", dirs_exist_ok=True)
+
+    print_message("Installing OpenCode config...", indent_size=2)
+    copy_configuration(CONFIG_PATH / "opencode.json", home_path / ".config" / "opencode" / "opencode.json")
 
     install_skills()
     print_message("Configurations installed successfully!", indent_size=2, color=SUCCESS_COLOR)
