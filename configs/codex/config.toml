@@ -12,6 +12,7 @@ sandbox_mode = "danger-full-access"
 enabled-reasoning-efforts = ["low", "medium", "high", "xhigh", "max", "ultra"]
 selected-avatar-id = "custom:dennise"
 avatar-overlay-mascot-width-px = 120
+git-commit-instructions = "Write commit messages as past-tense actions, such as `Added README.md` or `Updated authentication system`."
 
 [desktop.appearanceLightChromeTheme.fonts]
 code = '"JetBrainsMono Nerd Font Mono"'
@@ -29,10 +30,12 @@ name = "OpenRouter"
 base_url = "https://openrouter.ai/api/v1"
 wire_api = "responses"
 http_headers = { "Authorization" = "Bearer {env:OPENROUTER_API_KEY}" }
+requires_openai_auth = false
+supports_websockets = false
 
 [mcp_servers.monolith]
 enabled = true
-url = "https://monolith.dennise.me/mcp"
+url = "https://mcp.dennise.dev/mcp"
 http_headers = { "CF-Access-Client-Id" = "{env:CLOUDFLARE_CLIENT_ID}", "CF-Access-Client-Secret" = "{env:CLOUDFLARE_CLIENT_SECRET}" }
 
 [mcp_servers.gitkraken]
