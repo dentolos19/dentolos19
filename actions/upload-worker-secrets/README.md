@@ -1,6 +1,6 @@
-# Deploy Wrangler Secrets
+# Upload Worker Secrets
 
-Bulk uploads selected environment variables as Cloudflare Worker secrets. By default, the same bulk request deletes secrets omitted from the upload, matching the final state produced by `denizen` without temporarily removing every secret.
+Purges every existing Cloudflare Worker secret, then bulk uploads selected environment variables as the new secret set.
 
 The calling project must install Wrangler before running this action. The action invokes the project's local Wrangler package with `npx --no-install wrangler`.
 
@@ -8,7 +8,7 @@ The calling project must install Wrangler before running this action. The action
 
 ```yaml
 - name: Upload Secrets
-  uses: dentolos19/dentolos19/actions/deploy-wrangler-secrets@main
+  uses: dentolos19/dentolos19/actions/upload-worker-secrets@main
   with:
     secrets: |
       CLERK_SECRET_KEY
@@ -22,4 +22,4 @@ The calling project must install Wrangler before running this action. The action
     FILLOUT_API_KEY: ${{ secrets.FILLOUT_API_KEY }}
 ```
 
-Set `prune: "false"` to preserve secrets that are not part of the current upload. Use `working-directory`, `worker-name`, `environment`, or `config` when Wrangler cannot infer the target from the default configuration.
+Use `working-directory`, `worker-name`, `environment`, or `config` when Wrangler cannot infer the target from the default configuration.

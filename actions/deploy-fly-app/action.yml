@@ -1,6 +1,9 @@
 name: Deploy Fly App
-description: Deploy a Fly app and apply its Machine scaling configuration.
+description: Replace Fly app secrets, deploy the app, and apply its Machine scaling configuration.
 inputs:
+  secrets:
+    description: Comma-separated or newline-separated environment variable names to upload.
+    required: true
   working-directory:
     description: Directory containing the Fly app and its configuration.
     required: false
@@ -44,10 +47,15 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Setup Flyctl
-      uses: superfly/flyctl-actions/setup-flyctl@v1
+    - name: Upload Secrets
+      uses: $/actions/upload-fly-secrets
       with:
-        version: ${{ inputs.flyctl-version }}
+        secrets: ${{ inputs.secrets }}
+        working-directory: ${{ inputs.working-directory }}
+        app: ${{ inputs.app }}
+        config: ${{ inputs.config }}
+        flyctl-version: ${{ inputs.flyctl-version }}
+        stage: "true"
 
     - name: Deploy And Scale App
       shell: bash

@@ -1,0 +1,44 @@
+name: Upload Fly Secrets
+description: Purge existing Fly app secrets and upload selected environment variables.
+inputs:
+  secrets:
+    description: Comma-separated or newline-separated environment variable names to upload.
+    required: true
+  working-directory:
+    description: Directory containing the Fly app and its configuration.
+    required: false
+    default: .
+  app:
+    description: Fly app name. Flyctl uses the configured app when omitted.
+    required: false
+    default: ""
+  config:
+    description: Path to a Fly configuration file, relative to the working directory.
+    required: false
+    default: ""
+  flyctl-version:
+    description: Flyctl version to install.
+    required: false
+    default: latest
+  stage:
+    description: Upload secrets without deploying them to existing Machines.
+    required: false
+    default: "true"
+runs:
+  using: composite
+  steps:
+    - name: Setup Flyctl
+      uses: superfly/flyctl-actions/setup-flyctl@v1
+      with:
+        version: ${{ inputs.flyctl-version }}
+
+    - name: Upload Secrets
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        ACTION_PATH: ${{ github.action_path }}
+        INPUT_APP: ${{ inputs.app }}
+        INPUT_CONFIG: ${{ inputs.config }}
+        INPUT_SECRETS: ${{ inputs.secrets }}
+        INPUT_STAGE: ${{ inputs.stage }}
+      run: bash "$ACTION_PATH/entrypoint.sh"

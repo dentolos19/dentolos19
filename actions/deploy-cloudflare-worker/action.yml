@@ -1,13 +1,17 @@
-name: Deploy Wrangler Secrets
-description: Bulk upload selected environment variables as Cloudflare Worker secrets.
+name: Deploy Cloudflare Worker
+description: Deploy a Cloudflare Worker and replace its secrets.
 inputs:
   secrets:
     description: Comma-separated or newline-separated environment variable names to upload.
     required: true
   working-directory:
-    description: Directory containing the Wrangler configuration and installed Wrangler package.
+    description: Directory containing the Worker and its installed Wrangler package.
     required: false
     default: .
+  entrypoint:
+    description: Worker entrypoint or assets path. Wrangler uses the configured entrypoint when omitted.
+    required: false
+    default: ""
   worker-name:
     description: Worker name. Wrangler uses the configured name when omitted.
     required: false
@@ -20,21 +24,30 @@ inputs:
     description: Path to a Wrangler configuration file, relative to the working directory.
     required: false
     default: ""
-  prune:
-    description: Delete secrets that are not included in this upload before uploading the new values.
+  minify:
+    description: Minify the bundled Worker before deploying.
     required: false
-    default: "true"
+    default: "false"
 runs:
   using: composite
   steps:
-    - name: Upload Secrets
+    - name: Deploy Worker
       shell: bash
       working-directory: ${{ inputs.working-directory }}
       env:
         ACTION_PATH: ${{ github.action_path }}
         INPUT_CONFIG: ${{ inputs.config }}
+        INPUT_ENTRYPOINT: ${{ inputs.entrypoint }}
         INPUT_ENVIRONMENT: ${{ inputs.environment }}
-        INPUT_PRUNE: ${{ inputs.prune }}
-        INPUT_SECRETS: ${{ inputs.secrets }}
+        INPUT_MINIFY: ${{ inputs.minify }}
         INPUT_WORKER_NAME: ${{ inputs.worker-name }}
       run: bash "$ACTION_PATH/entrypoint.sh"
+
+    - name: Upload Secrets
+      uses: $/actions/upload-worker-secrets
+      with:
+        secrets: ${{ inputs.secrets }}
+        working-directory: ${{ inputs.working-directory }}
+        worker-name: ${{ inputs.worker-name }}
+        environment: ${{ inputs.environment }}
+        config: ${{ inputs.config }}

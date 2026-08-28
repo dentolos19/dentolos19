@@ -5,11 +5,6 @@ set -euo pipefail
 : "${CLOUDFLARE_API_TOKEN:?CLOUDFLARE_API_TOKEN must be set.}"
 : "${CLOUDFLARE_ACCOUNT_ID:?CLOUDFLARE_ACCOUNT_ID must be set.}"
 
-if [[ "$INPUT_PRUNE" != "true" && "$INPUT_PRUNE" != "false" ]]; then
-  echo "prune must be either true or false." >&2
-  exit 1
-fi
-
 wrangler=(npx --no-install wrangler)
 flags=()
 
@@ -45,18 +40,17 @@ while IFS= read -r name; do
   fi
 done < <(jq -r '.[]' <<< "$names_json")
 
+purge_file="$(mktemp)"
 secrets_file="$(mktemp)"
-existing_secrets_file="$(mktemp)"
-trap 'rm -f "$secrets_file" "$existing_secrets_file"' EXIT
-chmod 600 "$secrets_file" "$existing_secrets_file"
-printf '{}\n' > "$existing_secrets_file"
+trap 'rm -f "$purge_file" "$secrets_file"' EXIT
+chmod 600 "$purge_file" "$secrets_file"
 
-if [[ "$INPUT_PRUNE" == "true" ]]; then
-  "${wrangler[@]}" secret list --format json "${flags[@]}" |
-    jq 'map({(.name): null}) | add // {}' > "$existing_secrets_file"
+"${wrangler[@]}" secret list --format json "${flags[@]}" |
+  jq 'map({(.name): null}) | add // {}' > "$purge_file"
+if [[ "$(jq 'length' "$purge_file")" -gt 0 ]]; then
+  "${wrangler[@]}" secret bulk "$purge_file" "${flags[@]}"
 fi
 
-jq -n --argjson names "$names_json" --slurpfile existing "$existing_secrets_file" \
-  '($existing[0] // {}) + ($names | map({key: ., value: env[.]}) | from_entries)' \
-  > "$secrets_file"
+jq -n --argjson names "$names_json" \
+  '$names | map({key: ., value: env[.]}) | from_entries' > "$secrets_file"
 "${wrangler[@]}" secret bulk "$secrets_file" "${flags[@]}"
