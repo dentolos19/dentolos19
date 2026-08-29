@@ -22,15 +22,16 @@
 
 ## ⭐ Star Projects
 
-- [**Virage**](https://virage.app) — A vishing simulation platform designed for educating the vulnerable and helping them understand and recognize voice and email phishing attacks!
+- [**Virage**](https://virage.app) — Detecting and disrupting voice scams before they can deceive, manipulate, or cause harm.
+- [**+ONE**](https://plusone.help) — Turning estate insights and on-the-ground observations into smarter, more liveable communities.
 
 ## 🗃️ Hackathon Projects
 
-| Hackathon / Competition                        | Project / Team                                                                    | Stage         | Achievement      |
-| ---------------------------------------------- | --------------------------------------------------------------------------------- | ------------- | ---------------- |
-| 7th Kibo Robot Programming Challenge           | Anomaly                                                                           | International | *Ongoing*      |
+| Hackathon / Competition                        | Project / Team                                                                     | Stage         | Achievement      |
+| ---------------------------------------------- | ---------------------------------------------------------------------------------- | ------------- | ---------------- |
+| 7th Kibo Robot Programming Challenge (2026)    | Anomaly                                                                            | International | *Ongoing*        |
 | National AI Student Challenge 2026             | [Logdog](https://github.com/dentolos19/logdog)                                     | National      | Top 8 (Micron)   |
-| 6th Kibo Robot Programming Challenge           | [AstroVibe](https://humans-in-space.jaxa.jp/krpc/6th/#:~:text=Astrovibe,Singapore) | International | Top 11           |
+| 6th Kibo Robot Programming Challenge (2025)    | [AstroVibe](https://humans-in-space.jaxa.jp/krpc/6th/#:~:text=Astrovibe,Singapore) | International | Top 11           |
 | Code Overflow 2024                             | [Pennywise](https://github.com/dentolos19/pennywise)                               | School        | Committee Choice |
 | Code Overflow 2023                             | [Anywhere Fitness](https://github.com/dentolos19/anywherefitness)                  | School        | Top 3            |
 | National Cyberwellness Advocacy Challenge 2022 | [Faker Spotter](https://github.com/dentolos19/fakerspotter)                        | National      | Silver           |

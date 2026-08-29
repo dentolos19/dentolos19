@@ -77,7 +77,9 @@ AGENT_SKILLS = {
         "threejs-webgl",
         "web3d-integration-patterns",
     ),
+    "heygen-com/hyperframes": ("hyperframes",),
     "microsoft/playwright-cli": ("playwright-cli",),
+    "remotion-dev/skills": ("remotion-best-practices",),
     "roboflow/computer-vision-skills": ("roboflow-api-reference", "roboflow-inference"),
     "shadcn/ui": ("shadcn",),
     "vercel-labs/agent-skills": (
@@ -203,16 +205,36 @@ def run_command(command: list[str]):
     subprocess.run(command, check=True, stdout=subprocess.DEVNULL)
 
 
-def link_file(source: Path, target: Path):
+def copy_file(source: Path, target: Path):
     target.parent.mkdir(parents=True, exist_ok=True)
 
-    if target.is_symlink() and target.resolve() == source.resolve():
-        return
     if target.is_dir():
-        raise OSError(f"Cannot link {source}: {target} is a directory.")
+        raise OSError(f"Cannot copy {source}: {target} is a directory.")
 
     target.unlink(missing_ok=True)
-    target.symlink_to(source)
+    shutil.copy2(source, target)
+
+
+def remove_path(path: Path):
+    if path.is_symlink() or not path.is_dir():
+        path.unlink(missing_ok=True)
+        return
+
+    shutil.rmtree(path)
+
+
+def copy_tree(source: Path, target: Path, *, dirs_exist_ok: bool = False):
+    target.parent.mkdir(parents=True, exist_ok=True)
+
+    if dirs_exist_ok:
+        if target.is_symlink():
+            target.unlink()
+        elif target.exists() and not target.is_dir():
+            raise OSError(f"Cannot copy {source}: {target} is not a directory.")
+    else:
+        remove_path(target)
+
+    shutil.copytree(source, target, dirs_exist_ok=dirs_exist_ok)
 
 
 ### Packages ###
@@ -290,26 +312,10 @@ def install_skills():
             continue
 
         target_paths = tuple(path / skill_path.name for path in skill_paths)
-        if all(target.is_symlink() and target.resolve() == skill_path.resolve() for target in target_paths):
-            print_message(
-                f"{skill_path.name} is already installed. Skipping...",
-                indent_size=4,
-                color=MUTED_COLOR,
-            )
-            continue
-
         print_message(f"Installing {skill_path.name} (local)...", indent_size=4)
 
         for target_path in target_paths:
-            if target_path.is_symlink() and target_path.resolve() == skill_path.resolve():
-                continue
-            if target_path.exists() and not target_path.is_symlink():
-                raise OSError(
-                    f"Cannot install {skill_path.name}: {target_path} exists but is not linked to the local skill."
-                )
-
-            target_path.unlink(missing_ok=True)
-            target_path.symlink_to(skill_path, target_is_directory=True)
+            copy_tree(skill_path, target_path)
 
 
 def install_configurations():
@@ -319,10 +325,10 @@ def install_configurations():
 
     print_message("Installing tools...", indent_size=2)
     for file in (".editorconfig", ".oxlintrc.json", ".oxfmtrc.json", ".personal"):
-        link_file(CONFIG_PATH / file, home_path / file)
+        copy_file(CONFIG_PATH / file, home_path / file)
 
     print_message("Installing Codex config...", indent_size=2)
-    shutil.copytree(CONFIG_PATH / "codex", home_path / ".codex", dirs_exist_ok=True)
+    copy_tree(CONFIG_PATH / "codex", home_path / ".codex", dirs_exist_ok=True)
 
     print_message("Installing OpenCode config...", indent_size=2)
     copy_configuration(CONFIG_PATH / "opencode.json", home_path / ".config" / "opencode" / "opencode.json")

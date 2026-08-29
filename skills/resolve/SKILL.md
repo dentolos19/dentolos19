@@ -1,9 +1,9 @@
 ---
 name: resolve
-description: Inspect and resolve active Git conflicts during merges, rebases, cherry-picks, and reverts. Use when files are unmerged or the user asks to reconcile conflicting changes without continuing the Git operation automatically.
+description: Inspect and resolve active Git conflicts. Use when files are unmerged or the user asks to reconcile conflicting changes.
 ---
 
-# Resolve Git Conflicts
+# Resolve Conflicts
 
 Resolve every active conflict in the current repository unless the user limits the scope. A correct resolution preserves the intended behavior of both changes where they are compatible and makes an explicit choice where they are not.
 

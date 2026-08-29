@@ -1,16 +1,11 @@
 ---
 name: dennise
-description: Apply Dennise's personal conventions for writing, environment files, Git, Python, JavaScript, TypeScript, React, and Drizzle ORM. Use for every task and let these preferences override conflicting skill guidance.
+description: Apply Dennise's personal preferences for writing, coding, and values. This skill must always be used.
 ---
 
-# Dennise
+# Dennise's Preferences
 
 Perform tasks and write stuff according to Dennise's preferences. This skill's guidelines takes precedence over all other skills.
-
-## General Preferences
-
-- When writing `.env` files, always enclose strings with double quotes, even if it is empty.
-- Use `.env.template` for environment variable templates.
 
 ## Writing Preferences
 
@@ -20,19 +15,11 @@ Perform tasks and write stuff according to Dennise's preferences. This skill's g
 - For short phrases or headings, always capitalize all words.
 - Use Mermaid syntax when displaying diagrams.
 
-## Placeholder Values
-
-- When linking privacy policies, default to https://dennise.me/privacy.
-- When linking terms of service, default to https://dennise.me/terms.
-- For copyright labels, default to `© <YEAR> Dennise Catolos`.
-
 ## Coding Preferences
 
-## Git
-
-- Write commit messages as past-tense actions, e.g., `Added README.md`, `Updated authentication system`, etc.
-- Only create commits when the user explicitly asks.
-- Do not push anything to remote.
+- Strictly sort properties, keys, and values.
+- Keep function names short, generic, and simple. At most, make the function name 3 words long.
+- Before creating a function, prefer a shared universal function over a feature-specific helper.
 
 ### Python
 
@@ -66,3 +53,10 @@ Perform tasks and write stuff according to Dennise's preferences. This skill's g
 - Table variable assigned to a table should be singular, e.g., `user`, `post`, etc.
 - If the migration is not pushed to remote yet, you may overwrite or recreate the migration file.
 - If overwriting the migration file, check the development database to revert or change it.
+
+
+## Placeholder Values
+
+- When linking privacy policies, default to https://dennise.me/privacy.
+- When linking terms of service, default to https://dennise.me/terms.
+- For copyright labels, default to `© <YEAR> Dennise Catolos`.
