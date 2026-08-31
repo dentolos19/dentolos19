@@ -30,6 +30,7 @@ INDENT_COLORS = {
 
 BREW_PACKAGES = (
     "anomalyco/tap/opencode",
+    "codex",
     "ffmpeg",
     "font-jetbrains-mono-nerd-font",
     "gh",
@@ -90,6 +91,7 @@ AGENT_SKILLS = {
         "web-design-guidelines",
     ),
     "vercel-labs/skills": ("find-skills",),
+    "effect-ts/skills": ("effect-ts",),
 }
 
 ### Utilities ###
@@ -323,14 +325,20 @@ def install_configurations():
 
     home_path = Path.home()
 
-    print_message("Installing tools...", indent_size=2)
-    for file in (".editorconfig", ".oxlintrc.json", ".oxfmtrc.json", ".personal"):
+    print_message("Installing personal settings...", indent_size=2)
+    copy_configuration(CONFIG_PATH / ".personal", home_path / ".personal")
+
+    print_message("Installing common settings...", indent_size=2)
+    for file in (".editorconfig", ".oxfmtrc.json", ".oxlintrc.json"):
         copy_file(CONFIG_PATH / file, home_path / file)
 
-    print_message("Installing Codex config...", indent_size=2)
+    # print_message("Installing Starship settings...", indent_size=2)
+    # copy_file(CONFIG_PATH / "starship.toml", home_path / ".config" / "starship.toml")
+
+    print_message("Installing Codex settings...", indent_size=2)
     copy_tree(CONFIG_PATH / "codex", home_path / ".codex", dirs_exist_ok=True)
 
-    print_message("Installing OpenCode config...", indent_size=2)
+    print_message("Installing OpenCode settings...", indent_size=2)
     copy_configuration(CONFIG_PATH / "opencode.json", home_path / ".config" / "opencode" / "opencode.json")
 
     install_skills()

@@ -88,12 +88,6 @@
         "apiKey": "{env:OPENROUTER_API_KEY}"
       }
     },
-    "hetzner": {
-      "options": {
-        "baseURL": "https://inference.hetzner.com/api/v1",
-        "apiKey": "{env:HETZNER_API_KEY}"
-      }
-    },
     "platformai": {
       "name": "Platform AI",
       "models": {
@@ -131,5 +125,6 @@
       "type": "local",
       "command": ["bunx", "--bun", "@playwright/mcp"]
     }
-  }
+  },
+  "plugin": ["@dietrichgebert/ponytail"]
 }

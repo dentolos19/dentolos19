@@ -26,8 +26,8 @@ You must follow these rules and instructions written below.
 ## Supplementary Instructions
 
 - Always use the `dennise` skill for my personal preferences in coding.
-- When writing text content, apply the `unslop` skill and merge my preferences from the `dennise` skill.
-- When creating new projects or aligning existing ones, make use of the `conventions` skill.
+- For text, use the `unslop` skill and my preferences from the `dennise` skill.
+- For proper conventions and structure, make use of the `conventions` skill.
 - When resolving Git conflicts, make use of the `resolve` skill.
 
 ## Supporting Files
@@ -42,7 +42,7 @@ Supporting files are useful when you are starting a new session, so do read them
 
 ### `PRODUCT.md`
 
-- Strictly write title as `# Product Definition`.
+- Strictly write title as `# Product Specifications`.
 - Describe the project's problem statement, if any.
 - Define the project's requirements and goals.
 

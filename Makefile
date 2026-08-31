@@ -1,4 +1,4 @@
-.PHONY: help setup
+.PHONY: setup
 
 setup:
 	./setup.py

@@ -1,13 +1,13 @@
 ---
 name: unslop
-description: Rewrite prose to remove recognizable AI-writing patterns. Use for every writing or editing task, including user-facing responses.
+description: Rewrite prose to remove recognizable AI-writing patterns. Use for every writing or editing task.
 ---
 
-# Unsloppify Writings
+# Unsloppify Text
 
 Edit text to remove AI patterns and add human voice.
 
-## Process
+## Workflow
 
 1. Scan for the patterns below.
 2. Rewrite. Preserve meaning, match intended tone.

@@ -1,5 +1,5 @@
 <div align="center">
-  <img alt="Banner" src="assets/banner.png">
+  <img alt="Banner" src="banner.png">
   <br>
   <br>
   <a href="https://dennise.me"><kbd> <br> <span>🌐 My Website</span> <br> </kbd></a> •

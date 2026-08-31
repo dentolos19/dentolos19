@@ -8,3 +8,9 @@ if [ -n "${ZSH_VERSION:-}" ]; then
 else
     eval "$(starship init bash)"
 fi
+
+export NODE_USE_SYSTEM_CA=1
+export NODE_TLS_REJECT_UNAUTHORIZED=0
+
+export CLOUDFLARE_CLIENT_ID="{env:CLOUDFLARE_CLIENT_ID}"
+export CLOUDFLARE_CLIENT_SECRET="{env:CLOUDFLARE_CLIENT_SECRET}"
