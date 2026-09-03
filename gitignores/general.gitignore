@@ -7,6 +7,7 @@
 !.env*.template
 
 # Miscellaneous files
+.tmp/
 .DS_Store
 Desktop.ini
 Thumbs.db

@@ -23,6 +23,12 @@ You must follow these rules and instructions written below.
 - Only create commits when the user explicitly asks.
 - Do not push anything to remote.
 
+## Temporary Files
+
+- If you need to store temporary files, store them in `.tmp/` within the working directory.
+- Anything not related to the codebase may store files temporarily in `.tmp/`.
+- The temporary folder may be used for video generation, document generation, etc.
+
 ## Supplementary Instructions
 
 - Always use the `dennise` skill for my personal preferences in coding.
