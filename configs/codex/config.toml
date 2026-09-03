@@ -46,3 +46,16 @@ args = ["mcp"]
 [mcp_servers."1password"]
 enabled = true
 command = "1password-mcp"
+
+[marketplaces.ponytail]
+source_type = "git"
+source = "https://github.com/DietrichGebert/ponytail.git"
+
+[plugins."computer-use@openai-bundled"]
+enabled = true
+
+[plugins."browser@openai-bundled"]
+enabled = true
+
+[plugins."ponytail@ponytail"]
+enabled = true

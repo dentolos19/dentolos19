@@ -257,70 +257,77 @@ def install_packages():
     )
 
     for package in BREW_PACKAGES:
+        print_message(f"Installing {package}...", indent_size=2)
         if package in installed_packages:
-            print_message(f"{package} is already installed. Skipping...", indent_size=2, color=MUTED_COLOR)
             continue
 
-        print_message(f"Installing {package}...", indent_size=2)
         run_command([brew, "install", package])
 
     print_message("Packages installed successfully!", indent_size=2, color=SUCCESS_COLOR)
 
 
-def install_skills():
-    bun = shutil.which("bun")
-    if not bun:
-        print_message("Bun is not available. Skipping...", indent_size=2, color=WARNING_COLOR)
-        return
+def install_configurations():
+    def install_plugins():
+        codex = shutil.which("codex")
+        if not codex:
+            raise OSError("Codex CLI is not available after installation.")
 
-    print_message("Installing skills...", indent_size=2)
-    print_message("Updating skills CLI...", indent_size=4)
-    run_command([bun, "add", "--global", "skills@latest"])
+        print_message("Installing plugins...", indent_size=2)
+        print_message("Installing Ponytail...", indent_size=4)
+        run_command([codex, "plugin", "marketplace", "add", "https://github.com/DietrichGebert/ponytail.git"])
+        run_command([codex, "plugin", "add", "ponytail@ponytail"])
 
-    skills = shutil.which("skills")
-    if not skills:
-        raise OSError("The skills CLI is not available after installation.")
+    def install_skills():
+        bun = shutil.which("bun")
+        if not bun:
+            print_message("Bun is not available. Skipping...", indent_size=2, color=WARNING_COLOR)
+            return
 
-    installed_skills = {
-        entry["name"]
-        for entry in json.loads(
-            subprocess.run(
-                [skills, "list", "--global", "--agent", "codex", "--json"],
-                check=True,
-                capture_output=True,
-                text=True,
-            ).stdout
+        print_message("Installing skills...", indent_size=2)
+        print_message("Updating skills CLI...", indent_size=4)
+        run_command([bun, "add", "--global", "skills@latest"])
+
+        skills = shutil.which("skills")
+        if not skills:
+            raise OSError("The skills CLI is not available after installation.")
+
+        installed_skills = {
+            entry["name"]
+            for entry in json.loads(
+                subprocess.run(
+                    [skills, "list", "--global", "--agent", "codex", "--json"],
+                    check=True,
+                    capture_output=True,
+                    text=True,
+                ).stdout
+            )
+        }
+
+        for source, source_skills in AGENT_SKILLS.items():
+            for skill in source_skills:
+                print_message(f"Installing {skill}...", indent_size=4)
+                if skill in installed_skills:
+                    continue
+
+                run_command([skills, "add", source, "--global", "--agent", "codex", "--skill", skill, "--yes"])
+
+        skill_paths = (
+            Path.home() / ".agents" / "skills",
+            Path.home() / ".codex" / "skills",
         )
-    }
+        for path in skill_paths:
+            path.mkdir(parents=True, exist_ok=True)
 
-    for source, source_skills in AGENT_SKILLS.items():
-        for skill in source_skills:
-            if skill in installed_skills:
-                print_message(f"{skill} is already installed. Skipping...", indent_size=4, color=MUTED_COLOR)
+        for skill_path in (SCRIPT_PATH / "skills").iterdir():
+            if not skill_path.is_dir() or not (skill_path / "SKILL.md").is_file():
                 continue
 
-            print_message(f"Installing {skill}...", indent_size=4)
-            run_command([skills, "add", source, "--global", "--agent", "codex", "--skill", skill, "--yes"])
+            target_paths = tuple(path / skill_path.name for path in skill_paths)
+            print_message(f"Installing {skill_path.name} (local)...", indent_size=4)
 
-    skill_paths = (
-        Path.home() / ".agents" / "skills",
-        Path.home() / ".codex" / "skills",
-    )
-    for path in skill_paths:
-        path.mkdir(parents=True, exist_ok=True)
+            for target_path in target_paths:
+                copy_tree(skill_path, target_path)
 
-    for skill_path in (SCRIPT_PATH / "skills").iterdir():
-        if not skill_path.is_dir() or not (skill_path / "SKILL.md").is_file():
-            continue
-
-        target_paths = tuple(path / skill_path.name for path in skill_paths)
-        print_message(f"Installing {skill_path.name} (local)...", indent_size=4)
-
-        for target_path in target_paths:
-            copy_tree(skill_path, target_path)
-
-
-def install_configurations():
     print_message("Installing configurations...")
 
     home_path = Path.home()
@@ -341,7 +348,12 @@ def install_configurations():
     print_message("Installing OpenCode settings...", indent_size=2)
     copy_configuration(CONFIG_PATH / "opencode.json", home_path / ".config" / "opencode" / "opencode.json")
 
+    print_message("Installing Playwright settings...", indent_size=2)
+    copy_configuration(CONFIG_PATH / "playwright.json", home_path / ".playwright" / "cli.config.json")
+
+    install_plugins()
     install_skills()
+
     print_message("Configurations installed successfully!", indent_size=2, color=SUCCESS_COLOR)
 
 
