@@ -18,14 +18,17 @@ HOMEBREW_INSTALL = "https://raw.githubusercontent.com/Homebrew/install/HEAD/inst
 RESET_COLOR = "\033[0m"
 HEADING_COLOR = "\033[1;36m"
 ACTION_COLOR = "\033[94m"
+GROUP_COLOR = "\033[95m"
+MUTED_COLOR = "\033[90m"
 SUCCESS_COLOR = "\033[92m"
 WARNING_COLOR = "\033[93m"
-MUTED_COLOR = "\033[90m"
 ERROR_COLOR = "\033[91m"
+
 INDENT_COLORS = {
     0: HEADING_COLOR,
     2: ACTION_COLOR,
-    4: MUTED_COLOR,
+    4: GROUP_COLOR,
+    6: MUTED_COLOR,
 }
 
 BREW_PACKAGES = (
@@ -42,56 +45,9 @@ BREW_PACKAGES = (
 )
 
 AGENT_SKILLS = {
-    "anthropics/skills": (
-        "canvas-design",
-        "docx",
-        "frontend-design",
-        "mcp-builder",
-        "pdf",
-        "pptx",
-        "skill-creator",
-        "xlsx",
-    ),
-    "cloudflare/skills": (
-        "agents-sdk",
-        "cloudflare-email-service",
-        "cloudflare",
-        "durable-objects",
-        "turnstile-spin",
-        "web-perf",
-        "workers-best-practices",
-        "wrangler",
-    ),
-    "coreyhaines31/marketingskills": (
-        "copywriting",
-        "marketing-psychology",
-        "programmatic-seo",
-        "seo-audit",
-    ),
-    "freshtechbro/claudedesignskills": (
-        "animated-component-libraries",
-        "animejs",
-        "gsap-scrolltrigger",
-        "modern-web-design",
-        "motion-framer",
-        "react-three-fiber",
-        "threejs-webgl",
-        "web3d-integration-patterns",
-    ),
-    "heygen-com/hyperframes": ("hyperframes",),
-    "microsoft/playwright-cli": ("playwright-cli",),
-    "remotion-dev/skills": ("remotion-best-practices",),
-    "roboflow/computer-vision-skills": ("roboflow-api-reference", "roboflow-inference"),
     "shadcn/ui": ("shadcn",),
-    "vercel-labs/agent-skills": (
-        "vercel-composition-patterns",
-        "vercel-react-best-practices",
-        "vercel-react-native-skills",
-        "vercel-react-view-transitions",
-        "web-design-guidelines",
-    ),
-    "vercel-labs/skills": ("find-skills",),
     "effect-ts/skills": ("effect-ts",),
+    "microsoft/playwright-cli": ("playwright-cli",),
 }
 
 ### Utilities ###
@@ -204,7 +160,7 @@ def get_homebrew():
 
 
 def run_command(command: list[str]):
-    subprocess.run(command, check=True, stdout=subprocess.DEVNULL)
+    subprocess.run(command, check=True, stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
 
 
 def copy_file(source: Path, target: Path):
@@ -291,42 +247,52 @@ def install_configurations():
         if not skills:
             raise OSError("The skills CLI is not available after installation.")
 
+        required_agents = {"Codex", "Claude Code"}
         installed_skills = {
             entry["name"]
             for entry in json.loads(
                 subprocess.run(
-                    [skills, "list", "--global", "--agent", "codex", "--json"],
+                    [skills, "list", "--global", "--agent", "codex", "claude-code", "--json"],
                     check=True,
                     capture_output=True,
                     text=True,
                 ).stdout
             )
+            if required_agents <= set(entry["agents"])
         }
 
         for source, source_skills in AGENT_SKILLS.items():
+            print_message(f"Installing {source}...", indent_size=4)
             for skill in source_skills:
-                print_message(f"Installing {skill}...", indent_size=4)
+                print_message(f"Installing {skill}...", indent_size=6)
                 if skill in installed_skills:
                     continue
 
-                run_command([skills, "add", source, "--global", "--agent", "codex", "--skill", skill, "--yes"])
+                run_command(
+                    [skills, "add", source, "--global", "--agent", "codex", "claude-code", "--skill", skill, "--yes"]
+                )
 
-        skill_paths = (
-            Path.home() / ".agents" / "skills",
-            Path.home() / ".codex" / "skills",
-        )
-        for path in skill_paths:
-            path.mkdir(parents=True, exist_ok=True)
-
-        for skill_path in (SCRIPT_PATH / "skills").iterdir():
+        print_message("Installing custom skills...", indent_size=4)
+        for skill_path in sorted((SCRIPT_PATH / "skills").iterdir()):
             if not skill_path.is_dir() or not (skill_path / "SKILL.md").is_file():
                 continue
 
-            target_paths = tuple(path / skill_path.name for path in skill_paths)
-            print_message(f"Installing {skill_path.name} (local)...", indent_size=4)
-
-            for target_path in target_paths:
-                copy_tree(skill_path, target_path)
+            print_message(f"Installing {skill_path.name}...", indent_size=6)
+            run_command(
+                [
+                    skills,
+                    "add",
+                    str(SCRIPT_PATH / "skills"),
+                    "--global",
+                    "--agent",
+                    "codex",
+                    "claude-code",
+                    "--skill",
+                    skill_path.name,
+                    "--yes",
+                    "--copy",
+                ]
+            )
 
     print_message("Installing configurations...")
 

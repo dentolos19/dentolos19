@@ -32,28 +32,6 @@ You must follow these rules and instructions written below.
 ## Supplementary Instructions
 
 - Always use the `dennise` skill for my personal preferences in coding.
-- For text, use the `unslop` skill and my preferences from the `dennise` skill.
-- For proper conventions and structure, make use of the `conventions` skill.
+- Always follow the `conventions` skill flexibly.
+- For text, use the `prose` skill and my preferences from the `dennise` skill.
 - When resolving Git conflicts, make use of the `resolve` skill.
-
-## Supporting Files
-
-Supporting files are useful when you are starting a new session, so do read them if they exist. If the user requests, create these supporting based on the description below. Make all of these files as a source-of-truth, do not put external online references.
-
-### `AGENTS.md`
-
-- Strictly write title as `# Agent Instructions`.
-- Describe the project's structure and conventions.
-- Define the tech stack and APIs used.
-
-### `PRODUCT.md`
-
-- Strictly write title as `# Product Specifications`.
-- Describe the project's problem statement, if any.
-- Define the project's requirements and goals.
-
-### `DESIGN.md`
-
-- Strictly write title as `# Design System`.
-- Describe colors and theming rules.
-- What components are they using? (e.g., shadcn/ui, MUI)

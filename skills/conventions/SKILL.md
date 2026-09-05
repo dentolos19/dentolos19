@@ -1,33 +1,25 @@
 ---
 name: conventions
-description: Create, restructure, or align projects using Dennise's conventions. Use when creating a new project or when the user asks.
+description: Apply Dennise's project structure, configuration, and formatting conventions whenever creating or changing projects. Use Flexible mode by default and Strict mode only when explicitly requested.
 ---
 
 # Project Conventions
 
-Use them as defaults for new projects and when aligning existing ones. Explicit user decisions, local instructions, and compatibility requirements override them. Do not refactor working code only to match an example.
+Inspect the project's instructions, layout, manifests, and configuration first. Apply the relevant conventions below alongside the `dennise` skill.
 
-## Workflow
+## Modes
 
-1. Inspect the current repository before changing it. Read local instructions, Git status, the file tree, manifests, lockfiles, the Makefile, environment templates, runtime configuration, workflows, deployment files, and relevant documentation.
-2. Identify the actual process and deployment boundaries. Choose the smallest layout that represents those boundaries; do not split a single application or combine independently deployed services for visual symmetry.
-3. Compare the project with the applicable conventions. Separate missing conventions from intentional product, framework, platform, and compatibility differences.
-4. For an existing project, propose broad moves, package-manager migrations, deletions, or boundary changes before applying them. For a new project, establish the selected layout and root Makefile from the beginning.
-5. Keep package-native commands behind the Make interface. Update documentation, editor launch settings, CI paths, imports, generated-file rules, deployment configuration, and environment templates whenever structure or commands change.
-6. Run make check, then any relevant existing build or type-generation command. Do not add a test suite merely to satisfy the convention, and do not run tests or browser tests unless the user requested them. Never deploy, publish, push, or trigger a remote workflow without explicit authorization.
-7. Report the selected project shape, Make targets, project boundaries, intentional deviations, and validation results.
+- **Flexible (default)**: Always apply during project work. Fit conventions into the existing structure and tooling. Keep changes within the task; use these defaults for new files and missing configuration without reorganizing unrelated code.
+- **Strict (explicit only)**: Enforce every applicable convention across the requested project. Move and rename files, align tooling and formatting, and update imports, scripts, CI, and documentation to match. Existing structure alone is not an exception. Preserve behavior and report any compatibility constraint that prevents compliance.
 
-## Core Defaults
+Explicit user choices take precedence in both modes. Stack recommendations apply when choosing a stack; Strict mode does not itself request a framework rewrite.
 
-- Put a `Makefile` at the repository root and make it the canonical human-facing interface.
-- Keep a single application at the repository root. For a mixed-runtime system, use `src/app` for the frontend, `src/server` for the backend, and `src/<role>` for additional processes (e.g., `src/simulator`).
+## References
 
-## Convention Routing
+Read only what the task needs; read all applicable references for Strict alignment.
 
-Read only the references relevant to the task:
-
-- Read [references/layout.md](references/layout.md) whenever creating, restructuring, or reviewing project structure.
-- Read [references/makefile.md](references/makefile.md) whenever creating or changing commands, development startup, onboarding, documentation, or repository orchestration.
-- Read [references/delivery.md](references/delivery.md) when environment files, ignore files, Docker, Compose, editor launch settings, GitHub Actions, Cloudflare, or Fly.io are in scope.
-- Read [references/typescript.md](references/typescript.md) for a JavaScript, TypeScript, React, or Cloudflare Worker project.
-- Read [references/python.md](references/python.md) for a Python application, web service, or CLI project.
+- [**Layout**](references/layout.md): Directories, naming, and project boundaries.
+- [**Configuration**](references/configuration.md): Commands, package managers, formatting, and environment files.
+- [**Documentation**](references/documentation.md): Project documents and titles.
+- [**Git**](references/git.md): Tracked files and commits.
+- [**Stack**](references/stack.md): Defaults when choosing technologies.

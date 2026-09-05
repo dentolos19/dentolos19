@@ -1,9 +1,9 @@
 ---
-name: unslop
-description: Rewrite prose to remove recognizable AI-writing patterns. Use for every writing or editing task.
+name: prose
+description: Write or edit prose using Dennise's writing preferences and remove recognizable AI-writing patterns. Use for every writing or editing task.
 ---
 
-# Unsloppify Text
+# Prose Text
 
 Edit text to remove AI patterns and add human voice.
 
@@ -48,10 +48,10 @@ Removing patterns is half the job. Sterile, voiceless writing is just as obvious
 ### Style
 
 13. **Em dash overuse**: Avoid em dashes entirely. Use periods or commas only (no parentheses, no en dashes, no hyphen-as-dash substitutes). Em dashes are an AI tell, and reaching for parentheses instead just trades one tell for another. If a thought needs separation, end the sentence or use a comma.
-14. **Colon overuse**: Colons are fine before a list or example. Not as mid-sentence connectors. "If you're coming from traditional automation: instead of registering event handlers, you describe conditions" adds nothing with the colon. Rewrite to let the point stand on its own without comparison framing. "Describing when the scheduler should fire works best as plain English." Same meaning, no crutch punctuation.
-15. **Boldface overuse**: Don't bold every proper noun or acronym.
-16. **Inline-header lists**: The tell is a bold label and colon that restates the line: "**Performance:** Performance improved...". Convert those to prose. A bold lead-in that ends in a period, names the item, and is followed by genuinely new detail ("**Schema in TypeScript.** Tables live in one file.") is fine, not a tell.
-17. **Title case headings**: Use sentence case.
+14. **Colon Overuse**: Use colons for labeled values, lists, and examples. Avoid them as mid-sentence connectors.
+15. **Boldface Overuse**: Bold key terms selectively. Don't bold every proper noun or acronym.
+16. **Repetitive Labels**: Avoid labels that repeat the sentence, such as "**Performance**: Performance improved...". Keep useful labels in the format `**Key Term**: value`; otherwise, use prose.
+17. **Heading Capitalization**: Capitalize every word in headings and short phrases.
 18. **Decorative emojis**: Remove from headings and bullets.
 19. **Curly quotes**: Replace with straight quotes.
 
