@@ -1,10 +1,10 @@
 #:schema https://developers.openai.com/codex/config-schema.json
 
 model = "gpt-5.6-sol"
-review_model = "gpt-5.6-sol"
+review_model = "gpt-6-astra"
 model_verbosity = "low"
 model_reasoning_effort = "low"
-plan_mode_reasoning_effort = "high"
+# plan_mode_reasoning_effort = "high"
 approval_policy = "never"
 sandbox_mode = "danger-full-access"
 
@@ -36,7 +36,16 @@ supports_websockets = false
 [mcp_servers.monolith]
 enabled = true
 url = "https://mcp.dennise.dev/mcp"
-http_headers = { "CF-Access-Client-Id" = "{env:CLOUDFLARE_CLIENT_ID}", "CF-Access-Client-Secret" = "{env:CLOUDFLARE_CLIENT_SECRET}" }
+
+[mcp_servers.monolith.http_headers]
+"CF-Access-Client-Id" = "{env:CLOUDFLARE_CLIENT_ID}"
+"CF-Access-Client-Secret" = "{env:CLOUDFLARE_CLIENT_SECRET}"
+
+[mcp_servers.composio]
+url = "https://connect.composio.dev/mcp"
+
+[mcp_servers.composio.http_headers]
+"x-consumer-api-key" = "{env:COMPOSIO_API_KEY}"
 
 [mcp_servers.gitkraken]
 enabled = true
@@ -46,6 +55,16 @@ args = ["mcp"]
 [mcp_servers."1password"]
 enabled = true
 command = "1password-mcp"
+
+[mcp_servers.playwright]
+enabled = true
+command = "bunx"
+args = ["--bun", "@playwright/mcp"]
+
+[mcp_servers.blender]
+enabled = true
+command = "uvx"
+args = ["blender-mcp"]
 
 [marketplaces.ponytail]
 source_type = "git"

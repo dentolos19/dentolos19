@@ -1,6 +1,6 @@
 ---
 name: resolve
-description: Inspect and resolve active Git conflicts. Use when files are unmerged or the user asks to reconcile conflicting changes.
+description: Inspect and resolve active Git conflicts.
 ---
 
 # Resolve Conflicts

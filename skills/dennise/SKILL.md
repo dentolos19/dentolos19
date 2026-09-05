@@ -1,6 +1,6 @@
 ---
 name: dennise
-description: Apply Dennise's personal preferences for writing, coding, and values. This skill must always be used.
+description: Apply personal preferences for writing, coding, and values. This skill must always be used.
 ---
 
 # Dennise's Preferences

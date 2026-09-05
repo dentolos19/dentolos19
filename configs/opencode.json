@@ -10,38 +10,38 @@
       "description": "Writes, edits, and tests code to implement features and fix bugs."
     },
     "plan": {
-      "model": "openrouter/pareto-code",
+      "model": "openrouter/openrouter/pareto-code",
       "variant": "high",
       "description": "Researches the codebase and plans changes without modifying files.",
       "hidden": true // Not used.
     },
     "general": {
-      "model": "openrouter/pareto-code",
+      "model": "openrouter/openrouter/pareto-code",
       "variant": "medium",
       "hidden": true
     },
     "explore": {
-      "model": "openrouter/pareto-code",
+      "model": "openrouter/openrouter/pareto-code",
       "variant": "medium",
       "hidden": true
     },
     "title": {
-      "model": "openrouter/pareto-code",
+      "model": "openrouter/openrouter/pareto-code",
       "variant": "low"
     },
     "summary": {
-      "model": "openrouter/pareto-code",
+      "model": "openrouter/openrouter/pareto-code",
       "variant": "low"
     },
     "compaction": {
-      "model": "openrouter/pareto-code",
+      "model": "openrouter/openrouter/pareto-code",
       "variant": "low"
     }
   },
   "command": {
     "review": {
       "agent": "build",
-      "model": "openrouter/pareto-code",
+      "model": "openrouter/openrouter/pareto-code",
       "variant": "high",
       "subtask": true,
       "description": "Run a thorough code review of the current staged and unstaged changes.",
@@ -49,14 +49,14 @@
     },
     "resolve": {
       "agent": "build",
-      "model": "openrouter/pareto-code",
+      "model": "openrouter/openrouter/pareto-code",
       "variant": "medium",
       "description": "Automatically resolve Git merge conflicts in the current repository.",
       "template": "Resolve all current Git merge conflicts automatically. Inspect the repository status and every conflicted file, understand both sides and the intended code behavior, resolve all conflict markers without discarding valid changes, and verify that no conflicts remain. Run the most relevant available checks after resolution. Do not stop at explaining the conflicts: make the edits. If there are no conflicts, report that clearly. Additional conflict-resolution instructions: $ARGUMENTS"
     },
     "export": {
       "agent": "build",
-      "model": "openrouter/pareto-code",
+      "model": "openrouter/openrouter/pareto-code",
       "variant": "low",
       "subtask": true,
       "description": "Export the session context into a markdown file.",
@@ -65,25 +65,6 @@
   },
   "provider": {
     "openrouter": {
-      "models": {
-        "pareto-code": {
-          "id": "openrouter/pareto-code",
-          "name": "Pareto Code Router",
-          "reasoning": true,
-          "tool_call": true,
-          "variants": {
-            "high": {
-              "plugins": [{ "id": "pareto-router", "min_coding_score": 0.8 }]
-            },
-            "medium": {
-              "plugins": [{ "id": "pareto-router", "min_coding_score": 0.5 }]
-            },
-            "low": {
-              "plugins": [{ "id": "pareto-router", "min_coding_score": 0.25 }]
-            }
-          }
-        }
-      },
       "options": {
         "apiKey": "{env:OPENROUTER_API_KEY}"
       }
@@ -113,6 +94,13 @@
         "CF-Access-Client-Secret": "{env:CLOUDFLARE_CLIENT_SECRET}"
       }
     },
+    "composio": {
+      "type": "remote",
+      "url": "https://connect.composio.dev/mcp",
+      "headers": {
+        "X-Consumer-Api-Key": "Bearer {env:COMPOSIO_API_KEY}"
+      }
+    },
     "gitkraken": {
       "type": "local",
       "command": ["gk", "mcp"]
@@ -124,6 +112,10 @@
     "playwright": {
       "type": "local",
       "command": ["bunx", "--bun", "@playwright/mcp"]
+    },
+    "blender": {
+      "type": "local",
+      "command": ["uvx", "blender-mcp"]
     }
   },
   "plugin": ["@dietrichgebert/ponytail"]
