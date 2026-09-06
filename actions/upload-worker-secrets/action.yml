@@ -28,8 +28,8 @@ runs:
       working-directory: ${{ inputs.working-directory }}
       env:
         ACTION_PATH: ${{ github.action_path }}
-        INPUT_CONFIG: ${{ inputs.config }}
-        INPUT_ENVIRONMENT: ${{ inputs.environment }}
         INPUT_SECRETS: ${{ inputs.secrets }}
         INPUT_WORKER_NAME: ${{ inputs.worker-name }}
+        INPUT_ENVIRONMENT: ${{ inputs.environment }}
+        INPUT_CONFIG: ${{ inputs.config }}
       run: bash "$ACTION_PATH/entrypoint.sh"
