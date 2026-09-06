@@ -45,7 +45,12 @@ BREW_PACKAGES = (
 )
 
 AGENT_SKILLS = {
-    "shadcn/ui": ("shadcn",),
+    "anthropics/skills": (
+        "frontend-design",
+        "skill-creator",
+    ),
+    "heygen-com/hyperframes": ("hyperframes",),
+    "shadcn-ui/ui": ("shadcn",),
     "effect-ts/skills": ("effect-ts",),
     "microsoft/playwright-cli": ("playwright-cli",),
 }
@@ -310,9 +315,11 @@ def install_configurations():
 
     print_message("Installing Codex settings...", indent_size=2)
     copy_tree(CONFIG_PATH / "codex", home_path / ".codex", dirs_exist_ok=True)
+    copy_file(SCRIPT_PATH / "AGENTS.md", home_path / ".codex" / "AGENTS.md")
 
     print_message("Installing OpenCode settings...", indent_size=2)
     copy_configuration(CONFIG_PATH / "opencode.json", home_path / ".config" / "opencode" / "opencode.json")
+    copy_file(SCRIPT_PATH / "AGENTS.md", home_path / ".config" / "opencode" / "AGENTS.md")
 
     print_message("Installing Playwright settings...", indent_size=2)
     copy_configuration(CONFIG_PATH / "playwright.json", home_path / ".playwright" / "cli.config.json")

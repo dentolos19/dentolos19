@@ -1,37 +1,33 @@
 # Agent Instructions
 
-You must follow these rules and instructions written below.
-
 ## General Rules
 
 - Make full use of the plugins and tools to help you to retrieve documentations and information.
 - Before making changes, understand the existing codebase structure, conventions, and patterns.
 - Prefer minimal, targeted changes. Avoid refactoring unrelated code unless asked.
+- Use subagents when work can be meaningfully parallelized for complex tasks.
 - Do not write unit tests or do browser testing unless explictly told to do so.
-- Do not invent things on your own, perform research and find dependencies that can help you do it.
+- If my instructions are ambiguous, ask me to clarify before proceeding.
 - If administrator access is required on macOS, request authorization with `osascript`.
 - If administrator access is required on Linux, request authorization with `pkexec`.
 
-## File Rules
+## Subagent Delegation
 
-- When writing `.env` files, always enclose strings with double quotes, even if it is empty.
-- Use `.env.template` for environment variable templates.
-
-## Git Rules
-
-- Write commit messages as past-tense actions, e.g., `Added README.md`, `Updated authentication system`, etc.
-- Only create commits when the user explicitly asks.
-- Do not push anything to remote.
+- Delegate codebase exploration, research, tests, and reviews.
+- Break complex tasks into independent subtasks.
+- Give each subagent a narrow objective and expected output.
+- Keep architectural decisions, integration, and final verification in the parent agent.
+- Do not delegate trivial work where coordination would cost more than doing it directly.
 
 ## Temporary Files
 
 - If you need to store temporary files, store them in `.tmp/` within the working directory.
 - Anything not related to the codebase may store files temporarily in `.tmp/`.
-- The temporary folder may be used for video generation, document generation, etc.
+- The temporary folder may be used for temporary scripts, output artifacts, etc.
 
 ## Supplementary Instructions
 
-- Always use the `dennise` skill for my personal preferences in coding.
-- Always follow the `conventions` skill flexibly.
-- For text, use the `prose` skill and my preferences from the `dennise` skill.
+- Always use the `dennise` skill for my personal preferences.
+- Follow the `conventions` skill where possible.
+- Use the `prose` skill for writing and removing AI-generated patterns.
 - When resolving Git conflicts, make use of the `resolve` skill.

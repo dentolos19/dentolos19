@@ -12,7 +12,7 @@ Perform tasks and write stuff according to Dennise's preferences. This skill's g
 - Use American English spelling.
 - Use bold for key terms with the colon outside the bold markers, e.g., `**Key Term**: value`.
 - Always end full sentences with a period, even in bullet points.
-- For short phrases or headings, always capitalize all words.
+- For headings and titles, always capitalize all words.
 - Use Mermaid syntax when displaying diagrams.
 
 ## Coding Preferences
@@ -53,7 +53,6 @@ Perform tasks and write stuff according to Dennise's preferences. This skill's g
 - Table variable assigned to a table should be singular, e.g., `user`, `post`, etc.
 - If the migration is not pushed to remote yet, you may overwrite or recreate the migration file.
 - If overwriting the migration file, check the development database to revert or change it.
-
 
 ## Placeholder Values
 

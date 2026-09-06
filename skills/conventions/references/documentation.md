@@ -1,28 +1,43 @@
 # Documentation
 
-## `README.md`
+## Common Files
+
+Creating these files are optional. If the user request to create or they already exists, create or edit them according to the rules below.
+
+### `README.md`
 
 - Start with `# <Icon> <Project Name>`.
 - Describe the project's entire purpose in one simple sentence.
-- Show an application preview when one exists.
-- Add only useful sections such as `Installation` or `Tutorials`.
 - End with `## License` and link to the project's license exactly once.
+- If there is no existing license, use MIT License by default.
 - Always keep this file at the repository root.
 
-## `AGENTS.md`
+#### Example
+
+```
+# Project
+
+A simple app with a purpose.
+
+## License
+
+Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
+```
+
+### `AGENTS.md`
 
 - Strictly write title as `# Agent Instructions`.
 - Describe the project's structure and conventions.
 - Define the tech stack and APIs used.
 
-## `PRODUCT.md`
+### `PRODUCT.md`
 
 - Strictly write title as `# Product Specifications`.
 - Describe the project's problem statement, if any.
 - Define the project's requirements and goals.
 - Always keep this file at the repository root.
 
-## `DESIGN.md`
+### `DESIGN.md`
 
 - Strictly write title as `# Design System`.
 - Describe colors and theming rules.

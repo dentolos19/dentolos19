@@ -1,6 +1,6 @@
 # Setup
 
-Firstly, run the setup script:
+First, run the setup script:
 
 ```bash
 chmod +x ./setup.py # Allow execute permission.

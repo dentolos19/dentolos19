@@ -24,6 +24,13 @@ code = '"JetBrainsMono Nerd Font Mono"'
 enabled = true
 default_subagent_model = "gpt-5.6-luna"
 default_subagent_reasoning_effort = "high"
+max_concurrent_threads_per_session = 5
+
+[features.context_management]
+experimental_mode = true
+
+[features.multi_agent_v2]
+enabled = true
 
 [model_providers.openrouter]
 name = "OpenRouter"

@@ -51,7 +51,7 @@ Removing patterns is half the job. Sterile, voiceless writing is just as obvious
 14. **Colon Overuse**: Use colons for labeled values, lists, and examples. Avoid them as mid-sentence connectors.
 15. **Boldface Overuse**: Bold key terms selectively. Don't bold every proper noun or acronym.
 16. **Repetitive Labels**: Avoid labels that repeat the sentence, such as "**Performance**: Performance improved...". Keep useful labels in the format `**Key Term**: value`; otherwise, use prose.
-17. **Heading Capitalization**: Capitalize every word in headings and short phrases.
+17. **Heading Capitalization**: Capitalize every word in headings and titles.
 18. **Decorative emojis**: Remove from headings and bullets.
 19. **Curly quotes**: Replace with straight quotes.
 

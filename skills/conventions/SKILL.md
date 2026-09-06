@@ -16,14 +16,17 @@ Use Flexible mode by default and Strict mode only when explicitly requested.
 
 ## Rules
 
-- Always keep documentation up-to-date.
+- Always keep documentation up-to-date when making changes to the project.
 - When following conventions, always follow the exact sorting or positioning of the properties, rules, or sections.
-- Reference the existing examples for guidance.
-- Follow the references for the specific conventions.
+- Reference the example listed below for base templates.
+- Follow the references below for the specific conventions.
+- When referencing an example, copy its formatting, workflows, and configurations.
+- When copying, it must be exactly the same, including the order of properties, rules, and sections.
+- You may add additional properties, rules, or sections to the example when the project needs it.
 
 ## Examples
 
-- [**dentolos19/denizen**](https://github.com/dentolos19/denizen): A standalone full-stack TypeScript application.
+- [**dentolos19/denizen**](https://github.com/dentolos19/denizen): A standalone full-stack TypeScript application
 - [**dentolos19/ecoprimers**](https://github.com/dentolos19/ecoprimers): A standalone full-stack Python application.
 - [**dentolos19/facilix**](https://github.com/dentolos19/facilix): A multi-project full-stack TypeScript application with a Python backend.
 
