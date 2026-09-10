@@ -33,6 +33,7 @@ INDENT_COLORS = {
 
 BREW_PACKAGES = (
     "anomalyco/tap/opencode",
+    "claude-code",
     "codex",
     "ffmpeg",
     "font-jetbrains-mono-nerd-font",
@@ -233,10 +234,16 @@ def install_configurations():
         if not codex:
             raise OSError("Codex CLI is not available after installation.")
 
+        claude = shutil.which("claude")
+        if not claude:
+            raise OSError("Claude Code CLI is not available after installation.")
+
         print_message("Installing plugins...", indent_size=2)
         print_message("Installing Ponytail...", indent_size=4)
         run_command([codex, "plugin", "marketplace", "add", "https://github.com/DietrichGebert/ponytail.git"])
         run_command([codex, "plugin", "add", "ponytail@ponytail"])
+        run_command([claude, "plugin", "marketplace", "add", "https://github.com/DietrichGebert/ponytail.git"])
+        run_command([claude, "plugin", "install", "ponytail@ponytail"])
 
     def install_skills():
         bun = shutil.which("bun")
@@ -309,6 +316,9 @@ def install_configurations():
     print_message("Installing common settings...", indent_size=2)
     for file in (".editorconfig", ".oxfmtrc.json", ".oxlintrc.json"):
         copy_file(CONFIG_PATH / file, home_path / file)
+
+    print_message("Installing Claude Code settings...", indent_size=2)
+    copy_file(SCRIPT_PATH / "AGENTS.md", home_path / ".claude" / "CLAUDE.md")
 
     # print_message("Installing Starship settings...", indent_size=2)
     # copy_file(CONFIG_PATH / "starship.toml", home_path / ".config" / "starship.toml")

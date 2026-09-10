@@ -24,7 +24,7 @@ code = '"JetBrainsMono Nerd Font Mono"'
 enabled = true
 default_subagent_model = "gpt-5.6-luna"
 default_subagent_reasoning_effort = "high"
-max_concurrent_threads_per_session = 5
+max_concurrent_threads_per_session = 10
 
 [features.context_management]
 experimental_mode = true
