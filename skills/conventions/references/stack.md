@@ -1,23 +1,23 @@
 # Stack
 
-Use these defaults when choosing tools. Add only what the project needs and adapt to existing tooling in Flexible mode.
+Use this reference only when choosing or changing frameworks, libraries, services, or tools. Preserve the existing stack in Flexible mode. Treat these as defaults for new choices, not requirements that override an explicit user choice or an established project dependency.
 
 ## TypeScript
 
-- [**TanStack Start**](https://tanstack.com/start/latest): The main framework for full-stack web applications, with routing, server rendering, and server functions.
-- [**TanStack Libraries**](https://tanstack.com): Use the relevant libraries for routing, data fetching, forms, tables, and other application needs.
-- [**shadcn/ui**](https://ui.shadcn.com/docs): Reusable UI components whose source lives in the project and can be customized.
-- [**Drizzle ORM**](https://orm.drizzle.team/docs/overview): Define database schemas and write typed SQL queries. Use Drizzle Kit to generate and manage migrations.
-- [**Bun**](https://bun.sh/docs): Manage dependencies and run JavaScript and TypeScript scripts. Use `bunx` for one-off tools.
-- [**Oxc**](https://oxc.rs/docs/guide/introduction.html): Use Oxfmt for formatting and Oxlint for linting JavaScript and TypeScript.
+- [**TanStack Start**](https://tanstack.com/start/latest): Full-stack web applications with routing, server rendering, and server functions.
+- [**TanStack Libraries**](https://tanstack.com): Routing, data fetching, forms, tables, and related application needs.
+- [**shadcn/ui**](https://ui.shadcn.com/docs): Reusable components whose source lives in the project and can be customized.
+- [**Drizzle ORM**](https://orm.drizzle.team/docs/overview): Typed database schemas and SQL queries; use Drizzle Kit for migrations.
+- [**Bun**](https://bun.sh/docs): JavaScript and TypeScript dependencies and scripts; use `bunx` for one-off tools.
+- [**Oxc**](https://oxc.rs/docs/guide/introduction.html): Oxfmt for formatting and Oxlint for JavaScript and TypeScript linting.
 
 ## Python
 
-- [**uv**](https://docs.astral.sh/uv): Manage Python versions, environments, dependencies, and lockfiles. Run project commands with `uv run`.
-- [**ty**](https://docs.astral.sh/ty): Check Python types and report type errors without running the application.
-- [**Ruff**](https://docs.astral.sh/ruff): Format Python code and check or fix lint issues.
+- [**uv**](https://docs.astral.sh/uv): Python versions, environments, dependencies, and lockfiles; run project commands with `uv run`.
+- [**ty**](https://docs.astral.sh/ty): Python type checking without running the application.
+- [**Ruff**](https://docs.astral.sh/ruff): Python formatting and linting.
 
 ## Services
 
-- [**Neon**](https://neon.com/docs): Host PostgreSQL databases with database branching for isolated development environments.
-- [**Cloudflare**](https://developers.cloudflare.com): Deploy applications and APIs on Workers with Wrangler. Use services such as R2, D1, and KV when needed.
+- [**Neon**](https://neon.com/docs): PostgreSQL hosting with database branching for isolated development.
+- [**Cloudflare**](https://developers.cloudflare.com): Deployment on Workers with Wrangler, plus R2, D1, and KV when needed.

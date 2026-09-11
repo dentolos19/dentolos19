@@ -1,38 +1,32 @@
 ---
 name: conventions
-description: Apply proper conventions in terms of structure, configuration, and formatting conventions.
+description: Apply repository conventions when changing structure, configuration, documentation, or stack choices.
 ---
 
 # Project Conventions
 
-Inspect the project's current conventions first. Then, apply the relevant conventions below.
+Use this skill when a task needs a decision about repository structure, tooling, documentation, or stack conventions. Inspect only the files relevant to that decision. Use Flexible mode unless the user explicitly requests Strict mode.
 
 ## Modes
 
-Use Flexible mode by default and Strict mode only when explicitly requested.
+- **Flexible (default)**: Fit applicable conventions into the existing structure and tooling. Preserve project choices and add only what the task needs.
+- **Strict (explicit only)**: Enforce applicable conventions across the requested scope, including file moves or renames and related import, script, CI, and documentation updates.
 
-- **Flexible (default)**: Always apply during project work. Fit conventions into the existing structure and tooling.
-- **Strict**: Enforce every applicable convention across the requested project. Move and rename files, align tooling and formatting, and update imports, scripts, CI, and documentation to match.
+## Routing
 
-## Rules
+Read only the reference that matches the task:
 
-- Always keep documentation up-to-date when making changes to the project.
-- When following conventions, always follow the exact sorting or positioning of the properties, rules, or sections.
-- Reference the example listed below for base templates.
-- Follow the references below for the specific conventions.
-- When referencing an example, copy its formatting, workflows, and configurations.
-- When copying, it must be exactly the same, including the order of properties, rules, and sections.
-- You may add additional properties, rules, or sections to the example when the project needs it.
+- [Layout](references/layout.md) for directories, naming, file moves, or project boundaries.
+- [Configuration](references/configuration.md) for commands, package managers, formatters, linters, ignore files, or environment templates.
+- [Documentation](references/documentation.md) for README, AGENTS, PRODUCT, DESIGN, or maintained project docs.
+- [Stack](references/stack.md) for framework, library, service, or tool choices.
 
-## Examples
+When a reference conflicts with established project behavior, follow the project in Flexible mode. Preserve explicit user choices in either mode. Keep documentation current when a change affects behavior, structure, or setup.
 
-- [**dentolos19/denizen**](https://github.com/dentolos19/denizen): A standalone full-stack TypeScript application
-- [**dentolos19/ecoprimers**](https://github.com/dentolos19/ecoprimers): A standalone full-stack Python application.
-- [**dentolos19/facilix**](https://github.com/dentolos19/facilix): A multi-project full-stack TypeScript application with a Python backend.
+## Project Examples
 
-## References
+Consult these only when a comparable project shape helps resolve an ambiguity:
 
-- [**Layout**](references/layout.md): Directories, naming, and project boundaries.
-- [**Configuration**](references/configuration.md): Commands, package managers, formatting, and environment files.
-- [**Documentation**](references/documentation.md): Project documents and titles.
-- [**Stack**](references/stack.md): Frameworks, libraries, and tools.
+- [dentolos19/denizen](https://github.com/dentolos19/denizen): Standalone full-stack TypeScript application.
+- [dentolos19/ecoprimers](https://github.com/dentolos19/ecoprimers): Standalone full-stack Python application.
+- [dentolos19/facilix](https://github.com/dentolos19/facilix): Multi-project full-stack TypeScript application with a Python backend.

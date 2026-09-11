@@ -1,0 +1,6 @@
+interface:
+  brand_color: "#DB2777"
+  display_name: "Dennise"
+  icon_large: "./assets/icon.png"
+  icon_small: "./assets/icon.svg"
+  short_description: "Apply Dennise's personal working preferences"

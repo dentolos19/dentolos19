@@ -1,33 +1,15 @@
 # Agent Instructions
 
-## General Rules
+- Apply the `dennise` skill for personal preferences and `prose` when writing or editing prose.
+- Use `conventions` for structure, tooling, or documentation decisions, and `resolve` for active Git conflicts.
+- Read the files and documentation relevant to the change. Use tools, plugins, and MCPs when they supply needed information.
+- Keep changes within the requested scope and continue through implementation and relevant verification.
+- Resolve routine ambiguity from context. Ask when a missing decision materially changes the requested outcome and cannot be inferred; continue independent work meanwhile.
+- Use subagents for independent parts of complex tasks when the benefit outweighs coordination. Keep integration and final verification with the lead agent.
+- Do not write unit tests or perform browser testing unless explicitly requested. Use applicable existing checks without repeating them after success unless something changes.
+- Store temporary scripts and artifacts in `.tmp/` within the working directory.
+- When administrator authorization is needed, use `osascript` on macOS or `pkexec` on Linux, subject to the environment's permissions.
 
-- Make full use of the plugins and tools to help you to retrieve documentations and information.
-- Before making changes, understand the existing codebase structure, conventions, and patterns.
-- Prefer minimal, targeted changes. Avoid refactoring unrelated code unless asked.
-- Use subagents when work can be meaningfully parallelized for complex tasks.
-- Do not write unit tests or do browser testing unless explictly told to do so.
-- If my instructions are ambiguous, ask me to clarify before proceeding.
-- If administrator access is required on macOS, request authorization with `osascript`.
-- If administrator access is required on Linux, request authorization with `pkexec`.
+## Supplementary Documentations
 
-## Subagent Delegation
-
-- Delegate codebase exploration, research, tests, and reviews.
-- Break complex tasks into independent subtasks.
-- Give each subagent a narrow objective and expected output.
-- Keep architectural decisions, integration, and final verification in the parent agent.
-- Do not delegate trivial work where coordination would cost more than doing it directly.
-
-## Temporary Files
-
-- If you need to store temporary files, store them in `.tmp/` within the working directory.
-- Anything not related to the codebase may store files temporarily in `.tmp/`.
-- The temporary folder may be used for temporary scripts, output artifacts, etc.
-
-## Supplementary Instructions
-
-- Always use the `dennise` skill for my personal preferences.
-- Follow the `conventions` skill where possible.
-- Use the `prose` skill for writing and removing AI-generated patterns.
-- When resolving Git conflicts, make use of the `resolve` skill.
+- [**Writing Skills**](https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra)

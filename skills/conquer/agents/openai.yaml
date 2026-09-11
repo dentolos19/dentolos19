@@ -1,0 +1,6 @@
+interface:
+  brand_color: "#DC2626"
+  display_name: "Conquer"
+  icon_large: "./assets/icon.png"
+  icon_small: "./assets/icon.svg"
+  short_description: "Divide large tasks across coordinated agents"

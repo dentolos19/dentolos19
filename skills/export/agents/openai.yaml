@@ -1,0 +1,6 @@
+interface:
+  brand_color: "#059669"
+  display_name: "Export"
+  icon_large: "./assets/icon.png"
+  icon_small: "./assets/icon.svg"
+  short_description: "Export chats as reusable AI context packages"

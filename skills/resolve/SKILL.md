@@ -1,28 +1,11 @@
 ---
 name: resolve
-description: Inspect and resolve active Git conflicts.
+description: Resolve active Git merge conflicts when the user requests conflict resolution.
 ---
 
 # Resolve Conflicts
 
-# Workflow
-
-1. Detect all conflicting files from git status and conflict markers.
-2. Resolve each conflict with minimal, correctness-first edits.
-3. Prefer preserving both sides when safe. Otherwise, choose the variant that compiles and keeps public behavior stable.
-4. Regenerate lockfiles with package manager tools instead of hand-editing.
-5. Run compile, lint, and relevant tests.
-6. Stage resolved files and summarize key decisions.
-
-# Guardrails
-
-- Keep changes minimal and readable.
-- Do not leave conflict markers in any file.
-- Avoid broad refactors while resolving conflicts.
-- Do not push or tag during conflict resolution.
-
-# Output
-
-- Files resolved.
-- Notable resolution choices.
-- Build/test outcome.
+- Resolve the current unmerged files while preserving the intended behavior of both sides. Inspect the conflicting changes and surrounding code; compilation alone does not determine the correct resolution.
+- Regenerate conflicted lockfiles with the project's package manager. Keep unrelated edits intact.
+- Check that no unmerged entries or accidental conflict markers remain, and run the relevant existing checks permitted by the project. Stage only the resolved files. Do not commit, push, tag, or continue the Git operation unless requested.
+- Report the resolution choices and verification results. If intent cannot be determined, complete independent resolutions and identify the remaining conflict and missing decision.

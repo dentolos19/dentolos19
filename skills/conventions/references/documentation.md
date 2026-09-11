@@ -1,50 +1,35 @@
 # Documentation
 
-## Common Files
+Use this reference when creating or editing project documentation. The files below are optional. Keep them at the repository root when they exist or the task calls for them.
 
-Creating these files are optional. If the user request to create or they already exists, create or edit them according to the rules below.
+## Common Files
 
 ### `README.md`
 
 - Start with `# <Icon> <Project Name>`.
-- Describe the project's entire purpose in one simple sentence.
-- End with `## License` and link to the project's license exactly once.
-- If there is no existing license, use MIT License by default.
-- Always keep this file at the repository root.
-
-#### Example
-
-```
-# Project
-
-A simple app with a purpose.
-
-## License
-
-Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
-```
+- Describe the project's purpose in one simple sentence.
+- End with `## License` and link to the license exactly once.
+- Use the MIT License when no license exists and the task needs a default.
 
 ### `AGENTS.md`
 
-- Strictly write title as `# Agent Instructions`.
-- Describe the project's structure and conventions.
-- Define the tech stack and APIs used.
+- Use the title `# Agent Instructions`.
+- Document the conventions relevant to agents working in the repository.
+- Point to structure, stack, and API details when they matter to a task.
 
 ### `PRODUCT.md`
 
-- Strictly write title as `# Product Specifications`.
-- Describe the project's problem statement, if any.
-- Define the project's requirements and goals.
-- Always keep this file at the repository root.
+- Use the title `# Product Specifications`.
+- Describe the problem statement, if any.
+- Define the requirements and goals.
 
 ### `DESIGN.md`
 
-- Strictly write title as `# Design System`.
+- Use the title `# Design System`.
 - Describe colors and theming rules.
-- What components are they using? (e.g., shadcn/ui, MUI)
-- Always keep this file at the repository root.
+- Name the component system, such as shadcn/ui or MUI.
 
 ## Supporting Files
 
-- Use `/docs` for documentation, notes, and other maintained project context.
+- Use `/docs` for maintained documentation, notes, and project context.
 - Use `/docs/chat` for compacted chat summaries from AI agents.

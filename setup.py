@@ -313,6 +313,16 @@ def install_configurations():
     print_message("Installing personal settings...", indent_size=2)
     copy_configuration(CONFIG_PATH / ".personal", home_path / ".personal")
 
+    print_message("Installing shell configurations...", indent_size=2)
+    shell_name = Path(os.environ.get("SHELL", "bash")).name
+    shell_path = home_path / (".zshrc" if shell_name == "zsh" else ".bashrc")
+    shell_configuration = shell_path.read_text(encoding="utf-8") if shell_path.is_file() else ""
+    personal_commands = {". ~/.personal", "source ~/.personal"}
+    if not any(line.split("#", 1)[0].strip() in personal_commands for line in shell_configuration.splitlines()):
+        separator = "" if not shell_configuration or shell_configuration.endswith("\n") else "\n"
+        with shell_path.open("a", encoding="utf-8") as file:
+            file.write(f"{separator}. ~/.personal\n")
+
     print_message("Installing common settings...", indent_size=2)
     for file in (".editorconfig", ".oxfmtrc.json", ".oxlintrc.json"):
         copy_file(CONFIG_PATH / file, home_path / file)

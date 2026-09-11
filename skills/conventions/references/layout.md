@@ -1,10 +1,12 @@
 # Layouts
 
+Use this reference when adding, moving, or renaming files and directories, or when defining project boundaries. Preserve the existing layout in Flexible mode unless the task requires a new boundary.
+
 ## Repository Layouts
 
 ### Single Project Layout
 
-```
+```text
 .
 |-- .github/
 |-- .vscode/
@@ -36,7 +38,7 @@
 
 ### TypeScript Application
 
-```
+```text
 .
 |-- migrations/
 |-- public/
@@ -52,7 +54,7 @@
 
 ### Python Application
 
-```
+```text
 .
 |-- src/
 |   |-- main.py

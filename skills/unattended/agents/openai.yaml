@@ -1,0 +1,6 @@
+interface:
+  brand_color: "#7C3AED"
+  display_name: "Unattended"
+  icon_large: "./assets/icon.png"
+  icon_small: "./assets/icon.svg"
+  short_description: "Complete tasks without user intervention"

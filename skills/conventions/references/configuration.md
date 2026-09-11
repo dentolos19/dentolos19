@@ -1,54 +1,34 @@
 # Configuration
 
-## Commmon Files
+Use this reference when changing commands, package management, formatting or linting, ignore files, or environment files. In Flexible mode, keep the project's existing tooling and extend it only when the task requires it.
 
-- In all repositories, always have `.editorconfig`, `Makefile`
+## Repository Defaults
 
-## Makefiles
-
-- Always use a `Makefile` as the main human-facing command interface.
-- Provide targets `setup`, `start`, and `check` where applicable.
-- Use the example below as a base template.
-
-### Example
-
-```
-.PHONY: setup start check migrate
-
-setup:
-	bun install
-	$(MAKE) migrate
-
-start:
-	bun run dev
-
-check:
-	bun run check
-
-migrate:
-	bun run db:migrate
-	bun run db:seed
-```
+- Keep `.editorconfig` and `Makefile` in every repository.
+- Use `Makefile` as the human-facing command interface when the project exposes commands.
+- Provide `check`, `setup`, and `start` targets when they fit the project.
+- Map those targets to the project's actual check, setup, and development commands. Add service lifecycle or migration targets only when the project needs them.
 
 ## Ignore Files
 
-- Reference `dentolos19/dentolos19` repository for ignore templates.
-- Always use the ignore templates as a base, add project-specific rules on top of it. (only for `.gitignore`)
-- Use `.gitignore` as the master ignore files, copy the contents to other ignore files.
-- With the master ignore files as the base, add tool-specific rules on top of it. (for `.dockerignore`, etc.)
-- Group certain rules together with the same category or purpose.
-- Use the example below as a base template.
+- Use the `dentolos19/dentolos19` repository as the base for `.gitignore`.
+- Treat `.gitignore` as the master ignore file. Derive other ignore files from it, then add tool-specific rules.
+- Group rules by purpose. Keep project-specific rules between user-file and miscellaneous groups. Put Docker-specific rules in `.dockerignore`.
 
-### Example
-
-```
+```gitignore
 # Editor configurations
 .vs/
 .idea/
 
+# Build files
+.wrangler/
+dist/
+
 # User files
 .env*
 !.env*.template
+
+# Project-specific rules
 
 # Miscellaneous files
 .tmp/
@@ -58,30 +38,11 @@ Thumbs.db
 !.gitkeep
 ```
 
+For `.dockerignore`, copy the relevant `.gitignore` groups and add Docker-specific rules such as `.git/`.
+
 ## Environment Files
 
-- Name the `.env` template as `.env.template`.
-- Double-quote every string, including empty values: `KEY=""`.
-- Group environment variables accordingly to where they apply.
-- If no groups are applicable, just make them plain.
-
-### Group Example
-
-```
-# Client
-VITE_CLIENT_ONLY_KEY=""
-
-# Server
-SERVER_ONLY_KEY=""
-
-## Other
-BUILD_ONLY_KEY=""
-```
-
-### Plain Example
-
-```
-MY_KEY_ONE=""
-MY_KEY_TWO=""
-MY_KEY_THREE=""
-```
+- Name the environment template `.env.template`.
+- Double-quote every value, including empty values: `KEY=""`.
+- Sort variables alphabetically.
+- Add default values where they are safe and known.

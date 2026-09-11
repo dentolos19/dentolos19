@@ -1,0 +1,6 @@
+interface:
+  brand_color: "#0891B2"
+  display_name: "Resolve"
+  icon_large: "./assets/icon.png"
+  icon_small: "./assets/icon.svg"
+  short_description: "Inspect and resolve active Git conflicts"

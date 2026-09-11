@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Conventions</title>
+  <rect x="6" y="6" width="52" height="52" rx="16" fill="#2563EB"/>
+  <path d="M19 18h26v28H19Z" fill="none" stroke="#FFF" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M27 18v7M36 18v5M27 39v7M36 41v5M19 27h7M19 36h5M38 27h7M40 36h5" stroke="#FFF" stroke-width="3" stroke-linecap="round"/>
+  <path d="m26 33 4 4 8-9" fill="none" stroke="#FFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
