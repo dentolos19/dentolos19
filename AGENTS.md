@@ -1,6 +1,6 @@
 # Agent Instructions
 
-- Apply the `dennise` skill for personal preferences and `prose` when writing or editing prose.
+- Apply the `dennise` skill for personal preferences.
 - Use `conventions` for structure, tooling, or documentation decisions, and `resolve` for active Git conflicts.
 - Read the files and documentation relevant to the change. Use tools, plugins, and MCPs when they supply needed information.
 - Keep changes within the requested scope and continue through implementation and relevant verification.

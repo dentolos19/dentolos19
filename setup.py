@@ -310,10 +310,10 @@ def install_configurations():
 
     home_path = Path.home()
 
-    print_message("Installing personal settings...", indent_size=2)
+    print_message("Installing personal configurations...", indent_size=2)
+
     copy_configuration(CONFIG_PATH / ".personal", home_path / ".personal")
 
-    print_message("Installing shell configurations...", indent_size=2)
     shell_name = Path(os.environ.get("SHELL", "bash")).name
     shell_path = home_path / (".zshrc" if shell_name == "zsh" else ".bashrc")
     shell_configuration = shell_path.read_text(encoding="utf-8") if shell_path.is_file() else ""
@@ -323,25 +323,23 @@ def install_configurations():
         with shell_path.open("a", encoding="utf-8") as file:
             file.write(f"{separator}. ~/.personal\n")
 
-    print_message("Installing common settings...", indent_size=2)
     for file in (".editorconfig", ".oxfmtrc.json", ".oxlintrc.json"):
         copy_file(CONFIG_PATH / file, home_path / file)
 
-    print_message("Installing Claude Code settings...", indent_size=2)
+    print_message("Installing harness configurations...", indent_size=2)
+
+    # Claude Code
     copy_file(SCRIPT_PATH / "AGENTS.md", home_path / ".claude" / "CLAUDE.md")
 
-    # print_message("Installing Starship settings...", indent_size=2)
-    # copy_file(CONFIG_PATH / "starship.toml", home_path / ".config" / "starship.toml")
-
-    print_message("Installing Codex settings...", indent_size=2)
-    copy_tree(CONFIG_PATH / "codex", home_path / ".codex", dirs_exist_ok=True)
+    # Codex
     copy_file(SCRIPT_PATH / "AGENTS.md", home_path / ".codex" / "AGENTS.md")
+    copy_tree(CONFIG_PATH / "codex", home_path / ".codex", dirs_exist_ok=True)
 
-    print_message("Installing OpenCode settings...", indent_size=2)
-    copy_configuration(CONFIG_PATH / "opencode.json", home_path / ".config" / "opencode" / "opencode.json")
+    # OpenCode
     copy_file(SCRIPT_PATH / "AGENTS.md", home_path / ".config" / "opencode" / "AGENTS.md")
+    copy_configuration(CONFIG_PATH / "opencode.json", home_path / ".config" / "opencode" / "opencode.json")
 
-    print_message("Installing Playwright settings...", indent_size=2)
+    print_message("Installing other configurations...", indent_size=2)
     copy_configuration(CONFIG_PATH / "playwright.json", home_path / ".playwright" / "cli.config.json")
 
     install_plugins()
