@@ -74,6 +74,10 @@ args = ["blender-mcp"]
 source_type = "git"
 source = "https://github.com/DietrichGebert/ponytail.git"
 
+[marketplaces.impeccable]
+source_type = "git"
+source = "https://github.com/pbakaus/impeccable.git"
+
 [plugins."computer-use@openai-bundled"]
 enabled = true
 
@@ -81,4 +85,7 @@ enabled = true
 enabled = true
 
 [plugins."ponytail@ponytail"]
+enabled = true
+
+[plugins."impeccable@impeccable"]
 enabled = true

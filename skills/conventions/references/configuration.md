@@ -5,7 +5,8 @@ Use this reference when changing commands, package management, formatting or lin
 ## Makefiles
 
 - Always use a `Makefile` as the main human-facing command interface.
-- Provide targets `setup`, `start`, and `check` where applicable.
+- Provide targets `setup`, `start`, `compose`, `decompose`, `check`, and `migrate` as ordered where applicable.
+- Order `.PHONY` accordingly to order of declaration.
 - Use the example below as a base template.
 
 ```
@@ -30,8 +31,10 @@ migrate:
 
 - Use the `dentolos19/dentolos19` repository as the base for `.gitignore`.
 - Treat `.gitignore` as the master ignore file. Derive other ignore files from it, then add tool-specific rules.
-- Group rules by purpose. Keep project-specific rules between user-file and miscellaneous groups. Put Docker-specific rules in `.dockerignore`.
+- Group rules by purpose. Keep custom rule groups between user-file and miscellaneous rule groups.
 - For `.dockerignore`, copy the relevant `.gitignore` groups and add Docker-specific rules such as `.git/`.
+- For multi-project repositories, have a root `.gitignore` with `general.gitignore` as the base template.
+- Use the examples below as a reference.
 
 ```ignore
 # Editor configurations
@@ -46,9 +49,53 @@ dist/
 .env*
 !.env*.template
 
-# Project-specific rules
+# Miscellaneous files
+.tmp/
+.DS_Store
+Desktop.ini
+Thumbs.db
+!.gitkeep
+```
+
+```gitignore
+# Editor configurations
+.vs/
+.idea/
+
+# Build files
+.wrangler/
+dist/
+
+# User files
+.env*
+!.env*.template
+
+# Project-specific
+/src/routeTree.gen.ts
+
+# Miscellaneous files
+.tmp/
+.DS_Store
+Desktop.ini
+Thumbs.db
+!.gitkeep
+```
+
+```dockerignore
+# Editor configurations
+.vs/
+.idea/
+
+# Build files
+.wrangler/
+dist/
+
+# User files
+.env*
+!.env*.template
 
 # Docker-specific rules
+.git/
 
 # Miscellaneous files
 .tmp/

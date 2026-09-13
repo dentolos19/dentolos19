@@ -239,6 +239,12 @@ def install_configurations():
             raise OSError("Claude Code CLI is not available after installation.")
 
         print_message("Installing plugins...", indent_size=2)
+        print_message("Installing Impeccable...", indent_size=4)
+        run_command([codex, "plugin", "marketplace", "add", "https://github.com/pbakaus/impeccable.git"])
+        run_command([codex, "plugin", "add", "impeccable@impeccable"])
+        run_command([claude, "plugin", "marketplace", "add", "https://github.com/pbakaus/impeccable.git"])
+        run_command([claude, "plugin", "install", "impeccable@impeccable"])
+
         print_message("Installing Ponytail...", indent_size=4)
         run_command([codex, "plugin", "marketplace", "add", "https://github.com/DietrichGebert/ponytail.git"])
         run_command([codex, "plugin", "add", "ponytail@ponytail"])

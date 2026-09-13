@@ -9,7 +9,3 @@
 - Do not write unit tests or perform browser testing unless explicitly requested. Use applicable existing checks without repeating them after success unless something changes.
 - Store temporary scripts and artifacts in `.tmp/` within the working directory.
 - When administrator authorization is needed, use `osascript` on macOS or `pkexec` on Linux, subject to the environment's permissions.
-
-## Supplementary Documentations
-
-- [**Writing Skills**](https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra)
