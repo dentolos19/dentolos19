@@ -12,7 +12,6 @@ from pathlib import Path
 
 SCRIPT_PATH = Path(__file__).resolve().parent
 CONFIG_PATH = SCRIPT_PATH / "configs"
-ENVIRONMENT_ID = "s4tychpwlg53m7bozmbqs3cvz4"
 HOMEBREW_INSTALL = "https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
 
 RESET_COLOR = "\033[0m"
@@ -32,28 +31,46 @@ INDENT_COLORS = {
 }
 
 BREW_PACKAGES = (
-    "anomalyco/tap/opencode",
     "claude-code",
     "codex",
     "ffmpeg",
     "font-jetbrains-mono-nerd-font",
     "gh",
     "gitkraken-cli",
+    "just",
+    "just-lsp",
     "node",
     "oven-sh/bun/bun",
     "starship",
     "uv",
 )
 
+BUN_PACKAGES = (
+    "@opencode/cli",
+    "skills",
+)
+
 AGENT_SKILLS = {
-    "anthropics/skills": (
-        "frontend-design",
-        "skill-creator",
+    "anthropics/skills": ("frontend-design", "skill-creator", "webapp-testing"),
+    "cloudflare/skills": ("cloudflare", "wrangler", "web-perf", "workers-best-practices"),
+    "vercel-labs/agent-skills": (
+        "vercel-composition-patterns",
+        "vercel-react-best-practices",
+        "vercel-react-view-transitions",
+        "web-design-guidelines",
     ),
-    "heygen-com/hyperframes": ("hyperframes",),
-    "shadcn-ui/ui": ("shadcn",),
+    "Leonxlnx/taste-skill": (
+        "design-taste-frontend",
+        "full-output-enforcement",
+        "gpt-taste",
+        "image-to-code",
+        "redesign-existing-projects",
+    ),
     "effect-ts/skills": ("effect-ts",),
+    "heygen-com/hyperframes": ("hyperframes",),
     "microsoft/playwright-cli": ("playwright-cli",),
+    "shadcn-ui/ui": ("shadcn",),
+    "typesafe-ai/skills": ("typesafe-ai",),
 }
 
 ### Utilities ###
@@ -62,56 +79,11 @@ AGENT_SKILLS = {
 def print_message(message: str, *, indent_size: int = 0, stream=sys.stdout, color=None):
     message = f"{' ' * indent_size}{message}"
 
-    if not stream.isatty():
+    if not stream.isatty() and os.environ.get("FORCE_COLOR") != "1":
         print(message, file=stream)
         return
 
     print(f"{color or INDENT_COLORS.get(indent_size, INDENT_COLORS[0])}{message}{RESET_COLOR}", file=stream)
-
-
-def inject_environment():
-    print_message("Injecting environment...")
-
-    op = shutil.which("op")
-    if not op:
-        raise OSError(
-            "1Password CLI is not available. Install the 1Password CLI and authenticate before running setup."
-        )
-
-    try:
-        result = subprocess.run(
-            [op, "environment", "read", ENVIRONMENT_ID],
-            check=True,
-            capture_output=True,
-            text=True,
-        )
-    except subprocess.CalledProcessError as error:
-        details = error.stderr.strip()
-        if 'unknown command "environment"' in details:
-            raise OSError(
-                "1Password CLI beta version 2.33.0-beta.02 or newer is required to read 1Password Environments. Install the beta CLI and try again."
-            ) from error
-        if "authorization timeout" in details:
-            raise OSError(
-                "1Password authorization timed out. Unlock 1Password and approve the CLI request, then try again."
-            ) from error
-        raise OSError(f"Failed to read the 1Password Environment: {details}") from error
-
-    for line in result.stdout.splitlines():
-        line = line.lstrip()
-
-        if not line or line.startswith("#") or "=" not in line:
-            continue
-
-        key, value = (part.strip() for part in line.split("=", 1))
-
-        if value.startswith('"') and value.endswith('"'):
-            value = value[1:-1]
-
-        if re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", key):
-            os.environ[key] = value
-
-    print_message("Environment injected successfully!", indent_size=2, color=SUCCESS_COLOR)
 
 
 def replace_environment(path: Path):
@@ -225,6 +197,18 @@ def install_packages():
 
         run_command([brew, "install", package])
 
+    bun = shutil.which("bun")
+    if not bun:
+        raise OSError("Bun is not available after Homebrew installation.")
+
+    for package in BUN_PACKAGES:
+        print_message(f"Installing {package}...", indent_size=2)
+        run_command([bun, "add", "--global", "--trust", f"{package}@latest"])
+
+    bun_bin = Path.home() / ".bun" / "bin"
+    if bun_bin.is_dir():
+        os.environ["PATH"] = f"{bun_bin}{os.pathsep}{os.environ.get('PATH', '')}"
+
     print_message("Packages installed successfully!", indent_size=2, color=SUCCESS_COLOR)
 
 
@@ -239,11 +223,6 @@ def install_configurations():
             raise OSError("Claude Code CLI is not available after installation.")
 
         print_message("Installing plugins...", indent_size=2)
-        print_message("Installing Impeccable...", indent_size=4)
-        run_command([codex, "plugin", "marketplace", "add", "https://github.com/pbakaus/impeccable.git"])
-        run_command([codex, "plugin", "add", "impeccable@impeccable"])
-        run_command([claude, "plugin", "marketplace", "add", "https://github.com/pbakaus/impeccable.git"])
-        run_command([claude, "plugin", "install", "impeccable@impeccable"])
 
         print_message("Installing Ponytail...", indent_size=4)
         run_command([codex, "plugin", "marketplace", "add", "https://github.com/DietrichGebert/ponytail.git"])
@@ -252,19 +231,11 @@ def install_configurations():
         run_command([claude, "plugin", "install", "ponytail@ponytail"])
 
     def install_skills():
-        bun = shutil.which("bun")
-        if not bun:
-            print_message("Bun is not available. Skipping...", indent_size=2, color=WARNING_COLOR)
-            return
-
-        print_message("Installing skills...", indent_size=2)
-        print_message("Updating skills CLI...", indent_size=4)
-        run_command([bun, "add", "--global", "skills@latest"])
-
         skills = shutil.which("skills")
         if not skills:
             raise OSError("The skills CLI is not available after installation.")
 
+        print_message("Installing skills...", indent_size=2)
         required_agents = {"Codex", "Claude Code"}
         installed_skills = {
             entry["name"]
@@ -329,7 +300,8 @@ def install_configurations():
         with shell_path.open("a", encoding="utf-8") as file:
             file.write(f"{separator}. ~/.personal\n")
 
-    for file in (".editorconfig", ".oxfmtrc.json", ".oxlintrc.json"):
+    copy_file(SCRIPT_PATH / ".editorconfig", home_path / ".editorconfig")
+    for file in (".oxfmtrc.json", ".oxlintrc.json"):
         copy_file(CONFIG_PATH / file, home_path / file)
 
     print_message("Installing harness configurations...", indent_size=2)
@@ -340,6 +312,7 @@ def install_configurations():
     # Codex
     copy_file(SCRIPT_PATH / "AGENTS.md", home_path / ".codex" / "AGENTS.md")
     copy_tree(CONFIG_PATH / "codex", home_path / ".codex", dirs_exist_ok=True)
+    copy_configuration(CONFIG_PATH / "codex" / "config.toml", home_path / ".codex" / "config.toml")
 
     # OpenCode
     copy_file(SCRIPT_PATH / "AGENTS.md", home_path / ".config" / "opencode" / "AGENTS.md")
@@ -367,7 +340,6 @@ def main():
         return 1
 
     try:
-        inject_environment()
         install_packages()
         install_configurations()
     except (OSError, subprocess.CalledProcessError) as error:

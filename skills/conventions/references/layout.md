@@ -11,8 +11,9 @@ Use this reference when adding, moving, or renaming files and directories, or wh
 |-- .github/
 |-- .vscode/
 |-- docs/
+|-- .editorconfig
 |-- AGENTS.md
-|-- Makefile
+|-- Justfile
 |-- PRODUCT.md
 |-- README.md
 `-- <other project files>
@@ -29,8 +30,9 @@ Use this reference when adding, moving, or renaming files and directories, or wh
 |   |-- app/
 |   |-- server/
 |   `-- simulator/
+|-- .editorconfig
 |-- compose.yml
-|-- Makefile
+|-- Justfile
 `-- <other project files>
 ```
 
@@ -40,6 +42,7 @@ Use this reference when adding, moving, or renaming files and directories, or wh
 
 ```text
 .
+|-- .vscode/
 |-- migrations/
 |-- public/
 |-- src/
@@ -56,9 +59,11 @@ Use this reference when adding, moving, or renaming files and directories, or wh
 
 ```text
 .
+|-- .vscode/
 |-- src/
 |   |-- main.py
-|-- Makefile
+|-- .python-version
+|-- Justfile
 |-- pyproject.toml
 `-- <other project files>
 ```

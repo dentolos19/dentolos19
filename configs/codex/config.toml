@@ -13,6 +13,7 @@ enabled-reasoning-efforts = ["low", "medium", "high", "xhigh", "max", "ultra"]
 selected-avatar-id = "custom:dennise"
 avatar-overlay-mascot-width-px = 120
 git-commit-instructions = "Write commit messages as past-tense actions, such as `Added README.md` or `Updated authentication system`."
+preventSleepWhileRunning = true
 
 [desktop.appearanceLightChromeTheme.fonts]
 code = '"JetBrainsMono Nerd Font Mono"'
@@ -23,27 +24,15 @@ code = '"JetBrainsMono Nerd Font Mono"'
 [agents]
 enabled = true
 default_subagent_model = "gpt-5.6-luna"
-default_subagent_reasoning_effort = "high"
+default_subagent_reasoning_effort = "max"
 max_concurrent_threads_per_session = 10
 
 [features.multi_agent_v2]
 enabled = true
-
-[model_providers.openrouter]
-name = "OpenRouter"
-base_url = "https://openrouter.ai/api/v1"
-wire_api = "responses"
-http_headers = { "Authorization" = "Bearer {env:OPENROUTER_API_KEY}" }
-requires_openai_auth = false
-supports_websockets = false
-
-[mcp_servers.monolith]
-enabled = true
-url = "https://mcp.dennise.dev/mcp"
-
-[mcp_servers.monolith.http_headers]
-"CF-Access-Client-Id" = "{env:CLOUDFLARE_CLIENT_ID}"
-"CF-Access-Client-Secret" = "{env:CLOUDFLARE_CLIENT_SECRET}"
+wait_agent_enabled = true
+default_wait_timeout_ms = 1800000
+min_wait_timeout_ms = 600000
+max_wait_timeout_ms = 3600000
 
 [mcp_servers.composio]
 url = "https://connect.composio.dev/mcp"
@@ -74,10 +63,6 @@ args = ["blender-mcp"]
 source_type = "git"
 source = "https://github.com/DietrichGebert/ponytail.git"
 
-[marketplaces.impeccable]
-source_type = "git"
-source = "https://github.com/pbakaus/impeccable.git"
-
 [plugins."computer-use@openai-bundled"]
 enabled = true
 
@@ -85,7 +70,4 @@ enabled = true
 enabled = true
 
 [plugins."ponytail@ponytail"]
-enabled = true
-
-[plugins."impeccable@impeccable"]
 enabled = true

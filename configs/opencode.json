@@ -1,122 +1,79 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "autoupdate": "notify",
-  "permission": "allow",
+  "update": "notify",
   "default_agent": "build",
-  "agent": {
+  "permissions": [{ "action": "*", "resource": "*", "effect": "allow" }],
+  "agents": {
     "build": {
-      "model": "openrouter/z-ai/glm-5.3-flash",
-      "variant": "high",
-      "description": "Writes, edits, and tests code to implement features and fix bugs."
-    },
-    "plan": {
-      "model": "openrouter/openrouter/pareto-code",
-      "variant": "high",
-      "description": "Researches the codebase and plans changes without modifying files.",
-      "hidden": true // Not used.
+      "description": "Writes, edits, and tests code to implement features and fix bugs.",
+      "model": "openrouter/z-ai/glm-5.3-flash#max"
     },
     "general": {
-      "model": "openrouter/deepseek/deepseek-v4.1-flash",
-      "variant": "max",
-      "hidden": true
+      "model": "openrouter/deepseek/deepseek-v4.1-flash#max"
     },
     "explore": {
-      "model": "openrouter/deepseek/deepseek-v4.1-flash",
-      "variant": "max",
-      "hidden": true
-    },
-    "title": {
-      "model": "openrouter/deepseek/deepseek-v4.1-flash",
-      "variant": "max"
-    },
-    "summary": {
-      "model": "openrouter/deepseek/deepseek-v4.1-flash",
-      "variant": "max"
+      "model": "openrouter/deepseek/deepseek-v4.1-flash#max"
     },
     "compaction": {
-      "model": "openrouter/deepseek/deepseek-v4.1-flash",
-      "variant": "max"
+      "model": "openrouter/deepseek/deepseek-v4.1-flash#max"
     }
   },
-  "command": {
+  "commands": {
     "review": {
       "agent": "build",
-      "model": "openrouter/deepseek/deepseek-v4.1-flash",
-      "variant": "max",
-      "subtask": true,
       "description": "Run a thorough code review of the current staged and unstaged changes.",
+      "model": "openrouter/deepseek/deepseek-v4.1-flash#max",
+      "subagent": true,
       "template": "Review staged and unstaged changes unless another scope is provided. Report actionable defects with file locations, impact, and supporting evidence. Prioritize correctness, security, and regressions. Additional instructions: $ARGUMENTS"
-    },
-    "resolve": {
-      "agent": "build",
-      "model": "openrouter/deepseek/deepseek-v4.1-flash",
-      "variant": "max",
-      "description": "Automatically resolve Git merge conflicts in the current repository.",
-      "template": "Resolve the current Git conflicts while preserving intended behavior from both sides. Finish the edits and relevant permitted checks, then report unresolved conflicts or verification gaps. If no conflicts exist, report that. Additional instructions: $ARGUMENTS"
     },
     "export": {
       "agent": "build",
-      "model": "openrouter/deepseek/deepseek-v4.1-flash",
-      "variant": "max",
-      "subtask": true,
       "description": "Export the session context into a markdown file.",
+      "model": "openrouter/deepseek/deepseek-v4.1-flash#max",
+      "subagent": true,
       "template": "Export the available conversation to a Markdown handoff in the current directory. Preserve goals, corrections, decisions, exact continuation details, current state, and next steps. Redact secrets and disclose missing context. Choose a descriptive filename without overwriting an existing file. Report the saved path. Additional instructions: $ARGUMENTS"
+    },
+    "resolve": {
+      "agent": "build",
+      "description": "Automatically resolve Git merge conflicts in the current repository.",
+      "model": "openrouter/deepseek/deepseek-v4.1-flash#max",
+      "template": "Resolve the current Git conflicts while preserving intended behavior from both sides. Finish the edits and relevant permitted checks, then report unresolved conflicts or verification gaps. If no conflicts exist, report that. Additional instructions: $ARGUMENTS"
     }
   },
-  "provider": {
+  "mcp": {
+    "servers": {
+      "1password": {
+        "command": ["1password-mcp"],
+        "type": "local"
+      },
+      "composio": {
+        "headers": {
+          "x-consumer-api-key": "Bearer {env:COMPOSIO_API_KEY}"
+        },
+        "oauth": false,
+        "type": "remote",
+        "url": "https://connect.composio.dev/mcp"
+      },
+      "gitkraken": {
+        "command": ["gk", "mcp"],
+        "type": "local"
+      },
+      "playwright": {
+        "command": ["bunx", "--bun", "@playwright/mcp"],
+        "type": "local"
+      }
+      // "blender": {
+      //   "command": ["uvx", "blender-mcp"],
+      //   "type": "local"
+      // }
+    }
+  },
+  "providers": {
     "openrouter": {
-      "options": {
+      "settings": {
         "apiKey": "{env:OPENROUTER_API_KEY}"
       }
     }
-    // "platformai": {
-    //   "name": "Platform AI",
-    //   "models": {
-    //     "bedrock.claude-opus-4-8": {
-    //       "name": "Claude Opus 4.8"
-    //     },
-    //     "bedrock.claude-sonnet-5": {
-    //       "name": "Claude Sonnet 5"
-    //     }
-    //   },
-    //   "options": {
-    //     "baseURL": "https://api.ai.tech.gov.sg/platform/models/v1",
-    //     "apiKey": "{env:PLATFORMAI_API_KEY}"
-    //   }
-    // }
   },
-  "mcp": {
-    "monolith": {
-      "type": "remote",
-      "url": "https://mcp.dennise.dev/mcp",
-      "headers": {
-        "CF-Access-Client-Id": "{env:CLOUDFLARE_CLIENT_ID}",
-        "CF-Access-Client-Secret": "{env:CLOUDFLARE_CLIENT_SECRET}"
-      }
-    },
-    "composio": {
-      "type": "remote",
-      "url": "https://connect.composio.dev/mcp",
-      "headers": {
-        "X-Consumer-Api-Key": "Bearer {env:COMPOSIO_API_KEY}"
-      }
-    },
-    "gitkraken": {
-      "type": "local",
-      "command": ["gk", "mcp"]
-    },
-    "1password": {
-      "type": "local",
-      "command": ["1password-mcp"]
-    },
-    "playwright": {
-      "type": "local",
-      "command": ["bunx", "--bun", "@playwright/mcp"]
-    },
-    "blender": {
-      "type": "local",
-      "command": ["uvx", "blender-mcp"]
-    }
-  },
-  "plugin": ["@dietrichgebert/ponytail"]
+  "plugins": ["@dietrichgebert/ponytail"]
 }

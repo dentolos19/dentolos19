@@ -3,4 +3,4 @@ interface:
   display_name: "Conventions"
   icon_large: "./assets/icon.png"
   icon_small: "./assets/icon.svg"
-  short_description: "Apply project structure and formatting conventions"
+  short_description: "Apply project structure, tooling, delivery, and GitHub conventions"
