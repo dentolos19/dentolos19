@@ -32,4 +32,3 @@ Use this reference when creating or editing project documentation. The files bel
 ## Supporting Files
 
 - Use `/docs` for maintained documentation, notes, and project context.
-- Use `/docs/chat` for compacted chat summaries from AI agents.

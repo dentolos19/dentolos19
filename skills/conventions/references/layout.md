@@ -4,6 +4,8 @@ Use this reference when adding, moving, or renaming files and directories, or wh
 
 ## Repository Layouts
 
+- Keep Drizzle migrations in the repository root `migrations/` directory.
+
 ### Single Project Layout
 
 ```text
@@ -35,8 +37,6 @@ Use this reference when adding, moving, or renaming files and directories, or wh
 |-- Justfile
 `-- <other project files>
 ```
-
-## Project Layouts
 
 ### TypeScript Application
 

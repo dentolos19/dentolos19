@@ -22,6 +22,10 @@ Use this reference when updating dependencies, changing deployment automation, v
 - Preserve existing secret and variable names unless their values are available for a coordinated migration.
 - Keep workflow names descriptive, such as `Web Deployment`, and name the deployment step for its target, such as `Deploy Worker`.
 
+## Database Migrations
+
+- Recreate an unpublished migration only after checking whether it has been applied and reconciling the development database.
+
 ## Verification
 
 - Run `just check` when the repository provides it. Fix errors and actionable warnings at their shared cause instead of suppressing rules.

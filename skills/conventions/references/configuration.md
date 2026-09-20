@@ -2,6 +2,12 @@
 
 Use this reference when changing commands, package management, formatting or linting, ignore files, or environment files. In Flexible mode, keep the project's existing tooling and extend it only when the task requires it.
 
+## Package Management
+
+- Follow the project's package manager. With none established, use Bun, then pnpm as a fallback.
+- Use `bunx` for one-off JavaScript and TypeScript tools.
+- Use `uv` for Python dependencies and environments.
+
 ## `.editorconfig`
 
 - Keep a root `.editorconfig` in every repository.
@@ -153,5 +159,5 @@ Thumbs.db
 
 - Name the environment template `.env.template`.
 - Double-quote every value, including empty values: `KEY=""`.
-- Sort variables alphabetically.
 - Add default values where they are safe and known.
+- Sort variables alphabetically.

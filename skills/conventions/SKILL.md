@@ -1,16 +1,17 @@
 ---
 name: conventions
-description: Apply repository conventions when changing project structure, tooling, dependencies, documentation, delivery workflows, stack choices, or GitHub configuration.
+description: Apply repository conventions when changing code style, structure, tooling, documentation, delivery, stack, or GitHub settings.
 ---
 
 # Project Conventions
 
-Use this skill when a task needs a decision about repository structure, tooling, dependencies, documentation, delivery, stack, or GitHub conventions. Inspect only the files relevant to that decision. Fit applicable conventions into the existing project and preserve explicit user choices.
+Use this skill when a task needs a decision about code style, repository structure, tooling, dependencies, documentation, delivery, stack, or GitHub conventions. Inspect only what that decision needs. Fit applicable conventions into the existing project and preserve explicit user choices.
 
 ## Routing
 
 Read only the reference that matches the task:
 
+- [Coding](references/coding.md) for function declarations and other language-level conventions.
 - [Layout](references/layout.md) for directories, naming, file moves, or project boundaries.
 - [Configuration](references/configuration.md) for commands, package managers, formatters, linters, ignore files, or environment templates.
 - [Documentation](references/documentation.md) for `README.md`, `AGENTS.md`, `PRODUCT.md`, `DESIGN.md`, or maintained project docs.

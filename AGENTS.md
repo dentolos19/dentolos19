@@ -1,11 +1,17 @@
 # Agent Instructions
 
-- Apply the `dennise` skill for personal preferences.
-- Use `conventions` for structure, tooling, or documentation decisions, and `resolve` for active Git conflicts.
-- Read the files and documentation relevant to the change. Use tools, plugins, and MCPs when they supply needed information.
-- Keep changes within the requested scope and continue through implementation and relevant verification.
-- Resolve routine ambiguity from context. Ask when a missing decision materially changes the requested outcome and cannot be inferred; continue independent work meanwhile.
-- Use subagents for independent parts of complex tasks when the benefit outweighs coordination. Keep integration and final verification with the lead agent.
-- Do not write unit tests or perform browser testing unless explicitly requested. Use applicable existing checks without repeating them after success unless something changes.
+- Use `conventions` for coding, structuring, or documentation preferences and decisions.
 - Store temporary scripts and artifacts in `.tmp/` within the working directory.
-- When administrator authorization is needed, use `osascript` on macOS or `pkexec` on Linux, subject to the environment's permissions.
+- When administrator authorization is needed, use `osascript` on macOS or `pkexec` on Linux.
+
+## Writing Preferences
+
+- Use American English and use title casing in headings and short phrases.
+- End full sentences with periods, including bullets.
+- Use bold selectively for key terms, with colons outside the bold markers: `**Key Term**: value`.
+
+## Default Values
+
+- **Privacy Policy**: https://dennise.me/privacy.
+- **Terms Of Service**: https://dennise.me/terms.
+- **Copyright**: `© <YEAR> Dennise Catolos`.

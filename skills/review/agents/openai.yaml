@@ -1,0 +1,6 @@
+interface:
+  brand_color: "#D97706"
+  display_name: "Review"
+  icon_large: "./assets/icon.png"
+  icon_small: "./assets/icon.svg"
+  short_description: "Review pending changes against applicable best practices"

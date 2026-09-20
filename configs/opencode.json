@@ -43,24 +43,24 @@
   "mcp": {
     "servers": {
       "1password": {
-        "command": ["1password-mcp"],
-        "type": "local"
+        "type": "local",
+        "command": ["1password-mcp"]
       },
       "composio": {
+        "type": "remote",
+        "url": "https://connect.composio.dev/mcp",
+        "oauth": false,
         "headers": {
           "x-consumer-api-key": "Bearer {env:COMPOSIO_API_KEY}"
-        },
-        "oauth": false,
-        "type": "remote",
-        "url": "https://connect.composio.dev/mcp"
+        }
       },
       "gitkraken": {
-        "command": ["gk", "mcp"],
-        "type": "local"
+        "type": "local",
+        "command": ["gk", "mcp"]
       },
       "playwright": {
-        "command": ["bunx", "--bun", "@playwright/mcp"],
-        "type": "local"
+        "type": "local",
+        "command": ["bunx", "--bun", "@playwright/mcp"]
       }
       // "blender": {
       //   "command": ["uvx", "blender-mcp"],
