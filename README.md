@@ -29,6 +29,7 @@
 
 | Hackathon / Competition                        | Project / Team                                                                     | Stage         | Achievement      |
 | ---------------------------------------------- | ---------------------------------------------------------------------------------- | ------------- | ---------------- |
+| NASA Space Apps Challenge 2026                 | Tekong                                                                             | International | *Ongoing*        |
 | 7th Kibo Robot Programming Challenge (2026)    | Anomaly                                                                            | International | *Ongoing*        |
 | National AI Student Challenge 2026             | [Logdog](https://github.com/dentolos19/logdog)                                     | National      | Top 8 (Micron)   |
 | 6th Kibo Robot Programming Challenge (2025)    | [AstroVibe](https://humans-in-space.jaxa.jp/krpc/6th/#:~:text=Astrovibe,Singapore) | International | Top 11           |
