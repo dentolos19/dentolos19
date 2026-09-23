@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
+# /// script
+# dependencies = ["onepassword-sdk", "tomlkit"]
+# ///
 
+import argparse
+import asyncio
 import json
 import os
 import platform
@@ -8,11 +13,16 @@ import shlex
 import shutil
 import subprocess
 import sys
+from collections.abc import MutableMapping
 from pathlib import Path
+
+import tomlkit
+from onepassword import Client, DesktopAuth
 
 SCRIPT_PATH = Path(__file__).resolve().parent
 CONFIG_PATH = SCRIPT_PATH / "configs"
 HOMEBREW_INSTALL = "https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
+ENVIRONMENT_ID = "s4tychpwlg53m7bozmbqs3cvz4"
 
 RESET_COLOR = "\033[0m"
 HEADING_COLOR = "\033[1;36m"
@@ -37,18 +47,15 @@ BREW_PACKAGES = (
     "font-jetbrains-mono-nerd-font",
     "gh",
     "gitkraken-cli",
-    "just",
     "just-lsp",
+    "just",
     "node",
     "oven-sh/bun/bun",
     "starship",
     "uv",
 )
 
-BUN_PACKAGES = (
-    "@opencode/cli",
-    "skills",
-)
+BUN_PACKAGES = ("skills",)
 
 AGENT_SKILLS = {
     "anthropics/skills": ("frontend-design", "skill-creator", "webapp-testing"),
@@ -101,6 +108,27 @@ def replace_environment(path: Path):
 def copy_configuration(source: Path, target: Path):
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(replace_environment(source), encoding="utf-8")
+    target.chmod(0o600)
+
+
+def merge_configuration(source: Path, target: Path):
+    desired = tomlkit.parse(replace_environment(source))
+    current = tomlkit.parse(target.read_text(encoding="utf-8")) if target.is_file() else tomlkit.document()
+
+    def merge(destination: MutableMapping, updates: MutableMapping):
+        for key, value in updates.items():
+            if (
+                key in destination
+                and isinstance(destination[key], MutableMapping)
+                and isinstance(value, MutableMapping)
+            ):
+                merge(destination[key], value)
+            else:
+                destination[key] = value
+
+    merge(current, desired)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(tomlkit.dumps(current), encoding="utf-8")
     target.chmod(0o600)
 
 
@@ -159,7 +187,7 @@ def remove_path(path: Path):
     shutil.rmtree(path)
 
 
-def copy_tree(source: Path, target: Path, *, dirs_exist_ok: bool = False):
+def copy_tree(source: Path, target: Path, *, dirs_exist_ok: bool = False, ignore=None):
     target.parent.mkdir(parents=True, exist_ok=True)
 
     if dirs_exist_ok:
@@ -170,7 +198,7 @@ def copy_tree(source: Path, target: Path, *, dirs_exist_ok: bool = False):
     else:
         remove_path(target)
 
-    shutil.copytree(source, target, dirs_exist_ok=dirs_exist_ok)
+    shutil.copytree(source, target, dirs_exist_ok=dirs_exist_ok, ignore=ignore)
 
 
 ### Packages ###
@@ -212,7 +240,7 @@ def install_packages():
     print_message("Packages installed successfully!", indent_size=2, color=SUCCESS_COLOR)
 
 
-def install_configurations():
+def install_configurations(*, replace: bool = False):
     def install_plugins():
         codex = shutil.which("codex")
         if not codex:
@@ -290,7 +318,6 @@ def install_configurations():
     print_message("Installing personal configurations...", indent_size=2)
 
     copy_configuration(CONFIG_PATH / ".personal", home_path / ".personal")
-
     shell_name = Path(os.environ.get("SHELL", "bash")).name
     shell_path = home_path / (".zshrc" if shell_name == "zsh" else ".bashrc")
     shell_configuration = shell_path.read_text(encoding="utf-8") if shell_path.is_file() else ""
@@ -306,17 +333,23 @@ def install_configurations():
 
     print_message("Installing harness configurations...", indent_size=2)
 
-    # Claude Code
-    copy_file(SCRIPT_PATH / "AGENTS.md", home_path / ".claude" / "CLAUDE.md")
+    agents_path = SCRIPT_PATH / "AGENTS.md"
+    for destination in (
+        # home_path / "AGENTS.md",
+        home_path / ".agents" / "AGENTS.md",
+        home_path / ".claude" / "CLAUDE.md",
+        home_path / ".codex" / "AGENTS.md",
+    ):
+        copy_file(agents_path, destination)
 
-    # Codex
-    copy_file(SCRIPT_PATH / "AGENTS.md", home_path / ".codex" / "AGENTS.md")
-    copy_tree(CONFIG_PATH / "codex", home_path / ".codex", dirs_exist_ok=True)
-    copy_configuration(CONFIG_PATH / "codex" / "config.toml", home_path / ".codex" / "config.toml")
+    codex_config = CONFIG_PATH / "codex.toml"
+    codex_config_destination = home_path / ".codex" / "config.toml"
+    copy_tree(CONFIG_PATH / "pets", home_path / ".codex" / "pets", dirs_exist_ok=True)
 
-    # OpenCode
-    copy_file(SCRIPT_PATH / "AGENTS.md", home_path / ".config" / "opencode" / "AGENTS.md")
-    copy_configuration(CONFIG_PATH / "opencode.json", home_path / ".config" / "opencode" / "opencode.json")
+    if replace:
+        copy_configuration(codex_config, codex_config_destination)
+    else:
+        merge_configuration(codex_config, codex_config_destination)
 
     print_message("Installing other configurations...", indent_size=2)
     copy_configuration(CONFIG_PATH / "playwright.json", home_path / ".playwright" / "cli.config.json")
@@ -330,7 +363,26 @@ def install_configurations():
 ### Main ###
 
 
-def main():
+async def load_environment():
+    token = os.environ.get("OP_SERVICE_ACCOUNT_TOKEN")
+    account_name = os.environ.get("OP_ACCOUNT_NAME")
+    if not token and not account_name:
+        raise OSError("Set OP_ACCOUNT_NAME for 1Password desktop authentication or OP_SERVICE_ACCOUNT_TOKEN.")
+
+    client = await Client.authenticate(
+        auth=token if token else DesktopAuth(account_name=account_name),
+        integration_name="dentolos19 setup",
+        integration_version="1.0.0",
+    )
+    response = await client.environments.get_variables(os.environ.get("ENVIRONMENT_ID", ENVIRONMENT_ID))
+    os.environ.update({variable.name: variable.value for variable in response.variables})
+
+
+async def main():
+    parser = argparse.ArgumentParser(description="Install personal tools and configurations.")
+    parser.add_argument("--replace", action="store_true", help="Replace Codex config.toml instead of merging it.")
+    args = parser.parse_args()
+
     if platform.system() not in {"Darwin", "Linux"}:
         print_message(
             "This setup script supports macOS and Linux only.",
@@ -340,9 +392,10 @@ def main():
         return 1
 
     try:
+        await load_environment()
         install_packages()
-        install_configurations()
-    except (OSError, subprocess.CalledProcessError) as error:
+        install_configurations(replace=args.replace)
+    except Exception as error:
         print_message(f"Setup failed: {error}", stream=sys.stderr, color=ERROR_COLOR)
         return 1
 
@@ -350,4 +403,4 @@ def main():
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(asyncio.run(main()))

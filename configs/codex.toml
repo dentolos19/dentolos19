@@ -37,17 +37,14 @@ max_wait_timeout_ms = 3600000
 [mcp_servers.composio]
 url = "https://connect.composio.dev/mcp"
 
-[mcp_servers.composio.http_headers]
-"x-consumer-api-key" = "{env:COMPOSIO_API_KEY}"
+[mcp_servers."1password"]
+enabled = true
+command = "1password-mcp"
 
 [mcp_servers.gitkraken]
 enabled = true
 command = "gk"
 args = ["mcp"]
-
-[mcp_servers."1password"]
-enabled = true
-command = "1password-mcp"
 
 [mcp_servers.playwright]
 enabled = true
