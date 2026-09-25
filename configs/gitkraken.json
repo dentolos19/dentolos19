@@ -1,0 +1,92 @@
+{
+  "appDateFormat": "YYYY-MM-DD",
+  "appDateTimeFormat": "YYYY-MM-DD h:mm A",
+  "keepGitConfigInSyncWithProfile": true,
+  "useCustomProvider": true,
+  "commits": {
+    "maxCommitsInGraph": 2000
+  },
+  "profiles": {
+    "Personal": {
+      "ai": {
+        "sendCodeApproved": true
+      },
+      "cli": {
+        "cliPanelViewMode": "hidden",
+        "fontFamily": "\"JetBrainsMono Nerd Font\""
+      },
+      "editor": {
+        "fontFamily": "\"JetBrainsMono Nerd Font\""
+      },
+      "externalTools": {
+        "editor": {
+          "externalEditorName": "VS Code"
+        }
+      },
+      "gpg": {
+        "commitGpgSign": true,
+        "gpgFormat": "ssh",
+        "tagForceSignAnnotated": true
+      },
+      "ssh": {
+        "useGitCredentialManager": true,
+        "useLocalAgent": true
+      }
+    },
+    "Work": {
+      "ai": {
+        "sendCodeApproved": true
+      },
+      "cli": {
+        "cliPanelViewMode": "hidden",
+        "fontFamily": "\"JetBrainsMono Nerd Font\""
+      },
+      "editor": {
+        "fontFamily": "\"JetBrainsMono Nerd Font\""
+      },
+      "externalTools": {
+        "editor": {
+          "externalEditorName": "VS Code"
+        }
+      },
+      "gpg": {
+        "commitGpgSign": true,
+        "gpgFormat": "ssh",
+        "tagForceSignAnnotated": true
+      },
+      "ssh": {
+        "useGitCredentialManager": true,
+        "useLocalAgent": true
+      }
+    }
+  },
+  "ai": {
+    "customProvider": "ConfigurableOpenAI",
+    "providers": {
+      "ConfigurableOpenAI": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "maxTokens": {
+          "input": 200000
+        },
+        "commitMessage": {
+          "model": "openrouter/auto"
+        },
+        "conflictResolution": {
+          "model": "openrouter/auto"
+        },
+        "explainCommits": {
+          "model": "openrouter/auto"
+        },
+        "pullRequest": {
+          "model": "openrouter/auto"
+        },
+        "rebase": {
+          "model": "openrouter/auto"
+        },
+        "stashMessage": {
+          "model": "openrouter/auto"
+        }
+      }
+    }
+  }
+}

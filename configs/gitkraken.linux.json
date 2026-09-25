@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "Personal": {
+      "gpg": {
+        "gpgSshProgram": "/opt/1Password/op-ssh-sign"
+      }
+    },
+    "Work": {
+      "gpg": {
+        "gpgSshProgram": "/opt/1Password/op-ssh-sign"
+      }
+    }
+  }
+}

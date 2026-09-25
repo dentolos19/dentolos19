@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # /// script
 # dependencies = ["onepassword-sdk", "tomlkit"]
 # ///
@@ -13,6 +12,7 @@ import shlex
 import shutil
 import subprocess
 import sys
+import tempfile
 from collections.abc import MutableMapping
 from pathlib import Path
 
@@ -111,25 +111,66 @@ def copy_configuration(source: Path, target: Path):
     target.chmod(0o600)
 
 
-def merge_configuration(source: Path, target: Path):
+def merge_values(destination: MutableMapping, updates: MutableMapping):
+    for key, value in updates.items():
+        if key in destination and isinstance(destination[key], MutableMapping) and isinstance(value, MutableMapping):
+            merge_values(destination[key], value)
+        else:
+            destination[key] = value
+
+
+def merge_toml(source: Path, target: Path):
     desired = tomlkit.parse(replace_environment(source))
     current = tomlkit.parse(target.read_text(encoding="utf-8")) if target.is_file() else tomlkit.document()
-
-    def merge(destination: MutableMapping, updates: MutableMapping):
-        for key, value in updates.items():
-            if (
-                key in destination
-                and isinstance(destination[key], MutableMapping)
-                and isinstance(value, MutableMapping)
-            ):
-                merge(destination[key], value)
-            else:
-                destination[key] = value
-
-    merge(current, desired)
+    merge_values(current, desired)
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(tomlkit.dumps(current), encoding="utf-8")
     target.chmod(0o600)
+
+
+def merge_json(updates: MutableMapping, target: Path):
+    current = json.loads(target.read_text(encoding="utf-8")) if target.is_file() else {}
+    merge_values(current, updates)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=target.parent, delete=False) as file:
+        temporary_path = Path(file.name)
+        json.dump(current, file, indent=2)
+        file.write("\n")
+    try:
+        temporary_path.chmod(0o600)
+        temporary_path.replace(target)
+    finally:
+        temporary_path.unlink(missing_ok=True)
+
+
+def merge_gitkraken():
+    gitkraken_path = Path.home() / ".gitkraken"
+    config_path = gitkraken_path / "config"
+    if not config_path.is_file():
+        print_message("GitKraken is not initialized; skipping its configuration.", indent_size=4)
+        return
+
+    desired = json.loads(replace_environment(CONFIG_PATH / "gitkraken.json"))
+    if platform.system() == "Darwin":
+        merge_values(desired, json.loads(replace_environment(CONFIG_PATH / "gitkraken.macos.json")))
+    elif platform.system() == "Linux":
+        merge_values(desired, json.loads(replace_environment(CONFIG_PATH / "gitkraken.linux.json")))
+
+    profiles = desired.pop("profiles", {})
+    matched_profiles = set()
+    profile_updates = []
+    for path in (gitkraken_path / "profiles").glob("*/profile"):
+        profile = json.loads(path.read_text(encoding="utf-8"))
+        if profile.get("profileName") in profiles:
+            profile_updates.append((path, profiles[profile["profileName"]]))
+            matched_profiles.add(profile["profileName"])
+
+    for name in profiles.keys() - matched_profiles:
+        print_message(f"GitKraken profile {name} is not initialized; skipping it.", indent_size=4)
+
+    merge_json(desired, config_path)
+    for path, updates in profile_updates:
+        merge_json(updates, path)
 
 
 def get_homebrew():
@@ -349,10 +390,11 @@ def install_configurations(*, replace: bool = False):
     if replace:
         copy_configuration(codex_config, codex_config_destination)
     else:
-        merge_configuration(codex_config, codex_config_destination)
+        merge_toml(codex_config, codex_config_destination)
 
     print_message("Installing other configurations...", indent_size=2)
     copy_configuration(CONFIG_PATH / "playwright.json", home_path / ".playwright" / "cli.config.json")
+    merge_gitkraken()
 
     install_plugins()
     install_skills()
