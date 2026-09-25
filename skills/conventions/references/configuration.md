@@ -27,32 +27,61 @@ trim_trailing_whitespace = true
 ## `Justfile`
 
 - Always use a `Justfile` as the main human-facing command interface.
-- Provide recipes `setup`, `start`, `compose`, `decompose`, `check`, and `migrate` in that order where applicable.
+- For deployable Cloudflare projects, start with `set dotenv-load` so local deployment can read `.env`.
+- Provide recipes in this order where applicable: `setup`, `install`, `start`, `compose`, `decompose`, `build`, `check`, `migrate`, and `deploy`. Place other project-specific recipes after these.
+- Make `setup` depend on `install`, then perform any local-only setup such as starting services, migrating, and seeding. Keep `install` free of those side effects so CI can use it independently.
+- Keep each recipe command indented with four spaces.
+- Use frozen lockfiles in `install` (`bun install --frozen-lockfile`, `uv sync --frozen`) and include each package manager in a multi-project repository. Add `build` only when the project has a real production build; omit no-op recipes and bytecode-only builds that produce no deliverable.
+- Make `deploy` depend on `install` and `build` when a build exists. For Cloudflare Workers, validate the existing Worker secret values, upload them in one JSON payload with `wrangler secret bulk`, then run `wrangler deploy`. Omit the bulk upload when the Worker has no secrets. In a multi-project repository, change to the app directory before both Wrangler commands.
 - Use lowercase recipe parameters, including variadic parameters such as `*args` and interpolations such as `{{ args }}`.
 - Prefer one parameterized recipe for related variants, such as `generate [all|static|routing]`, instead of separate suffixed recipes.
 - Use the example below as a base template.
 
 ```just
-setup:
-  bun install
-  just migrate
+set dotenv-load
+
+setup mode="": install
+    just compose
+    just migrate
+    if [ "{{ mode }}" != "prerun" ]; then just decompose; fi
+
+install:
+    bun install --frozen-lockfile
 
 start: compose
-  bun run dev && wait
-  just decompose
+    bun run dev && wait
+    just decompose
 
 compose:
-  docker compose up --detach --wait
+    docker compose up --detach --wait
 
 decompose:
-  docker compose down
+    docker compose down
+
+build:
+    bun run build
 
 check:
-  bun run check
+    bun run check
 
 migrate *args:
-  bun run db:migrate {{ args }}
+    bun run db:migrate {{ args }}
+
+deploy: install build
+    #!/usr/bin/env bash
+    set -euo pipefail
+    names=(APP_SECRET)
+    for name in "${names[@]}"; do if [[ -z "${!name:-}" ]]; then echo "Missing worker secret value: $name" >&2; exit 1; fi; done
+    node -e 'process.stdout.write(JSON.stringify(Object.fromEntries(process.argv.slice(1).map((name) => [name, process.env[name]]))))' "${names[@]}" | bun wrangler secret bulk
+    bun wrangler deploy
 ```
+
+Replace `APP_SECRET` with the project's existing Worker secret names.
+
+## Cloudflare And Compose
+
+- Name Wrangler configuration files `wrangler.jsonc` and update references when renaming an existing `wrangler.json`.
+- In `compose.yml`, name a service's named volume after that service, such as `database` for a `database` service. Check for existing Docker volumes before renaming; a Compose rename does not migrate stored data.
 
 ## Ignore Files
 

@@ -15,12 +15,15 @@ Use this reference when updating dependencies, changing deployment automation, v
 ## Deployment Workflows
 
 - Use `Production` as the deployment environment name.
-- Use established current actions such as `actions/checkout@v4`, `actions/setup-node@v6`, `oven-sh/setup-bun@v2`, `extractions/setup-just@v4`, and `cloudflare/wrangler-action@v4` where applicable.
+- For Cloudflare Workers, name the workflow `Cloudflare Deployment` and the job and deployment step `Deploy Worker`.
+- Preserve each workflow's existing concurrency policy. Do not copy concurrency settings from a reference project.
+- Use established actions such as `actions/checkout@v4`, `actions/setup-node@v6`, `oven-sh/setup-bun@v2`, and `extractions/setup-just@v4` where applicable. Set up uv or .NET when the project's recipes need them.
 - Install Just only when the workflow runs a `just` command.
-- Route workflow commands through existing Just recipes, such as `just build` or `just migrate`, when those recipes represent the same operation.
-- Install Bun dependencies with `bun install --frozen-lockfile` in CI.
-- Preserve existing secret and variable names unless their values are available for a coordinated migration.
-- Keep workflow names descriptive, such as `Web Deployment`, and name the deployment step for its target, such as `Deploy Worker`.
+- Run `just deploy` as the Cloudflare deployment step. The recipe installs frozen dependencies, builds when applicable, uploads Worker secrets with `wrangler secret bulk`, and runs `wrangler deploy`; do not repeat these commands or use a second Worker deployment action in the workflow.
+- Pass Cloudflare credentials at the job level and build inputs and Worker secret values to the deployment step. Preserve existing secret and variable names.
+- Run migrations separately with `just migrate` after deployment when the project needs them, retaining its existing arguments and environment values.
+- Set up every runtime used by `just deploy` before invoking it, including Node.js for the secret JSON command and Bun, uv, or .NET as applicable.
+- Keep deployment timeouts appropriate to the project; use 60 minutes for the Cloudflare workflow unless its build needs longer.
 
 ## Database Migrations
 

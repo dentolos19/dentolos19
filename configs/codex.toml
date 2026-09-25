@@ -60,11 +60,12 @@ args = ["blender-mcp"]
 source_type = "git"
 source = "https://github.com/DietrichGebert/ponytail.git"
 
-[plugins."computer-use@openai-bundled"]
-enabled = true
-
-[plugins."browser@openai-bundled"]
-enabled = true
+[marketplaces.pstack-for-codex-local]
+source_type = "git"
+source = "https://github.com/Aqua-123/pstack-for-codex.git"
 
 [plugins."ponytail@ponytail"]
+enabled = true
+
+[plugins."pstack-for-codex@pstack-for-codex-local"]
 enabled = true

@@ -287,17 +287,21 @@ def install_configurations(*, replace: bool = False):
         if not codex:
             raise OSError("Codex CLI is not available after installation.")
 
-        claude = shutil.which("claude")
-        if not claude:
-            raise OSError("Claude Code CLI is not available after installation.")
+        # claude = shutil.which("claude")
+        # if not claude:
+        #     raise OSError("Claude Code CLI is not available after installation.")
 
         print_message("Installing plugins...", indent_size=2)
 
         print_message("Installing Ponytail...", indent_size=4)
         run_command([codex, "plugin", "marketplace", "add", "https://github.com/DietrichGebert/ponytail.git"])
         run_command([codex, "plugin", "add", "ponytail@ponytail"])
-        run_command([claude, "plugin", "marketplace", "add", "https://github.com/DietrichGebert/ponytail.git"])
-        run_command([claude, "plugin", "install", "ponytail@ponytail"])
+        # run_command([claude, "plugin", "marketplace", "add", "https://github.com/DietrichGebert/ponytail.git"])
+        # run_command([claude, "plugin", "install", "ponytail@ponytail"])
+
+        print_message("Installing pstack...", indent_size=4)
+        run_command([codex, "plugin", "marketplace", "add", "Aqua-123/pstack-for-codex"])
+        run_command([codex, "plugin", "add", "pstack-for-codex@pstack-for-codex-local"])
 
     def install_skills():
         skills = shutil.which("skills")
