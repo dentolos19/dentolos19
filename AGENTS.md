@@ -1,6 +1,7 @@
 # Agent Instructions
 
-- Use `conventions` for coding, structuring, or documentation preferences and decisions.
+- Use `conventions` skill for coding and structuring preferences.
+- Use `unslop` skill for writing and responses.
 - Store temporary scripts and artifacts in `.tmp/` within the working directory.
 - When administrator authorization is needed, use `osascript` on macOS or `pkexec` on Linux.
 

@@ -3,7 +3,7 @@ name: unattended
 description: Complete tasks unattended when the user asks to work without questions or manual intervention.
 ---
 
-# Unattended
+# Unattended Task
 
 - Complete the requested work using available context and existing authorization. Make reasonable assumptions for routine choices and note those that affect the result.
 - Choose commands and tools that can finish without human input. Existing authenticated sessions and noninteractive options are usable when the underlying action is authorized. Do not initiate login, elevation, approval, or confirmation prompts.

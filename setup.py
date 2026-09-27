@@ -41,7 +41,6 @@ INDENT_COLORS = {
 }
 
 BREW_PACKAGES = (
-    "claude-code",
     "codex",
     "ffmpeg",
     "font-jetbrains-mono-nerd-font",
@@ -60,24 +59,18 @@ BUN_PACKAGES = ("skills",)
 AGENT_SKILLS = {
     "anthropics/skills": ("frontend-design", "skill-creator", "webapp-testing"),
     "cloudflare/skills": ("cloudflare", "wrangler", "web-perf", "workers-best-practices"),
-    "vercel-labs/agent-skills": (
-        "vercel-composition-patterns",
-        "vercel-react-best-practices",
-        "vercel-react-view-transitions",
-        "web-design-guidelines",
-    ),
-    "Leonxlnx/taste-skill": (
-        "design-taste-frontend",
-        "full-output-enforcement",
-        "gpt-taste",
-        "image-to-code",
-        "redesign-existing-projects",
-    ),
+    "cursor/plugins": ("deslop", "how", "unslop", "why"),
     "effect-ts/skills": ("effect-ts",),
     "heygen-com/hyperframes": ("hyperframes",),
+    "Leonxlnx/taste-skill": ("design-taste-frontend", "full-output-enforcement", "gpt-taste", "image-to-code"),
     "microsoft/playwright-cli": ("playwright-cli",),
     "shadcn-ui/ui": ("shadcn",),
     "typesafe-ai/skills": ("typesafe-ai",),
+    "vercel-labs/agent-skills": (
+        "vercel-composition-patterns",
+        "vercel-react-best-practices",
+        "web-design-guidelines",
+    ),
 }
 
 ### Utilities ###
@@ -166,7 +159,7 @@ def merge_gitkraken():
             matched_profiles.add(profile["profileName"])
 
     for name in profiles.keys() - matched_profiles:
-        print_message(f"GitKraken profile {name} is not initialized; skipping it.", indent_size=4)
+        print_message(f"{name} profile is not initialized; skipping it.", indent_size=4)
 
     merge_json(desired, config_path)
     for path, updates in profile_updates:
@@ -287,18 +280,11 @@ def install_configurations(*, replace: bool = False):
         if not codex:
             raise OSError("Codex CLI is not available after installation.")
 
-        # claude = shutil.which("claude")
-        # if not claude:
-        #     raise OSError("Claude Code CLI is not available after installation.")
-
         print_message("Installing plugins...", indent_size=2)
 
         print_message("Installing Ponytail...", indent_size=4)
         run_command([codex, "plugin", "marketplace", "add", "https://github.com/DietrichGebert/ponytail.git"])
         run_command([codex, "plugin", "add", "ponytail@ponytail"])
-        # run_command([claude, "plugin", "marketplace", "add", "https://github.com/DietrichGebert/ponytail.git"])
-        # run_command([claude, "plugin", "install", "ponytail@ponytail"])
-
         print_message("Installing pstack...", indent_size=4)
         run_command([codex, "plugin", "marketplace", "add", "Aqua-123/pstack-for-codex"])
         run_command([codex, "plugin", "add", "pstack-for-codex@pstack-for-codex-local"])
@@ -309,18 +295,17 @@ def install_configurations(*, replace: bool = False):
             raise OSError("The skills CLI is not available after installation.")
 
         print_message("Installing skills...", indent_size=2)
-        required_agents = {"Codex", "Claude Code"}
         installed_skills = {
             entry["name"]
             for entry in json.loads(
                 subprocess.run(
-                    [skills, "list", "--global", "--agent", "codex", "claude-code", "--json"],
+                    [skills, "list", "--global", "--agent", "codex", "--json"],
                     check=True,
                     capture_output=True,
                     text=True,
                 ).stdout
             )
-            if required_agents <= set(entry["agents"])
+            if "Codex" in entry["agents"]
         }
 
         for source, source_skills in AGENT_SKILLS.items():
@@ -330,9 +315,7 @@ def install_configurations(*, replace: bool = False):
                 if skill in installed_skills:
                     continue
 
-                run_command(
-                    [skills, "add", source, "--global", "--agent", "codex", "claude-code", "--skill", skill, "--yes"]
-                )
+                run_command([skills, "add", source, "--global", "--agent", "codex", "--skill", skill, "--yes"])
 
         print_message("Installing custom skills...", indent_size=4)
         for skill_path in sorted((SCRIPT_PATH / "skills").iterdir()):
@@ -348,7 +331,6 @@ def install_configurations(*, replace: bool = False):
                     "--global",
                     "--agent",
                     "codex",
-                    "claude-code",
                     "--skill",
                     skill_path.name,
                     "--yes",
@@ -376,13 +358,12 @@ def install_configurations(*, replace: bool = False):
     for file in (".oxfmtrc.json", ".oxlintrc.json"):
         copy_file(CONFIG_PATH / file, home_path / file)
 
-    print_message("Installing harness configurations...", indent_size=2)
+    print_message("Installing Codex configurations...", indent_size=2)
 
     agents_path = SCRIPT_PATH / "AGENTS.md"
     for destination in (
         # home_path / "AGENTS.md",
         home_path / ".agents" / "AGENTS.md",
-        home_path / ".claude" / "CLAUDE.md",
         home_path / ".codex" / "AGENTS.md",
     ):
         copy_file(agents_path, destination)
@@ -396,9 +377,11 @@ def install_configurations(*, replace: bool = False):
     else:
         merge_toml(codex_config, codex_config_destination)
 
+    print_message("Installing GitKraken configurations...", indent_size=2)
+    merge_gitkraken()
+
     print_message("Installing other configurations...", indent_size=2)
     copy_configuration(CONFIG_PATH / "playwright.json", home_path / ".playwright" / "cli.config.json")
-    merge_gitkraken()
 
     install_plugins()
     install_skills()

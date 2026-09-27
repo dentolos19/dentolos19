@@ -1,9 +1,9 @@
 ---
 name: review
-description: Review uncommitted code changes before commit.
+description: Review pending code changes for actionable defects and fix them when requested.
 ---
 
-# Review Changes
+# Code Review
 
 - Review staged, unstaged, and untracked changes as one change set. Trace affected behavior through relevant callers and dependencies, distinguishing introduced defects from pre-existing issues.
 - Focus on actionable correctness, security, data-loss, and usability problems. Use applicable best-practice skills and primary documentation when they help assess the changes. Avoid speculative findings and unrelated cleanup.
