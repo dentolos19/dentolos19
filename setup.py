@@ -54,7 +54,11 @@ BREW_PACKAGES = (
     "uv",
 )
 
-BUN_PACKAGES = ("skills",)
+BUN_PACKAGES = (
+    "cf",
+    "neon",
+    "skills",
+)
 
 AGENT_SKILLS = {
     "anthropics/skills": ("frontend-design", "skill-creator", "webapp-testing"),

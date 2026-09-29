@@ -11,9 +11,11 @@ sandbox_mode = "danger-full-access"
 [desktop]
 enabled-reasoning-efforts = ["low", "medium", "high", "xhigh", "max", "ultra"]
 selected-avatar-id = "custom:dennise"
-avatar-overlay-mascot-width-px = 120
+avatar-overlay-mascot-width-px = 80
+sidebar-show-projects-in-recents = false
 git-commit-instructions = "Write commit messages as past-tense actions, such as `Added README.md` or `Updated authentication system`."
 preventSleepWhileRunning = true
+keepRemoteControlAwakeWhilePluggedIn = true
 
 [desktop.appearanceLightChromeTheme.fonts]
 code = '"JetBrainsMono Nerd Font Mono"'
