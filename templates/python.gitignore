@@ -3,16 +3,14 @@
 .idea/
 
 # Build files
+__pycache__/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
 .venv/
 *.egg-info/
 build/
 dist/
-
-# Cache files
-.mypy_cache/
-.pytest_cache/
-.ruff_cache/
-__pycache__/
 
 # User files
 .env*

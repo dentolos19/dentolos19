@@ -41,6 +41,8 @@ INDENT_COLORS = {
 }
 
 BREW_PACKAGES = (
+    "awscli",
+    "azure-cli",
     "codex",
     "ffmpeg",
     "font-jetbrains-mono-nerd-font",
@@ -50,6 +52,7 @@ BREW_PACKAGES = (
     "just",
     "node",
     "oven-sh/bun/bun",
+    "pulumi/tap/pulumi",
     "starship",
     "uv",
 )
