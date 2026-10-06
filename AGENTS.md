@@ -1,18 +1,9 @@
 # Agent Instructions
 
-- Use `conventions` skill for coding and structuring preferences.
-- Use `unslop` skill for writing and responses.
-- Store temporary scripts and artifacts in `.tmp/` within the working directory.
+- Use the `conventions` skill for coding and preferences.
+- For better writing and responses, use the `unslop` skill.
+- Read up on documentation through skills or through Context7 and Firecrawl.
+- Store temporary scripts and artifacts in a `.tmp` folder relative to the working directory.
+- When doing browser testing, use the built-in browser, run headless Playwright, or attach to an existing browser; whichever is suited for the task.
+- By default, run headless Playwright. Otherwise, use built-in browser. If you require the user to authenticate, attach to an existing browser.
 - When administrator authorization is needed, use `osascript` on macOS or `pkexec` on Linux.
-
-## Writing Preferences
-
-- Use American English and use title casing in headings and short phrases.
-- End full sentences with periods, including bullets.
-- Use bold selectively for key terms, with colons outside the bold markers: `**Key Term**: value`.
-
-## Default Values
-
-- **Privacy Policy**: https://dennise.me/privacy.
-- **Terms Of Service**: https://dennise.me/terms.
-- **Copyright**: `© <YEAR> Dennise Catolos`.

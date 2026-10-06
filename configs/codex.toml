@@ -9,9 +9,10 @@ enabled-reasoning-efforts = ["low", "medium", "high", "xhigh", "max", "ultra"]
 selected-avatar-id = "custom:dennise"
 avatar-overlay-mascot-width-px = 80
 sidebar-show-projects-in-recents = false
-git-commit-instructions = "Write commit messages as past-tense actions, such as `Added README.md` or `Updated authentication system`."
 preventSleepWhileRunning = true
 keepRemoteControlAwakeWhilePluggedIn = true
+git-commit-instructions = "Describe commit messages as past-tense actions, such as `Added README.md` or `Updated authentication system`."
+git-pr-instructions = "Write PR titles as a feature or a fix, like `Case Region Improvements` or `Agentic Integration`. For PR descriptions, include a summary section with a overview of the PR, and then the changes section listing the specific modifications."
 
 [desktop.appearanceLightChromeTheme.fonts]
 code = '"JetBrainsMono Nerd Font Mono"'
@@ -47,12 +48,12 @@ args = ["mcp"]
 [mcp_servers.playwright]
 enabled = true
 command = "bunx"
-args = ["--bun", "@playwright/mcp"]
+args = ["--bun", "@playwright/mcp", "--headless"]
 
-[mcp_servers.blender]
-enabled = true
-command = "uvx"
-args = ["blender-mcp"]
+# [mcp_servers.blender]
+# enabled = true
+# command = "uvx"
+# args = ["blender-mcp"]
 
 [marketplaces.ponytail]
 source_type = "git"
