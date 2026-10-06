@@ -10,6 +10,7 @@ selected-avatar-id = "custom:dennise"
 avatar-overlay-mascot-width-px = 80
 sidebar-show-projects-in-recents = false
 git-commit-instructions = "Write commit messages as past-tense actions, such as `Added README.md` or `Updated authentication system`."
+git-pr-instructions = "Name pull requests' title of a feature or a fix, like `Case Region Improvements` or `Agentic Integration`."
 preventSleepWhileRunning = true
 keepRemoteControlAwakeWhilePluggedIn = true
 

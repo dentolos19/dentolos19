@@ -66,13 +66,9 @@ BUN_PACKAGES = (
 AGENT_SKILLS = {
     "anthropics/skills": ("frontend-design", "skill-creator", "webapp-testing"),
     "cloudflare/skills": ("cloudflare", "wrangler", "web-perf", "workers-best-practices"),
-    "cursor/plugins": ("deslop", "how", "unslop", "why"),
     "effect-ts/skills": ("effect-ts",),
-    "heygen-com/hyperframes": ("hyperframes",),
-    "Leonxlnx/taste-skill": ("design-taste-frontend", "full-output-enforcement", "gpt-taste", "image-to-code"),
-    "microsoft/playwright-cli": ("playwright-cli",),
+    "pulumi/agent-skills/pulumi": ("pulumi-best-practices",),
     "shadcn-ui/ui": ("shadcn",),
-    "typesafe-ai/skills": ("typesafe-ai",),
     "vercel-labs/agent-skills": (
         "vercel-composition-patterns",
         "vercel-react-best-practices",
@@ -207,7 +203,12 @@ def get_homebrew():
 
 
 def run_command(command: list[str]):
-    subprocess.run(command, check=True, stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
+    try:
+        subprocess.run(command, check=True, capture_output=True, text=True)
+    except subprocess.CalledProcessError as error:
+        print(error.stdout, end="", file=sys.stderr)
+        print(error.stderr, end="", file=sys.stderr)
+        raise
 
 
 def copy_file(source: Path, target: Path):

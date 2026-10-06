@@ -1,8 +1,9 @@
 # Agent Instructions
 
-- Use `conventions` skill for coding and structuring preferences.
-- Use `unslop` skill for writing and responses.
-- Store temporary scripts and artifacts in `.tmp/` within the working directory.
+- Use the `conventions` skill for coding and configuration preferences.
+- For better writing and responses, use the `unslop` skill.
+- Always use documentation through skills or search through Context7 and Firecrawl.
+- Store temporary scripts and artifacts in a `.tmp` folder relative to the working directory.
 - When administrator authorization is needed, use `osascript` on macOS or `pkexec` on Linux.
 
 ## Writing Preferences
