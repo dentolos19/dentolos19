@@ -30,3 +30,7 @@ Consult the closest project below for guidance on applying the conventions. Read
 ## Convention Rules
 
 - When copying over a configuration from a project or reference, strictly follow the same order of keys, values, and formatting.
+
+## Other Documentation
+
+- [Rethinking Skills And Prompts For GPT-6 Astra](https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra) when authoring or revising skills, `AGENTS.md`, or task prompts. Keep descriptions focused, load guidance only when relevant, and define outcomes and boundaries without prescribing unnecessary steps.

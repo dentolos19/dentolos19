@@ -1,0 +1,43 @@
+{
+  "autoupdate": "notify",
+  "agents": {
+    "build": {
+      "model": "openai/gpt-6.1-sol#high"
+    },
+    "plan": {
+      "model": "openai/gpt-6.1-sol#high"
+    },
+    "compaction": {
+      "model": "openai/gpt-6-luna-fast#max"
+    },
+    "general": {
+      "model": "openai/gpt-6-luna-fast#max",
+      "hidden": true
+    },
+    "explore": {
+      "model": "openai/gpt-6-luna-fast#max",
+      "hidden": true
+    }
+  },
+  "mcp": {
+    "servers": {
+      "composio": {
+        "type": "remote",
+        "url": "https://connect.composio.dev/mcp"
+      },
+      "gitkraken": {
+        "type": "local",
+        "command": ["gk", "mcp"]
+      },
+      "1password": {
+        "type": "local",
+        "command": ["1password-mcp"]
+      },
+      "playwright": {
+        "type": "local",
+        "command": ["bunx", "--bun", "@playwright/mcp", "--headless"]
+      }
+    }
+  },
+  "plugins": ["@dietrichgebert/ponytail"]
+}

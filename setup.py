@@ -41,6 +41,7 @@ INDENT_COLORS = {
 }
 
 BREW_PACKAGES = (
+    "anomalyco/tap/opencode-v2",
     "awscli",
     "azure-cli",
     "codex",
@@ -382,6 +383,10 @@ def install_configurations(*, replace: bool = False):
         copy_configuration(codex_config, codex_config_destination)
     else:
         merge_toml(codex_config, codex_config_destination)
+
+    print_message("Installing OpenCode configurations...", indent_size=2)
+    copy_configuration(CONFIG_PATH / "opencode.json", home_path / ".config" / "opencode" / "opencode.json")
+    copy_configuration(CONFIG_PATH / "opencode.cli.json", home_path / ".config" / "opencode" / "cli.json")
 
     print_message("Installing GitKraken configurations...", indent_size=2)
     merge_gitkraken()

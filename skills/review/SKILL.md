@@ -1,13 +1,12 @@
 ---
 name: review
-description: Review pending code changes for actionable defects and fix them when requested.
+description: Review pending changes, branches, or PRs against repository standards and the request or spec. Fix findings when requested.
 ---
 
 # Code Review
 
-- Review staged, unstaged, and untracked changes as one change set. Trace affected behavior through relevant callers and dependencies, distinguishing introduced defects from pre-existing issues.
-- Focus on actionable correctness, security, data-loss, and usability problems. Use applicable best-practice skills and primary documentation when they help assess the changes. Avoid speculative findings and unrelated cleanup.
-- Find duplicate functions in the changed code. When they serve the same purpose, consolidate them in an appropriate shared file, such as an existing utility module or `utils.ts`.
-- For review-only requests, report findings without editing. When fixes are requested, complete them within scope, preserve unrelated work, and review the resulting change set.
-- Run relevant existing checks according to repository instructions and report verification gaps. Do not commit, push, or deploy unless requested.
-- Report findings by severity with file and line references, impact, and a concrete correction. For review-and-fix requests, lead with the result and important fixes. Include check results and remaining risks, and say explicitly when no actionable findings remain.
+- Use the requested scope. Default to staged, unstaged, and untracked changes together. For branch or PR reviews, validate the base and head and compare against their merge-base; include pending changes only when requested.
+- Review two axes independently: **Standards**, covering actionable defects and relevant repository conventions; and **Spec**, covering missing, incorrect, or unrequested behavior against the user's request, issue, or spec. Use independent reviewers when useful. If no requirement source is available, report the spec review as skipped rather than inventing requirements.
+- Read relevant standards and trace affected behavior through callers and dependencies. Use `conventions` and primary documentation where needed. Treat code smells as judgment calls, subordinate to repository rules; report concrete costs rather than speculative cleanup or style already enforced by tooling.
+- Keep review-only work read-only. When fixes are requested, complete them, preserve unrelated work, and verify the resulting changes with relevant checks. Do not commit, push, deploy, or post external comments unless requested.
+- Report findings separately under `Standards` and `Spec`, ordered by severity within each. Include file and line references, evidence or the applicable requirement, impact, and a concrete correction. Cross-reference overlapping findings. For fixes, lead with the result; include remaining findings, check results, and verification gaps. State when an axis has no actionable findings or was skipped.

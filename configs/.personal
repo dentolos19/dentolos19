@@ -1,21 +1,23 @@
-# Bun
 export BUN_INSTALL="$HOME/.bun"
+export PLAYWRIGHT_MCP_OUTPUT_DIR="$HOME/.playwright-cli"
+export RUFF_CACHE_DIR="$HOME/.cache/ruff"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-# Starship
+export NODE_USE_SYSTEM_CA=1
+export NODE_TLS_REJECT_UNAUTHORIZED=0
+export HOMEBREW_NO_ENV_HINTS=1
+
+export CLOUDFLARE_ACCOUNT_ID="{env:CLOUDFLARE_ACCOUNT_ID}"
+export CLOUDFLARE_API_TOKEN="{env:CLOUDFLARE_API_TOKEN}"
+
+# if [ "$(uname -s)" = "Darwin" ]; then
+#     export NODE_EXTRA_CA_CERTS="$HOME/.config/cloudflare/gateway-ca.pem"
+# elif [ "$(uname -s)" = "Linux" ]; then
+#     export NODE_EXTRA_CA_CERTS="/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem"
+# fi
+
 if [ -n "${ZSH_VERSION:-}" ]; then
     eval "$(starship init zsh)"
 else
     eval "$(starship init bash)"
 fi
-
-export NODE_USE_SYSTEM_CA=1
-# export NODE_TLS_REJECT_UNAUTHORIZED=0
-
-export CLOUDFLARE_ACCOUNT_ID="{env:CLOUDFLARE_ACCOUNT_ID}"
-export CLOUDFLARE_API_TOKEN="{env:CLOUDFLARE_API_TOKEN}"
-export CLOUDFLARE_CLIENT_ID="{env:CLOUDFLARE_CLIENT_ID}"
-export CLOUDFLARE_CLIENT_SECRET="{env:CLOUDFLARE_CLIENT_SECRET}"
-
-export PLAYWRIGHT_MCP_OUTPUT_DIR="$HOME/.playwright-cli"
-export RUFF_CACHE_DIR="$HOME/.cache/ruff"

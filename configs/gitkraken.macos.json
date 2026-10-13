@@ -1,21 +1,11 @@
 {
   "profiles": {
     "Personal": {
-      "externalTools": {
-        "terminal": {
-          "externalTerminalName": "Terminal"
-        }
-      },
       "gpg": {
         "gpgSshProgram": "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
       }
     },
     "Work": {
-      "externalTools": {
-        "terminal": {
-          "externalTerminalName": "Terminal"
-        }
-      },
       "gpg": {
         "gpgSshProgram": "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
       }
