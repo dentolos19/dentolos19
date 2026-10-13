@@ -41,6 +41,7 @@ INDENT_COLORS = {
 }
 
 BREW_PACKAGES = (
+    "anomalyco/tap/opencode-v2",
     "awscli",
     "azure-cli",
     "codex",
@@ -351,6 +352,8 @@ def install_configurations(*, replace: bool = False):
     print_message("Installing personal configurations...", indent_size=2)
 
     copy_configuration(CONFIG_PATH / ".personal", home_path / ".personal")
+    copy_file(SCRIPT_PATH / ".editorconfig", home_path / ".editorconfig")
+
     shell_name = Path(os.environ.get("SHELL", "bash")).name
     shell_path = home_path / (".zshrc" if shell_name == "zsh" else ".bashrc")
     shell_configuration = shell_path.read_text(encoding="utf-8") if shell_path.is_file() else ""
@@ -359,10 +362,6 @@ def install_configurations(*, replace: bool = False):
         separator = "" if not shell_configuration or shell_configuration.endswith("\n") else "\n"
         with shell_path.open("a", encoding="utf-8") as file:
             file.write(f"{separator}. ~/.personal\n")
-
-    copy_file(SCRIPT_PATH / ".editorconfig", home_path / ".editorconfig")
-    for file in (".oxfmtrc.json", ".oxlintrc.json"):
-        copy_file(CONFIG_PATH / file, home_path / file)
 
     print_message("Installing Codex configurations...", indent_size=2)
 
@@ -382,6 +381,10 @@ def install_configurations(*, replace: bool = False):
         copy_configuration(codex_config, codex_config_destination)
     else:
         merge_toml(codex_config, codex_config_destination)
+
+    print_message("Installing OpenCode configurations...", indent_size=2)
+    copy_configuration(CONFIG_PATH / "opencode.json", home_path / ".config" / "opencode" / "opencode.json")
+    copy_configuration(CONFIG_PATH / "opencode.cli.json", home_path / ".config" / "opencode" / "cli.json")
 
     print_message("Installing GitKraken configurations...", indent_size=2)
     merge_gitkraken()

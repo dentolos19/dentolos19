@@ -3,16 +3,12 @@
   "appDateTimeFormat": "YYYY-MM-DD h:mm A",
   "keepGitConfigInSyncWithProfile": true,
   "useCustomProvider": true,
-  "commits": {
-    "maxCommitsInGraph": 2000
-  },
   "profiles": {
     "Personal": {
       "ai": {
         "sendCodeApproved": true
       },
       "cli": {
-        "cliPanelViewMode": "hidden",
         "fontFamily": "\"JetBrainsMono Nerd Font\""
       },
       "editor": {
@@ -38,7 +34,6 @@
         "sendCodeApproved": true
       },
       "cli": {
-        "cliPanelViewMode": "hidden",
         "fontFamily": "\"JetBrainsMono Nerd Font\""
       },
       "editor": {
@@ -65,9 +60,6 @@
     "providers": {
       "ConfigurableOpenAI": {
         "baseUrl": "https://openrouter.ai/api/v1",
-        "maxTokens": {
-          "input": 200000
-        },
         "commitMessage": {
           "model": "openrouter/auto"
         },

@@ -1,3 +1,0 @@
-{
-  "plugins": ["node", "import", "promise", "typescript", "eslint"]
-}

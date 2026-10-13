@@ -3,4 +3,4 @@ interface:
   display_name: "Review"
   icon_large: "./assets/icon.png"
   icon_small: "./assets/icon.svg"
-  short_description: "Review pending changes against applicable best practices"
+  short_description: "Review changes against repository standards and the spec"

@@ -50,21 +50,9 @@ enabled = true
 command = "bunx"
 args = ["--bun", "@playwright/mcp", "--headless"]
 
-# [mcp_servers.blender]
-# enabled = true
-# command = "uvx"
-# args = ["blender-mcp"]
-
 [marketplaces.ponytail]
 source_type = "git"
 source = "https://github.com/DietrichGebert/ponytail.git"
 
-[marketplaces.pstack-for-codex-local]
-source_type = "git"
-source = "https://github.com/Aqua-123/pstack-for-codex.git"
-
 [plugins."ponytail@ponytail"]
-enabled = true
-
-[plugins."pstack-for-codex@pstack-for-codex-local"]
 enabled = true
