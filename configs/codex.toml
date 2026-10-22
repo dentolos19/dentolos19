@@ -48,7 +48,7 @@ args = ["mcp"]
 [mcp_servers.playwright]
 enabled = true
 command = "bunx"
-args = ["--bun", "@playwright/mcp", "--headless"]
+args = ["--bun", "@playwright/mcp"]
 
 [marketplaces.ponytail]
 source_type = "git"

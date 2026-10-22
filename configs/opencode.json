@@ -35,7 +35,7 @@
       },
       "playwright": {
         "type": "local",
-        "command": ["bunx", "--bun", "@playwright/mcp", "--headless"]
+        "command": ["bunx", "--bun", "@playwright/mcp"]
       }
     }
   },
