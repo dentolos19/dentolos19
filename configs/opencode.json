@@ -1,5 +1,57 @@
 {
-  "autoupdate": "notify",
+  "$schema": "https://opencode.ai/config.json",
+  "update": "notify",
+
+  "providers": {
+    "platform-ai": {
+      "name": "Platform AI",
+      "package": "@opencode/ai/providers/openai-compatible",
+      "settings": {
+        "baseURL": "https://api.ai.tech.gov.sg/platform/models/v1"
+      },
+      "headers": {
+        "x-api-key": "{env:PLATFORMAI_API_KEY}"
+      },
+      "models": {
+        "bedrock.claude-opus-5-5": {
+          "name": "Claude Opus 5.5",
+          "reasoning": true,
+          "limit": {
+            "context": 1000000,
+            "output": 64000
+          },
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"]
+          }
+        },
+        "bedrock.claude-sonnet-5-5": {
+          "name": "Claude Sonnet 5.5",
+          "reasoning": true,
+          "limit": {
+            "context": 1000000,
+            "output": 64000
+          },
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"]
+          }
+        },
+        "bedrock.claude-haiku-5-5": {
+          "name": "Claude Haiku 5.5",
+          "reasoning": true,
+          "limit": {
+            "context": 1000000,
+            "output": 64000
+          },
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"]
+          }
+        }
+      }
+    }
+  },
   "agents": {
     "build": {
       "model": "openai/gpt-6.1-sol#high"
@@ -8,14 +60,14 @@
       "model": "openai/gpt-6.1-sol#high"
     },
     "compaction": {
-      "model": "openai/gpt-6-luna-fast#max"
+      "model": "openai/gpt-6.1-terra#max"
     },
     "general": {
-      "model": "openai/gpt-6-luna-fast#max",
+      "model": "openai/gpt-6.1-terra#max",
       "hidden": true
     },
     "explore": {
-      "model": "openai/gpt-6-luna-fast#max",
+      "model": "openai/gpt-6.1-terra#max",
       "hidden": true
     }
   },

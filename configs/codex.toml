@@ -1,14 +1,18 @@
 #:schema https://developers.openai.com/codex/config-schema.json
 
+model = "gpt-6.1-sol"
+model_reasoning_effort = "high"
 model_verbosity = "low"
-approval_policy = "never"
+service_tier = "default"
 sandbox_mode = "danger-full-access"
+approval_policy = "never"
 
 [desktop]
 enabled-reasoning-efforts = ["low", "medium", "high", "xhigh", "max", "ultra"]
 selected-avatar-id = "custom:dennise"
 avatar-overlay-mascot-width-px = 80
 sidebar-show-projects-in-recents = false
+sidebarShowYourDotInRecents = false
 preventSleepWhileRunning = true
 keepRemoteControlAwakeWhilePluggedIn = true
 git-commit-instructions = "Describe commit messages as past-tense actions, such as `Added README.md` or `Updated authentication system`."
@@ -22,9 +26,15 @@ code = '"JetBrainsMono Nerd Font Mono"'
 
 [agents]
 enabled = true
-default_subagent_model = "gpt-6-luna"
+default_subagent_model = "gpt-6.1-terra"
 default_subagent_reasoning_effort = "max"
 max_concurrent_threads_per_session = 10
+
+[memories]
+use_memories = true
+generate_memories = true
+extract_model = "gpt-6-luna"
+consolidation_model = "gpt-6.1-terra"
 
 [features.multi_agent_v2]
 enabled = true
