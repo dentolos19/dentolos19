@@ -292,9 +292,6 @@ def install_configurations(*, replace: bool = False):
         print_message("Installing Ponytail...", indent_size=4)
         run_command([codex, "plugin", "marketplace", "add", "https://github.com/DietrichGebert/ponytail.git"])
         run_command([codex, "plugin", "add", "ponytail@ponytail"])
-        print_message("Installing pstack...", indent_size=4)
-        run_command([codex, "plugin", "marketplace", "add", "Aqua-123/pstack-for-codex"])
-        run_command([codex, "plugin", "add", "pstack-for-codex@pstack-for-codex-local"])
 
     def install_skills():
         skills = shutil.which("skills")
