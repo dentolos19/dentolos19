@@ -1,5 +1,5 @@
 # /// script
-# dependencies = ["onepassword-sdk", "tomlkit"]
+# dependencies = ["onepassword-sdk>=0.4.2", "tomlkit>=0.15.2"]
 # ///
 
 import argparse
@@ -382,6 +382,22 @@ def install_configurations(*, replace: bool = False):
     print_message("Installing OpenCode configurations...", indent_size=2)
     copy_configuration(CONFIG_PATH / "opencode.json", home_path / ".config" / "opencode" / "opencode.json")
     copy_configuration(CONFIG_PATH / "opencode.cli.json", home_path / ".config" / "opencode" / "cli.json")
+
+    print_message("Installing Git configurations...", indent_size=2)
+    copy_configuration(CONFIG_PATH / "git" / "allowed_signers", home_path / ".config" / "git" / "allowed_signers")
+    copy_configuration(CONFIG_PATH / "git" / ".gitconfig", home_path / ".gitconfig")
+
+    if platform.system() == "Darwin":
+        run_command(
+            [
+                "git",
+                "config",
+                "--file",
+                str(home_path / ".gitconfig"),
+                "gpg.ssh.program",
+                "/Applications/1Password.app/Contents/MacOS/op-ssh-sign",
+            ]
+        )
 
     print_message("Installing GitKraken configurations...", indent_size=2)
     merge_gitkraken()

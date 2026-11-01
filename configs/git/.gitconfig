@@ -1,0 +1,20 @@
+[user]
+	name = Dennise Catolos
+	email = dentolos19@gmail.com
+  signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOfdfbXzPTQVcL6EB2byxPcS3/lQRgE9LRcyuUnGf2C8
+[commit]
+	gpgSign = true
+[tag]
+	gpgSign = true
+	forceSignAnnotated = true
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	allowedSignersFile = ~/.config/git/allowed_signers
+	program = /opt/1Password/op-ssh-sign
+[credential "https://github.com"]
+	helper =
+	helper = !gh auth git-credential
+[credential "https://gist.github.com"]
+	helper =
+	helper = !gh auth git-credential

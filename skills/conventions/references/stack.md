@@ -6,8 +6,7 @@
 - [**TanStack Libraries**](https://tanstack.com): Routing, data fetching, forms, tables, and related application needs.
 - [**shadcn/ui**](https://ui.shadcn.com/docs): Reusable components whose source lives in the project and can be customized.
 - [**Drizzle ORM**](https://orm.drizzle.team/docs/overview): Typed database schemas and SQL queries; use Drizzle Kit for migrations.
-- [**Bun**](https://bun.sh/docs): JavaScript and TypeScript dependencies and scripts.
-- [**Oxc**](https://oxc.rs/docs/guide/introduction.html): Oxfmt for formatting and Oxlint for JavaScript and TypeScript linting.
+- [**Bun**](https://bun.sh/docs): JavaScript and TypeScript dependencies, scripts, and native linting, formatting, and type checking configured in `bunfig.toml`.
 
 ## Python
 
@@ -17,5 +16,7 @@
 
 ## Services
 
-- [**Cloudflare**](https://developers.cloudflare.com): Deployment on Workers with Wrangler, plus R2, D1, and KV when needed.
+- [**Cloudflare**](https://developers.cloudflare.com): Workers with the Cloudflare CLI; retain Wrangler where required by project tooling, such as Python packaging. Use R2, D1, and KV when needed.
 - [**Neon**](https://neon.com/docs): Postgres hosting with database branching for isolated development.
+
+Update dependencies to compatible versions, keeping related packages aligned and required compatibility pins intact.
