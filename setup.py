@@ -57,22 +57,49 @@ BREW_PACKAGES = (
     "uv",
 )
 
-BUN_PACKAGES = (
-    "cf",
-    "neon",
-    "skills",
-)
+BUN_PACKAGES = ("agent-browser", "cf", "neon", "skills")
 
 AGENT_SKILLS = {
-    "anthropics/skills": ("frontend-design", "skill-creator", "webapp-testing"),
+    "addyosmani/web-quality-skills": ("accessibility",),
+    "anthropics/skills": (
+        "doc-coauthoring",
+        "docx",
+        "frontend-design",
+        "mcp-builder",
+        "pdf",
+        "pptx",
+        "skill-creator",
+        "webapp-testing",
+        "xlsx",
+    ),
+    "antfu/skills": ("vite", "vitest"),
+    "better-auth/skills": ("better-auth-best-practices", "better-auth-security-best-practices"),
+    "bryanwhl/ffmpeg-video-editor": ("ffmpeg-video-editor",),
+    "cloudai-x/threejs-skills": (
+        "threejs-asset-pipeline",
+        "threejs-fundamentals",
+        "threejs-loaders",
+        "threejs-performance",
+        "threejs-react-three-fiber",
+    ),
     "cloudflare/skills": ("cloudflare", "wrangler", "web-perf", "workers-best-practices"),
+    "currents-dev/playwright-best-practices-skill": ("playwright-best-practices",),
     "effect-ts/skills": ("effect-ts",),
+    "emilkowalski/skills": ("emil-design-eng",),
+    "greensock/gsap-skills": ("gsap-core", "gsap-performance", "gsap-react", "gsap-timeline"),
+    "heygen-com/hyperframes": ("hyperframes", "hyperframes-cli", "hyperframes-registry", "media-use"),
+    "honojs/skills": ("hono",),
+    "obra/superpowers": ("systematic-debugging",),
+    "remotion-dev/skills": ("remotion-best-practices",),
     "shadcn-ui/ui": ("shadcn",),
+    "vercel-labs/agent-browser": ("agent-browser",),
     "vercel-labs/agent-skills": (
         "vercel-composition-patterns",
         "vercel-react-best-practices",
         "web-design-guidelines",
     ),
+    "vercel-labs/skills": ("find-skills",),
+    "wshobson/agents": ("python-testing-patterns",),
 }
 
 ### Utilities ###
@@ -303,13 +330,13 @@ def install_configurations(*, replace: bool = False):
             entry["name"]
             for entry in json.loads(
                 subprocess.run(
-                    [skills, "list", "--global", "--agent", "codex", "--json"],
+                    [skills, "list", "--global", "--agent", "claude-code", "codex", "opencode", "--json"],
                     check=True,
                     capture_output=True,
                     text=True,
                 ).stdout
             )
-            if "Codex" in entry["agents"]
+            if {"Claude Code", "Codex", "OpenCode"}.issubset(entry["agents"])
         }
 
         for source, source_skills in AGENT_SKILLS.items():
@@ -319,7 +346,21 @@ def install_configurations(*, replace: bool = False):
                 if skill in installed_skills:
                     continue
 
-                run_command([skills, "add", source, "--global", "--agent", "codex", "--skill", skill, "--yes"])
+                run_command(
+                    [
+                        skills,
+                        "add",
+                        source,
+                        "--global",
+                        "--agent",
+                        "claude-code",
+                        "codex",
+                        "opencode",
+                        "--skill",
+                        skill,
+                        "--yes",
+                    ]
+                )
 
         print_message("Installing custom skills...", indent_size=4)
         for skill_path in sorted((SCRIPT_PATH / "skills").iterdir()):
@@ -334,7 +375,9 @@ def install_configurations(*, replace: bool = False):
                     str(SCRIPT_PATH / "skills"),
                     "--global",
                     "--agent",
+                    "claude-code",
                     "codex",
+                    "opencode",
                     "--skill",
                     skill_path.name,
                     "--yes",

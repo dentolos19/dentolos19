@@ -6,6 +6,9 @@
 .env*
 !.env*.template
 
+# Local files
+/skills/crisp
+
 # Miscellaneous files
 .tmp/
 .DS_Store

@@ -61,22 +61,22 @@
       "ConfigurableOpenAI": {
         "baseUrl": "https://openrouter.ai/api/v1",
         "commitMessage": {
-          "model": "openrouter/auto"
+          "model": "openai/gpt-6.1-terra"
         },
         "conflictResolution": {
-          "model": "openrouter/auto"
+          "model": "openai/gpt-6.1-terra"
         },
         "explainCommits": {
-          "model": "openrouter/auto"
+          "model": "openai/gpt-6.1-terra"
         },
         "pullRequest": {
-          "model": "openrouter/auto"
+          "model": "openai/gpt-6.1-terra"
         },
         "rebase": {
-          "model": "openrouter/auto"
+          "model": "openai/gpt-6.1-terra"
         },
         "stashMessage": {
-          "model": "openrouter/auto"
+          "model": "openai/gpt-6.1-terra"
         }
       }
     }

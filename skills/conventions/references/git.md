@@ -12,3 +12,7 @@
 - For topics, use lowercase, single-word topics. Include languages, major frameworks, platforms, and concise product-domain terms that the repository actually uses.
 - Remove stale, misspelled, redundant, or speculative topics when replacing the topic set.
 - Enable secret scanning and push protection for eligible repositories.
+
+## GitHub Actions
+
+- Format cache keys as `v{version}-{group}-{dependencies}`. Group names must contain no spaces or dashes. Include only inputs needed for cache invalidation or isolation. Use matching version, group, and scope prefixes for `restore-keys`. Separate save steps must reuse the restore step’s `cache-primary-key`. Bump the version when the cache format becomes incompatible.

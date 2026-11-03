@@ -15,7 +15,6 @@ Read the documentation below for the conventions and patterns to use.
 - [Configuration](references/configuration.md) for tooling, environments, CI, and local services.
 - [Git](references/git.md) for commit rules, issue/PR writing, features, and GitHub settings.
 - [Layout](references/layout.md) for directories, structuring, naming, or project boundaries.
-- [Personalization](references/personalization.md) for user preferences and agent instructions.
 - [Stack](references/stack.md) for framework, library, service, or tool choices.
 
 ## Project References
