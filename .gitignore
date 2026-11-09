@@ -1,17 +1,8 @@
-# Editor configurations
-.vs/
-.idea/
-
-# User files
-.env*
-!.env*.template
-
-# Local files
-/skills/crisp
-
-# Miscellaneous files
-.tmp/
 .DS_Store
+.env*
+.tmp/
 Desktop.ini
 Thumbs.db
+
+!.env*.template
 !.gitkeep

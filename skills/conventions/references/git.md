@@ -5,6 +5,13 @@
 - For PR descriptions, include a summary section with a overview of the PR, and then the changes section listing the specific modifications.
 - Do not be too technical on the description when writing issues or pull requests.
 
+# Ignores
+
+- In `dentolos19`, use the `.gitignore` file as a base template for any project.
+- Sync rules for other ignore files including `.dockerignore`, use the local `.gitignore` as a base.
+- Put normal rules at the top, exception rules at the bottom, with a empty line separating them.
+- Sort rules alphabetically. Do not add comments.
+
 ## GitHub
 
 - Set the about description to a short, direct, one-sentence description of the product or purpose.
