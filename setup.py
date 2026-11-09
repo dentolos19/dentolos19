@@ -174,7 +174,7 @@ def merge_gitkraken():
 
     desired = json.loads(replace_environment(CONFIG_PATH / "gitkraken.json"))
     if platform.system() == "Darwin":
-        merge_values(desired, json.loads(replace_environment(CONFIG_PATH / "gitkraken.macos.json")))
+        merge_values(desired, json.loads(replace_environment(CONFIG_PATH / "gitkraken.darwin.json")))
     elif platform.system() == "Linux":
         merge_values(desired, json.loads(replace_environment(CONFIG_PATH / "gitkraken.linux.json")))
 

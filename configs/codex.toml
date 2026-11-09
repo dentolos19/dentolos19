@@ -12,6 +12,7 @@ enabled-reasoning-efforts = ["low", "medium", "high", "xhigh", "max", "ultra"]
 selected-avatar-id = "custom:dennise"
 avatar-overlay-mascot-width-px = 80
 sidebar-show-projects-in-recents = false
+agent-usage-reset-enabled = false
 sidebarShowYourDotInRecents = false
 preventSleepWhileRunning = true
 keepRemoteControlAwakeWhilePluggedIn = true
