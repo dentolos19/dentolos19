@@ -1,0 +1,80 @@
+name: Clean Workflows
+run-name: "Clean Workflows #${{ github.run_number }}"
+on:
+  schedule:
+    - cron: "0 13 * * 0" # Sundays at 9:00 PM Singapore time (UTC+8).
+  workflow_dispatch:
+jobs:
+  discover:
+    name: Discover My Repositories
+    outputs:
+      repositories: ${{ steps.discover.outputs.repositories }}
+      repository_count: ${{ steps.discover.outputs.repository_count }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Discover Repositories
+        id: discover
+        uses: actions/github-script@v7
+        env:
+          CLEAN_WORKFLOWS_TOKEN: ${{ secrets.CLEAN_WORKFLOWS_TOKEN }}
+        with:
+          github-token: ${{ secrets.CLEAN_WORKFLOWS_TOKEN }}
+          script: |
+            if (!process.env.CLEAN_WORKFLOWS_TOKEN) {
+              throw new Error("Set the CLEAN_WORKFLOWS_TOKEN repository secret before running cleanup.");
+            }
+
+            const owner = context.repo.owner.toLowerCase();
+            const repositories = await github.paginate(
+              github.rest.repos.listForAuthenticatedUser,
+              { per_page: 100, affiliation: "owner,collaborator,organization_member", sort: "full_name" }
+            );
+
+            const filteredRepositories = repositories
+              .filter((repository) =>
+                !repository.archived &&
+                !repository.disabled &&
+                (repository.owner.login.toLowerCase() === owner ||
+                  repository.permissions?.admin || repository.permissions?.maintain)
+              )
+              .map((repository) => repository.full_name);
+
+            core.info(`Found ${filteredRepositories.length} owned or maintained repositories.`);
+            core.setOutput("repositories", JSON.stringify(filteredRepositories));
+            core.setOutput("repository_count", String(filteredRepositories.length));
+
+  delete:
+    if: ${{ needs.discover.outputs.repository_count != '0' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        repository: ${{ fromJson(needs.discover.outputs.repositories) }}
+    name: Delete Workflow Runs
+    needs: discover
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete Runs
+        uses: actions/github-script@v7
+        env:
+          REPOSITORY: ${{ matrix.repository }}
+        with:
+          github-token: ${{ secrets.CLEAN_WORKFLOWS_TOKEN }}
+          script: |
+            const [owner, repo] = process.env.REPOSITORY.split("/");
+            const cutoff = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+
+            // Fetch the first page again after deletion so shifted runs are not skipped.
+            while (true) {
+              const { data } = await github.rest.actions.listWorkflowRunsForRepo({
+                owner, repo, per_page: 100, status: "completed", created: `<${cutoff}`
+              });
+              if (data.workflow_runs.length === 0) break;
+
+              for (const run of data.workflow_runs) {
+                if (run.status !== "completed" || !(Date.parse(run.created_at) < Date.parse(cutoff))) {
+                  throw new Error(`Refusing to delete run ${run.id}: it is not completed and older than seven days.`);
+                }
+                await github.rest.actions.deleteWorkflowRun({ owner, repo, run_id: run.id });
+                core.info(`Deleted ${owner}/${repo} run ${run.id}.`);
+              }
+            }
