@@ -2,7 +2,6 @@
 # dependencies = ["onepassword-sdk>=0.4.2", "tomlkit>=0.15.2"]
 # ///
 
-import argparse
 import asyncio
 import json
 import os
@@ -44,6 +43,7 @@ BREW_PACKAGES = (
     "anomalyco/tap/opencode-v2",
     "awscli",
     "azure-cli",
+    "claude-code",
     "codex",
     "ffmpeg",
     "font-jetbrains-mono-nerd-font",
@@ -308,17 +308,9 @@ def install_packages():
     print_message("Packages installed successfully!", indent_size=2, color=SUCCESS_COLOR)
 
 
-def install_configurations(*, replace: bool = False):
-    def install_plugins():
-        codex = shutil.which("codex")
-        if not codex:
-            raise OSError("Codex CLI is not available after installation.")
-
-        print_message("Installing plugins...", indent_size=2)
-
-        print_message("Installing Ponytail...", indent_size=4)
-        run_command([codex, "plugin", "marketplace", "add", "https://github.com/DietrichGebert/ponytail.git"])
-        run_command([codex, "plugin", "add", "ponytail@ponytail"])
+def install_configurations():
+    home_path = Path.home()
+    agents_path = SCRIPT_PATH / "AGENTS.md"
 
     def install_skills():
         skills = shutil.which("skills")
@@ -385,70 +377,97 @@ def install_configurations(*, replace: bool = False):
                 ]
             )
 
-    print_message("Installing configurations...")
+    def install_personal():
+        print_message("Installing personal configurations...", indent_size=2)
 
-    home_path = Path.home()
+        copy_configuration(CONFIG_PATH / ".personal", home_path / ".personal")
+        copy_file(SCRIPT_PATH / ".editorconfig", home_path / ".editorconfig")
 
-    print_message("Installing personal configurations...", indent_size=2)
+        shell_name = Path(os.environ.get("SHELL", "bash")).name
+        shell_path = home_path / (".zshrc" if shell_name == "zsh" else ".bashrc")
+        shell_configuration = shell_path.read_text(encoding="utf-8") if shell_path.is_file() else ""
+        personal_commands = {". ~/.personal", "source ~/.personal"}
+        if not any(line.split("#", 1)[0].strip() in personal_commands for line in shell_configuration.splitlines()):
+            separator = "" if not shell_configuration or shell_configuration.endswith("\n") else "\n"
+            with shell_path.open("a", encoding="utf-8") as file:
+                file.write(f"{separator}. ~/.personal\n")
 
-    copy_configuration(CONFIG_PATH / ".personal", home_path / ".personal")
-    copy_file(SCRIPT_PATH / ".editorconfig", home_path / ".editorconfig")
+    def install_codex():
+        print_message("Installing Codex configurations...", indent_size=2)
 
-    shell_name = Path(os.environ.get("SHELL", "bash")).name
-    shell_path = home_path / (".zshrc" if shell_name == "zsh" else ".bashrc")
-    shell_configuration = shell_path.read_text(encoding="utf-8") if shell_path.is_file() else ""
-    personal_commands = {". ~/.personal", "source ~/.personal"}
-    if not any(line.split("#", 1)[0].strip() in personal_commands for line in shell_configuration.splitlines()):
-        separator = "" if not shell_configuration or shell_configuration.endswith("\n") else "\n"
-        with shell_path.open("a", encoding="utf-8") as file:
-            file.write(f"{separator}. ~/.personal\n")
+        for destination in (
+            # home_path / "AGENTS.md",
+            home_path / ".agents" / "AGENTS.md",
+            home_path / ".codex" / "AGENTS.md",
+        ):
+            copy_file(agents_path, destination)
 
-    print_message("Installing Codex configurations...", indent_size=2)
+        codex_config = CONFIG_PATH / "codex.toml"
+        codex_config_destination = home_path / ".codex" / "config.toml"
+        copy_tree(CONFIG_PATH / "pets", home_path / ".codex" / "pets", dirs_exist_ok=True)
 
-    agents_path = SCRIPT_PATH / "AGENTS.md"
-    for destination in (
-        # home_path / "AGENTS.md",
-        home_path / ".agents" / "AGENTS.md",
-        home_path / ".codex" / "AGENTS.md",
-    ):
-        copy_file(agents_path, destination)
-
-    codex_config = CONFIG_PATH / "codex.toml"
-    codex_config_destination = home_path / ".codex" / "config.toml"
-    copy_tree(CONFIG_PATH / "pets", home_path / ".codex" / "pets", dirs_exist_ok=True)
-
-    if replace:
-        copy_configuration(codex_config, codex_config_destination)
-    else:
         merge_toml(codex_config, codex_config_destination)
 
-    print_message("Installing OpenCode configurations...", indent_size=2)
-    copy_configuration(CONFIG_PATH / "opencode.json", home_path / ".config" / "opencode" / "opencode.json")
-    copy_configuration(CONFIG_PATH / "opencode.cli.json", home_path / ".config" / "opencode" / "cli.json")
+    def install_claude():
+        print_message("Installing Claude configurations...", indent_size=2)
 
-    print_message("Installing Git configurations...", indent_size=2)
-    copy_configuration(CONFIG_PATH / "git" / "allowed_signers", home_path / ".config" / "git" / "allowed_signers")
-    copy_configuration(CONFIG_PATH / "git" / ".gitconfig", home_path / ".gitconfig")
+        claude_path = home_path / ".claude"
+        copy_file(agents_path, claude_path / "CLAUDE.md")
 
-    if platform.system() == "Darwin":
-        run_command(
-            [
-                "git",
-                "config",
-                "--file",
-                str(home_path / ".gitconfig"),
-                "gpg.ssh.program",
-                "/Applications/1Password.app/Contents/MacOS/op-ssh-sign",
-            ]
-        )
+        claude_settings = json.loads(replace_environment(CONFIG_PATH / "claude.json"))
+        merge_json(claude_settings, claude_path / "settings.json")
 
-    print_message("Installing GitKraken configurations...", indent_size=2)
-    merge_gitkraken()
+        claude_mcp = json.loads(replace_environment(CONFIG_PATH / "claude.mcp.json"))
+        merge_json(claude_mcp, home_path / ".claude.json")
 
-    print_message("Installing other configurations...", indent_size=2)
-    copy_configuration(CONFIG_PATH / "playwright.json", home_path / ".playwright" / "cli.config.json")
+    def install_claude_desktop():
+        print_message("Installing Claude Desktop configurations...", indent_size=2)
 
-    install_plugins()
+        desktop_paths = {
+            "Darwin": home_path / "Library" / "Application Support" / "Claude",
+            "Linux": home_path / ".config" / "Claude",
+        }
+        desktop_config = json.loads(replace_environment(CONFIG_PATH / "claude.desktop.json"))
+        merge_json(desktop_config, desktop_paths[platform.system()] / "claude_desktop_config.json")
+
+    def install_opencode():
+        print_message("Installing OpenCode configurations...", indent_size=2)
+
+        copy_configuration(CONFIG_PATH / "opencode.json", home_path / ".config" / "opencode" / "opencode.json")
+        copy_configuration(CONFIG_PATH / "opencode.cli.json", home_path / ".config" / "opencode" / "cli.json")
+
+    def install_git():
+        print_message("Installing Git configurations...", indent_size=2)
+
+        copy_configuration(CONFIG_PATH / "allowed_signers", home_path / ".config" / "git" / "allowed_signers")
+        copy_configuration(CONFIG_PATH / ".gitconfig", home_path / ".gitconfig")
+
+        if platform.system() == "Darwin":
+            run_command(
+                [
+                    "git",
+                    "config",
+                    "--file",
+                    str(home_path / ".gitconfig"),
+                    "gpg.ssh.program",
+                    "/Applications/1Password.app/Contents/MacOS/op-ssh-sign",
+                ]
+            )
+
+    def install_gitkraken():
+        print_message("Installing GitKraken configurations...", indent_size=2)
+
+        merge_gitkraken()
+
+    print_message("Installing configurations...")
+
+    install_personal()
+    install_codex()
+    install_claude()
+    install_claude_desktop()
+    install_opencode()
+    install_git()
+    install_gitkraken()
     install_skills()
 
     print_message("Configurations installed successfully!", indent_size=2, color=SUCCESS_COLOR)
@@ -473,10 +492,6 @@ async def load_environment():
 
 
 async def main():
-    parser = argparse.ArgumentParser(description="Install personal tools and configurations.")
-    parser.add_argument("--replace", action="store_true", help="Replace Codex config.toml instead of merging it.")
-    args = parser.parse_args()
-
     if platform.system() not in {"Darwin", "Linux"}:
         print_message(
             "This setup script supports macOS and Linux only.",
@@ -488,7 +503,7 @@ async def main():
     try:
         await load_environment()
         install_packages()
-        install_configurations(replace=args.replace)
+        install_configurations()
     except Exception as error:
         print_message(f"Setup failed: {error}", stream=sys.stderr, color=ERROR_COLOR)
         return 1

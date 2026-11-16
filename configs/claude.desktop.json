@@ -1,0 +1,27 @@
+{
+  "preferences": {
+    "coworkBrowserToolsEnabled": true,
+    "coworkPreferredBrowser": "built_in",
+    "coworkWebSearchEnabled": true,
+    "coworkScheduledTasksEnabled": true,
+    "ccdScheduledTasksEnabled": true
+  },
+  "mcpServers": {
+    "composio": {
+      "command": "bunx",
+      "args": ["--bun", "mcp-remote", "https://connect.composio.dev/mcp"]
+    },
+    "1password": {
+      "command": "1password-mcp",
+      "args": []
+    },
+    "gitkraken": {
+      "command": "gk",
+      "args": ["mcp"]
+    },
+    "playwright": {
+      "command": "bunx",
+      "args": ["--bun", "@playwright/mcp"]
+    }
+  }
+}

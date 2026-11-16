@@ -60,10 +60,3 @@ args = ["mcp"]
 enabled = true
 command = "bunx"
 args = ["--bun", "@playwright/mcp"]
-
-[marketplaces.ponytail]
-source_type = "git"
-source = "https://github.com/DietrichGebert/ponytail.git"
-
-[plugins."ponytail@ponytail"]
-enabled = true

@@ -1,0 +1,23 @@
+{
+  "mcpServers": {
+    "composio": {
+      "type": "http",
+      "url": "https://connect.composio.dev/mcp"
+    },
+    "1password": {
+      "type": "stdio",
+      "command": "1password-mcp",
+      "args": []
+    },
+    "gitkraken": {
+      "type": "stdio",
+      "command": "gk",
+      "args": ["mcp"]
+    },
+    "playwright": {
+      "type": "stdio",
+      "command": "bunx",
+      "args": ["--bun", "@playwright/mcp"]
+    }
+  }
+}

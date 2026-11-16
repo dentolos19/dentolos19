@@ -1,7 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "update": "notify",
-
   "providers": {
     "platform-ai": {
       "name": "Platform AI",
@@ -90,6 +89,5 @@
         "command": ["bunx", "--bun", "@playwright/mcp"]
       }
     }
-  },
-  "plugins": ["@dietrichgebert/ponytail"]
+  }
 }
