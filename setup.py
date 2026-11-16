@@ -39,12 +39,19 @@ INDENT_COLORS = {
     6: MUTED_COLOR,
 }
 
+BUN_PACKAGES = (
+    "@anthropic-ai/claude-code",
+    "@openai/codex",
+    "@opencode/cli",
+    "agent-browser",
+    "cf",
+    "neon",
+    "skills",
+)
+
 BREW_PACKAGES = (
-    "anomalyco/tap/opencode-v2",
     "awscli",
     "azure-cli",
-    "claude-code",
-    "codex",
     "ffmpeg",
     "font-jetbrains-mono-nerd-font",
     "gh",
@@ -57,7 +64,13 @@ BREW_PACKAGES = (
     "uv",
 )
 
-BUN_PACKAGES = ("agent-browser", "cf", "neon", "skills")
+BREW_PATHS = {
+    "Linux": (Path("/home/linuxbrew/.linuxbrew/bin/brew"),),
+    "Darwin": (Path("/opt/homebrew/bin/brew"), Path("/usr/local/bin/brew")),
+}
+
+SKILL_AGENTS = ("claude-code", "codex", "opencode")
+SKILL_AGENT_NAMES = {"Claude Code", "Codex", "OpenCode"}
 
 AGENT_SKILLS = {
     "addyosmani/web-quality-skills": ("accessibility",),
@@ -127,6 +140,10 @@ def replace_environment(path: Path):
     return configuration
 
 
+def load_json(path: Path):
+    return json.loads(replace_environment(path))
+
+
 def copy_configuration(source: Path, target: Path):
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(replace_environment(source), encoding="utf-8")
@@ -172,11 +189,8 @@ def merge_gitkraken():
         print_message("GitKraken is not initialized; skipping its configuration.", indent_size=4)
         return
 
-    desired = json.loads(replace_environment(CONFIG_PATH / "gitkraken.json"))
-    if platform.system() == "Darwin":
-        merge_values(desired, json.loads(replace_environment(CONFIG_PATH / "gitkraken.darwin.json")))
-    elif platform.system() == "Linux":
-        merge_values(desired, json.loads(replace_environment(CONFIG_PATH / "gitkraken.linux.json")))
+    desired = load_json(CONFIG_PATH / "gitkraken.json")
+    merge_values(desired, load_json(CONFIG_PATH / f"gitkraken.{platform.system().lower()}.json"))
 
     profiles = desired.pop("profiles", {})
     matched_profiles = set()
@@ -195,19 +209,21 @@ def merge_gitkraken():
         merge_json(updates, path)
 
 
-def get_homebrew():
+def find_homebrew():
     brew = shutil.which("brew")
     if brew:
         return brew
 
-    brew_paths = {
-        "Darwin": (Path("/opt/homebrew/bin/brew"), Path("/usr/local/bin/brew")),
-        "Linux": (Path("/home/linuxbrew/.linuxbrew/bin/brew"),),
-    }
-    for brew_path in brew_paths[platform.system()]:
+    for brew_path in BREW_PATHS[platform.system()]:
         if brew_path.is_file():
             os.environ["PATH"] = f"{brew_path.parent}{os.pathsep}{os.environ.get('PATH', '')}"
             return str(brew_path)
+
+
+def get_homebrew():
+    brew = find_homebrew()
+    if brew:
+        return brew
 
     print_message("Homebrew is not installed. Installing...", indent_size=2, color=WARNING_COLOR)
 
@@ -219,13 +235,12 @@ def get_homebrew():
     install_command = f'exec {shlex.quote(bash)} -c "$({shlex.quote(curl)} -fsSL {shlex.quote(HOMEBREW_INSTALL)})"'
     subprocess.run([bash, "-c", install_command], check=True)
 
-    for brew_path in brew_paths[platform.system()]:
-        if brew_path.is_file():
-            os.environ["PATH"] = f"{brew_path.parent}{os.pathsep}{os.environ.get('PATH', '')}"
-            print_message("Homebrew installed successfully!", indent_size=2, color=SUCCESS_COLOR)
-            return str(brew_path)
+    brew = find_homebrew()
+    if not brew:
+        raise OSError("Homebrew installation completed, but the brew executable could not be found.")
 
-    raise OSError("Homebrew installation completed, but the brew executable could not be found.")
+    print_message("Homebrew installed successfully!", indent_size=2, color=SUCCESS_COLOR)
+    return brew
 
 
 def run_command(command: list[str]):
@@ -247,26 +262,15 @@ def copy_file(source: Path, target: Path):
     shutil.copy2(source, target)
 
 
-def remove_path(path: Path):
-    if path.is_symlink() or not path.is_dir():
-        path.unlink(missing_ok=True)
-        return
-
-    shutil.rmtree(path)
-
-
-def copy_tree(source: Path, target: Path, *, dirs_exist_ok: bool = False, ignore=None):
+def copy_tree(source: Path, target: Path):
     target.parent.mkdir(parents=True, exist_ok=True)
 
-    if dirs_exist_ok:
-        if target.is_symlink():
-            target.unlink()
-        elif target.exists() and not target.is_dir():
-            raise OSError(f"Cannot copy {source}: {target} is not a directory.")
-    else:
-        remove_path(target)
+    if target.is_symlink():
+        target.unlink()
+    elif target.exists() and not target.is_dir():
+        raise OSError(f"Cannot copy {source}: {target} is not a directory.")
 
-    shutil.copytree(source, target, dirs_exist_ok=dirs_exist_ok, ignore=ignore)
+    shutil.copytree(source, target, dirs_exist_ok=True)
 
 
 ### Packages ###
@@ -317,65 +321,36 @@ def install_configurations():
         if not skills:
             raise OSError("The skills CLI is not available after installation.")
 
+        def add_skill(source: str, skill: str, *options: str):
+            command = [skills, "add", source, "--global", "--agent", *SKILL_AGENTS, "--skill", skill, "--yes"]
+            run_command([*command, *options])
+
         print_message("Installing skills...", indent_size=2)
         installed_skills = {
             entry["name"]
             for entry in json.loads(
                 subprocess.run(
-                    [skills, "list", "--global", "--agent", "claude-code", "codex", "opencode", "--json"],
+                    [skills, "list", "--global", "--agent", *SKILL_AGENTS, "--json"],
                     check=True,
                     capture_output=True,
                     text=True,
                 ).stdout
             )
-            if {"Claude Code", "Codex", "OpenCode"}.issubset(entry["agents"])
+            if SKILL_AGENT_NAMES.issubset(entry["agents"])
         }
 
         for source, source_skills in AGENT_SKILLS.items():
             print_message(f"Installing {source}...", indent_size=4)
             for skill in source_skills:
                 print_message(f"Installing {skill}...", indent_size=6)
-                if skill in installed_skills:
-                    continue
-
-                run_command(
-                    [
-                        skills,
-                        "add",
-                        source,
-                        "--global",
-                        "--agent",
-                        "claude-code",
-                        "codex",
-                        "opencode",
-                        "--skill",
-                        skill,
-                        "--yes",
-                    ]
-                )
+                if skill not in installed_skills:
+                    add_skill(source, skill)
 
         print_message("Installing custom skills...", indent_size=4)
         for skill_path in sorted((SCRIPT_PATH / "skills").iterdir()):
-            if not skill_path.is_dir() or not (skill_path / "SKILL.md").is_file():
-                continue
-
-            print_message(f"Installing {skill_path.name}...", indent_size=6)
-            run_command(
-                [
-                    skills,
-                    "add",
-                    str(SCRIPT_PATH / "skills"),
-                    "--global",
-                    "--agent",
-                    "claude-code",
-                    "codex",
-                    "opencode",
-                    "--skill",
-                    skill_path.name,
-                    "--yes",
-                    "--copy",
-                ]
-            )
+            if skill_path.is_dir() and (skill_path / "SKILL.md").is_file():
+                print_message(f"Installing {skill_path.name}...", indent_size=6)
+                add_skill(str(SCRIPT_PATH / "skills"), skill_path.name, "--copy")
 
     def install_personal():
         print_message("Installing personal configurations...", indent_size=2)
@@ -402,33 +377,25 @@ def install_configurations():
         ):
             copy_file(agents_path, destination)
 
-        codex_config = CONFIG_PATH / "codex.toml"
-        codex_config_destination = home_path / ".codex" / "config.toml"
-        copy_tree(CONFIG_PATH / "pets", home_path / ".codex" / "pets", dirs_exist_ok=True)
-
-        merge_toml(codex_config, codex_config_destination)
+        copy_tree(CONFIG_PATH / "pets", home_path / ".codex" / "pets")
+        merge_toml(CONFIG_PATH / "codex.toml", home_path / ".codex" / "config.toml")
 
     def install_claude():
         print_message("Installing Claude configurations...", indent_size=2)
 
-        claude_path = home_path / ".claude"
-        copy_file(agents_path, claude_path / "CLAUDE.md")
-
-        claude_settings = json.loads(replace_environment(CONFIG_PATH / "claude.json"))
-        merge_json(claude_settings, claude_path / "settings.json")
-
-        claude_mcp = json.loads(replace_environment(CONFIG_PATH / "claude.mcp.json"))
-        merge_json(claude_mcp, home_path / ".claude.json")
+        copy_file(agents_path, home_path / ".claude" / "CLAUDE.md")
+        merge_json(load_json(CONFIG_PATH / "claude.json"), home_path / ".claude" / "settings.json")
+        merge_json(load_json(CONFIG_PATH / "claude.mcp.json"), home_path / ".claude.json")
 
     def install_claude_desktop():
         print_message("Installing Claude Desktop configurations...", indent_size=2)
 
-        desktop_paths = {
-            "Darwin": home_path / "Library" / "Application Support" / "Claude",
-            "Linux": home_path / ".config" / "Claude",
-        }
-        desktop_config = json.loads(replace_environment(CONFIG_PATH / "claude.desktop.json"))
-        merge_json(desktop_config, desktop_paths[platform.system()] / "claude_desktop_config.json")
+        desktop_path = (
+            home_path / ".config" / "Claude"
+            if platform.system() == "Linux"
+            else home_path / "Library" / "Application Support" / "Claude"
+        )
+        merge_json(load_json(CONFIG_PATH / "claude.desktop.json"), desktop_path / "claude_desktop_config.json")
 
     def install_opencode():
         print_message("Installing OpenCode configurations...", indent_size=2)
@@ -492,9 +459,9 @@ async def load_environment():
 
 
 async def main():
-    if platform.system() not in {"Darwin", "Linux"}:
+    if platform.system() not in {"Linux", "Darwin"}:
         print_message(
-            "This setup script supports macOS and Linux only.",
+            "This setup script supports Linux and macOS only.",
             stream=sys.stderr,
             color=ERROR_COLOR,
         )
