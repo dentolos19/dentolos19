@@ -1,9 +1,5 @@
 {
   "mcpServers": {
-    "composio": {
-      "type": "http",
-      "url": "https://connect.composio.dev/mcp"
-    },
     "1password": {
       "type": "stdio",
       "command": "1password-mcp",
@@ -17,7 +13,7 @@
     "playwright": {
       "type": "stdio",
       "command": "bunx",
-      "args": ["--bun", "@playwright/mcp"]
+      "args": ["--bun", "@playwright/mcp", "--browser", "chrome", "--user-data-dir", "{env:HOME}/.playwright/chrome"]
     }
   }
 }

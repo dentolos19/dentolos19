@@ -21,6 +21,7 @@ from onepassword import Client, DesktopAuth
 SCRIPT_PATH = Path(__file__).resolve().parent
 CONFIG_PATH = SCRIPT_PATH / "configs"
 HOMEBREW_INSTALL = "https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
+COMPOSIO_INSTALL = "https://composio.dev/install"
 ENVIRONMENT_ID = "s4tychpwlg53m7bozmbqs3cvz4"
 
 RESET_COLOR = "\033[0m"
@@ -73,46 +74,11 @@ SKILL_AGENTS = ("claude-code", "codex", "opencode")
 SKILL_AGENT_NAMES = {"Claude Code", "Codex", "OpenCode"}
 
 AGENT_SKILLS = {
-    "addyosmani/web-quality-skills": ("accessibility",),
-    "anthropics/skills": (
-        "doc-coauthoring",
-        "docx",
-        "frontend-design",
-        "mcp-builder",
-        "pdf",
-        "pptx",
-        "skill-creator",
-        "webapp-testing",
-        "xlsx",
-    ),
-    "antfu/skills": ("vite", "vitest"),
-    "better-auth/skills": ("better-auth-best-practices", "better-auth-security-best-practices"),
-    "bryanwhl/ffmpeg-video-editor": ("ffmpeg-video-editor",),
-    "cloudai-x/threejs-skills": (
-        "threejs-asset-pipeline",
-        "threejs-fundamentals",
-        "threejs-loaders",
-        "threejs-performance",
-        "threejs-react-three-fiber",
-    ),
-    "cloudflare/skills": ("cloudflare", "wrangler", "web-perf", "workers-best-practices"),
+    "composiohq/composio": ("composio",),
     "currents-dev/playwright-best-practices-skill": ("playwright-best-practices",),
     "effect-ts/skills": ("effect-ts",),
-    "emilkowalski/skills": ("emil-design-eng",),
-    "greensock/gsap-skills": ("gsap-core", "gsap-performance", "gsap-react", "gsap-timeline"),
-    "heygen-com/hyperframes": ("hyperframes", "hyperframes-cli", "hyperframes-registry", "media-use"),
-    "honojs/skills": ("hono",),
-    "obra/superpowers": ("systematic-debugging",),
-    "remotion-dev/skills": ("remotion-best-practices",),
     "shadcn-ui/ui": ("shadcn",),
     "vercel-labs/agent-browser": ("agent-browser",),
-    "vercel-labs/agent-skills": (
-        "vercel-composition-patterns",
-        "vercel-react-best-practices",
-        "web-design-guidelines",
-    ),
-    "vercel-labs/skills": ("find-skills",),
-    "wshobson/agents": ("python-testing-patterns",),
 }
 
 ### Utilities ###
@@ -243,9 +209,9 @@ def get_homebrew():
     return brew
 
 
-def run_command(command: list[str]):
+def run_command(command: list[str], *, env: dict[str, str] | None = None):
     try:
-        subprocess.run(command, check=True, capture_output=True, text=True)
+        subprocess.run(command, check=True, capture_output=True, text=True, env=env)
     except subprocess.CalledProcessError as error:
         print(error.stdout, end="", file=sys.stderr)
         print(error.stderr, end="", file=sys.stderr)
@@ -277,37 +243,62 @@ def copy_tree(source: Path, target: Path):
 
 
 def install_packages():
+    def install_brew():
+        print_message("Installing Homebrew packages...", indent_size=2)
+
+        brew = get_homebrew()
+
+        installed_packages = set(
+            subprocess.run(
+                [brew, "list", "--full-name"],
+                check=True,
+                capture_output=True,
+                text=True,
+            ).stdout.split()
+        )
+
+        for package in BREW_PACKAGES:
+            print_message(f"Installing {package}...", indent_size=4)
+            if package not in installed_packages:
+                run_command([brew, "install", package])
+
+    def install_bun():
+        print_message("Installing Bun packages...", indent_size=2)
+
+        bun = shutil.which("bun")
+        if not bun:
+            raise OSError("Bun is not available after Homebrew installation.")
+
+        for package in BUN_PACKAGES:
+            print_message(f"Installing {package}...", indent_size=4)
+            run_command([bun, "add", "--global", "--trust", f"{package}@latest"])
+
+        bun_bin = Path.home() / ".bun" / "bin"
+        if bun_bin.is_dir():
+            os.environ["PATH"] = f"{bun_bin}{os.pathsep}{os.environ.get('PATH', '')}"
+
+    def install_composio():
+        print_message("Installing Composio...", indent_size=2)
+
+        local_bin = Path.home() / ".local" / "bin"
+        os.environ["PATH"] = f"{local_bin}{os.pathsep}{os.environ.get('PATH', '')}"
+        if shutil.which("composio"):
+            return
+
+        bash = shutil.which("bash")
+        if not bash or not shutil.which("curl"):
+            raise OSError("Bash and curl are required to install Composio.")
+
+        run_command(
+            [bash, "-c", f"set -o pipefail; curl -fsSL {shlex.quote(COMPOSIO_INSTALL)} | sh"],
+            env={**os.environ, "COMPOSIO_INSTALL_SHELL": "none"},
+        )
+
     print_message("Installing packages...")
 
-    brew = get_homebrew()
-
-    installed_packages = set(
-        subprocess.run(
-            [brew, "list", "--full-name"],
-            check=True,
-            capture_output=True,
-            text=True,
-        ).stdout.split()
-    )
-
-    for package in BREW_PACKAGES:
-        print_message(f"Installing {package}...", indent_size=2)
-        if package in installed_packages:
-            continue
-
-        run_command([brew, "install", package])
-
-    bun = shutil.which("bun")
-    if not bun:
-        raise OSError("Bun is not available after Homebrew installation.")
-
-    for package in BUN_PACKAGES:
-        print_message(f"Installing {package}...", indent_size=2)
-        run_command([bun, "add", "--global", "--trust", f"{package}@latest"])
-
-    bun_bin = Path.home() / ".bun" / "bin"
-    if bun_bin.is_dir():
-        os.environ["PATH"] = f"{bun_bin}{os.pathsep}{os.environ.get('PATH', '')}"
+    install_brew()
+    install_bun()
+    install_composio()
 
     print_message("Packages installed successfully!", indent_size=2, color=SUCCESS_COLOR)
 
@@ -426,6 +417,11 @@ def install_configurations():
 
         merge_gitkraken()
 
+    def install_playwright():
+        print_message("Installing Playwright configurations...", indent_size=2)
+
+        copy_configuration(CONFIG_PATH / "playwright.json", home_path / ".playwright" / "cli.config.json")
+
     print_message("Installing configurations...")
 
     install_personal()
@@ -435,6 +431,7 @@ def install_configurations():
     install_opencode()
     install_git()
     install_gitkraken()
+    install_playwright()
     install_skills()
 
     print_message("Configurations installed successfully!", indent_size=2, color=SUCCESS_COLOR)

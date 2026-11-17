@@ -1,16 +1,18 @@
 {
   "preferences": {
+    "ccdScheduledTasksEnabled": true,
+    "ccNextActions": false,
+    "ccPromptSuggestions": false,
+    "ccRemoteControlDefaultEnabled": false,
+    "claudeIosSimulatorAccessEnabled": false,
     "coworkBrowserToolsEnabled": true,
     "coworkPreferredBrowser": "built_in",
-    "coworkWebSearchEnabled": true,
     "coworkScheduledTasksEnabled": true,
-    "ccdScheduledTasksEnabled": true
+    "coworkWebSearchEnabled": true,
+    "remoteControlStayReachable": true,
+    "sidebarMode": "epitaxy"
   },
   "mcpServers": {
-    "composio": {
-      "command": "bunx",
-      "args": ["--bun", "mcp-remote", "https://connect.composio.dev/mcp"]
-    },
     "1password": {
       "command": "1password-mcp",
       "args": []
@@ -21,7 +23,7 @@
     },
     "playwright": {
       "command": "bunx",
-      "args": ["--bun", "@playwright/mcp"]
+      "args": ["--bun", "@playwright/mcp", "--browser", "chrome", "--user-data-dir", "{env:HOME}/.playwright/chrome"]
     }
   }
 }

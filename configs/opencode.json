@@ -72,10 +72,6 @@
   },
   "mcp": {
     "servers": {
-      "composio": {
-        "type": "remote",
-        "url": "https://connect.composio.dev/mcp"
-      },
       "gitkraken": {
         "type": "local",
         "command": ["gk", "mcp"]
@@ -86,7 +82,7 @@
       },
       "playwright": {
         "type": "local",
-        "command": ["bunx", "--bun", "@playwright/mcp"]
+        "command": ["bunx", "--bun", "@playwright/mcp", "--browser", "chrome", "--user-data-dir", "{env:HOME}/.playwright/chrome"]
       }
     }
   }

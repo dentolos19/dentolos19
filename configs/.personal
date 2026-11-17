@@ -1,7 +1,7 @@
 export BUN_INSTALL="$HOME/.bun"
 export PLAYWRIGHT_MCP_OUTPUT_DIR="$HOME/.playwright-cli"
 export RUFF_CACHE_DIR="$HOME/.cache/ruff"
-export PATH="$BUN_INSTALL/bin:$PATH"
+export PATH="$HOME/.local/bin:$BUN_INSTALL/bin:$PATH"
 
 export NODE_USE_SYSTEM_CA=1
 # export NODE_TLS_REJECT_UNAUTHORIZED=0

@@ -44,9 +44,6 @@ default_wait_timeout_ms = 1800000
 min_wait_timeout_ms = 600000
 max_wait_timeout_ms = 3600000
 
-[mcp_servers.composio]
-url = "https://connect.composio.dev/mcp"
-
 [mcp_servers."1password"]
 enabled = true
 command = "1password-mcp"
@@ -59,4 +56,4 @@ args = ["mcp"]
 [mcp_servers.playwright]
 enabled = true
 command = "bunx"
-args = ["--bun", "@playwright/mcp"]
+args = ["--bun", "@playwright/mcp", "--browser", "chrome", "--user-data-dir", "{env:HOME}/.playwright/chrome"]
