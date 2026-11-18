@@ -29,13 +29,13 @@
 
 | Hackathon / Competition                        | Project / Team                                                                     | Stage         | Achievement      |
 | ---------------------------------------------- | ---------------------------------------------------------------------------------- | ------------- | ---------------- |
-| NASA Space Apps Challenge 2026                 | Tekong                                                                             | International | *Ongoing*        |
-| 7th Kibo Robot Programming Challenge (2026)    | Anomaly                                                                            | International | *Ongoing*        |
-| National AI Student Challenge 2026             | [Logdog](https://github.com/dentolos19/logdog)                                     | National      | Top 8 (Micron)   |
+| 7th Kibo Robot Programming Challenge (2026)    | Anomaly                                                                            | International | _Ongoing_        |
+| NASA Space Apps Challenge 2026                 | [Tekong](https://tekong.dennise.me)                                                | International | _Judging_        |
+| National AI Student Challenge 2026             | [Logdog](https://logdog.dennise.me)                                                | National      | Top 8 (Micron)   |
 | 6th Kibo Robot Programming Challenge (2025)    | [AstroVibe](https://humans-in-space.jaxa.jp/krpc/6th/#:~:text=Astrovibe,Singapore) | International | Top 11           |
-| Code Overflow 2024                             | [Pennywise](https://github.com/dentolos19/pennywise)                               | School        | Committee Choice |
-| Code Overflow 2023                             | [Anywhere Fitness](https://github.com/dentolos19/anywherefitness)                  | School        | Top 3            |
-| National Cyberwellness Advocacy Challenge 2022 | [Faker Spotter](https://github.com/dentolos19/fakerspotter)                        | National      | Silver           |
+| Code Overflow 2024                             | [Pennywise](https://pennywise.dennise.me)                                          | School        | Committee Choice |
+| Code Overflow 2023                             | [Anywhere Fitness](https:///anywherefitness.dennise.me)                            | School        | Top 3            |
+| National Cyberwellness Advocacy Challenge 2022 | [Faker Spotter](https://fakerspotter.dennise.me)                                   | National      | Silver           |
 
 ## 📎 My Projects
 
