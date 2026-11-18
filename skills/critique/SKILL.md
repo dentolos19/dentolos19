@@ -1,6 +1,6 @@
 ---
 name: critique
-description: Evaluate and improve substantial task output before delivery using evidence-based validation and critique.
+description: Reviews and improves substantial task output before delivery through evidence-based validation, critique, and iteration. Use before finalizing non-trivial work such as code changes, documents, analyses, or reports.
 ---
 
 # Critique

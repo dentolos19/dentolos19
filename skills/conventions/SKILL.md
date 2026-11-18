@@ -1,6 +1,6 @@
 ---
 name: conventions
-description: Adapt project conventions when working on code, structure, stack, or Git.
+description: Applies the user's project conventions for code style, directory layout, tech stack, tooling configuration, and Git commits, issues, and PRs. Use when writing or modifying code, scaffolding or restructuring a project, choosing frameworks or libraries, or working with Git.
 ---
 
 # Project Conventions
@@ -32,4 +32,4 @@ Consult the closest project below for guidance on applying the conventions. Read
 
 ## Other Documentation
 
-- [Rethinking Skills And Prompts For GPT-6 Astra](https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra) when authoring or revising skills, `AGENTS.md`, or task prompts. Keep descriptions focused, load guidance only when relevant, and define outcomes and boundaries without prescribing unnecessary steps.
+- [Skill Authoring Best Practices](https://docs.claude.com/en/docs/agents-and-tools/agent-skills/best-practices) when authoring or revising skills, `CLAUDE.md`, `AGENTS.md`, or task prompts. Write third-person descriptions that state what the skill does and when to use it, keep `SKILL.md` concise, load detailed guidance from references only when relevant, and define outcomes and boundaries without prescribing unnecessary steps.
