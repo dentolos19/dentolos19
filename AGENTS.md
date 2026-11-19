@@ -1,11 +1,11 @@
 # Agent Instructions
 
-At the start of each session, read the [Agent Instructions](https://app.notion.com/p/41ab87074c4f81218c30dd180d7a148d) page in Notion and follow it. It is my standing instruction.
+At the start of each session, read my [Agent Instructions](https://app.notion.com/p/41ab87074c4f81218c30dd180d7a148d) page in Notion as my standing instructions.
 
 ## Coding Preferences
 
 - Use the Conventions skill for coding and preferences.
-- Make use of the built-in plugins and skills or Composio CLI for tools and context.
+- Make use of the built-in plugins and skills or Composio for tools and context.
 - Use Agent Browser for browser tasks, otherwise use the built-in browser or Playwright.
 - Keep validation and testing minimal. Prioritize targeted checks and avoid redundant tests.
 - Do not include validation, testing, or verification details unless explicitly requested.

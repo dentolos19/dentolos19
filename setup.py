@@ -23,6 +23,7 @@ CONFIG_PATH = SCRIPT_PATH / "configs"
 HOMEBREW_INSTALL = "https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
 COMPOSIO_INSTALL = "https://composio.dev/install"
 ENVIRONMENT_ID = "s4tychpwlg53m7bozmbqs3cvz4"
+WORK_HOSTNAME = "dc-sanjua-v6yvf"
 
 RESET_COLOR = "\033[0m"
 HEADING_COLOR = "\033[1;36m"
@@ -44,13 +45,13 @@ BUN_PACKAGES = (
     "@anthropic-ai/claude-code",
     "@openai/codex",
     "@opencode/cli",
-    "agent-browser",
     "cf",
     "neon",
     "skills",
 )
 
 BREW_PACKAGES = (
+    "antigravity-cli",
     "awscli",
     "azure-cli",
     "ffmpeg",
@@ -70,15 +71,14 @@ BREW_PATHS = {
     "Darwin": (Path("/opt/homebrew/bin/brew"), Path("/usr/local/bin/brew")),
 }
 
-SKILL_AGENTS = ("claude-code", "codex", "opencode")
-SKILL_AGENT_NAMES = {"Claude Code", "Codex", "OpenCode"}
+SKILL_AGENTS = ("antigravity-cli", "claude-code", "codex", "opencode")
+SKILL_AGENT_NAMES = {"Antigravity CLI", "Claude Code", "Codex", "OpenCode"}
 
 AGENT_SKILLS = {
     "composiohq/composio": ("composio",),
     "currents-dev/playwright-best-practices-skill": ("playwright-best-practices",),
     "effect-ts/skills": ("effect-ts",),
     "shadcn-ui/ui": ("shadcn",),
-    "vercel-labs/agent-browser": ("agent-browser",),
 }
 
 ### Utilities ###
@@ -155,8 +155,8 @@ def merge_gitkraken():
         print_message("GitKraken is not initialized; skipping its configuration.", indent_size=4)
         return
 
-    desired = load_json(CONFIG_PATH / "gitkraken.json")
-    merge_values(desired, load_json(CONFIG_PATH / f"gitkraken.{platform.system().lower()}.json"))
+    desired = load_json(CONFIG_PATH / "gitkraken" / "config.json")
+    merge_values(desired, load_json(CONFIG_PATH / "gitkraken" / f"{platform.system().lower()}.json"))
 
     profiles = desired.pop("profiles", {})
     matched_profiles = set()
@@ -368,15 +368,15 @@ def install_configurations():
         ):
             copy_file(agents_path, destination)
 
-        copy_tree(CONFIG_PATH / "pets", home_path / ".codex" / "pets")
-        merge_toml(CONFIG_PATH / "codex.toml", home_path / ".codex" / "config.toml")
+        copy_tree(CONFIG_PATH / "codex" / "pets", home_path / ".codex" / "pets")
+        merge_toml(CONFIG_PATH / "codex" / "config.toml", home_path / ".codex" / "config.toml")
 
     def install_claude():
         print_message("Installing Claude configurations...", indent_size=2)
 
         copy_file(agents_path, home_path / ".claude" / "CLAUDE.md")
-        merge_json(load_json(CONFIG_PATH / "claude.json"), home_path / ".claude" / "settings.json")
-        merge_json(load_json(CONFIG_PATH / "claude.mcp.json"), home_path / ".claude.json")
+        merge_json(load_json(CONFIG_PATH / "claude" / "settings.json"), home_path / ".claude" / "settings.json")
+        merge_json(load_json(CONFIG_PATH / "claude" / "mcp.json"), home_path / ".claude.json")
 
     def install_claude_desktop():
         print_message("Installing Claude Desktop configurations...", indent_size=2)
@@ -386,19 +386,20 @@ def install_configurations():
             if platform.system() == "Linux"
             else home_path / "Library" / "Application Support" / "Claude"
         )
-        merge_json(load_json(CONFIG_PATH / "claude.desktop.json"), desktop_path / "claude_desktop_config.json")
+        merge_json(load_json(CONFIG_PATH / "claude" / "desktop.json"), desktop_path / "claude_desktop_config.json")
 
     def install_opencode():
         print_message("Installing OpenCode configurations...", indent_size=2)
 
-        copy_configuration(CONFIG_PATH / "opencode.json", home_path / ".config" / "opencode" / "opencode.json")
-        copy_configuration(CONFIG_PATH / "opencode.cli.json", home_path / ".config" / "opencode" / "cli.json")
+        opencode_path = home_path / ".config" / "opencode"
+        copy_configuration(CONFIG_PATH / "opencode" / "opencode.json", opencode_path / "opencode.json")
+        copy_configuration(CONFIG_PATH / "opencode" / "cli.json", opencode_path / "cli.json")
 
     def install_git():
         print_message("Installing Git configurations...", indent_size=2)
 
-        copy_configuration(CONFIG_PATH / "allowed_signers", home_path / ".config" / "git" / "allowed_signers")
-        copy_configuration(CONFIG_PATH / ".gitconfig", home_path / ".gitconfig")
+        copy_configuration(CONFIG_PATH / "git" / "allowed_signers", home_path / ".config" / "git" / "allowed_signers")
+        copy_configuration(CONFIG_PATH / "git" / ".gitconfig", home_path / ".gitconfig")
 
         if platform.system() == "Darwin":
             run_command(
@@ -412,6 +413,12 @@ def install_configurations():
                 ]
             )
 
+        if platform.node().split(".")[0] == WORK_HOSTNAME:
+            work_path = home_path / ".config" / "git" / "work.gitconfig"
+            copy_configuration(CONFIG_PATH / "git" / ".gitconfig.work", work_path)
+            gitconfig_path = str(home_path / ".gitconfig")
+            run_command(["git", "config", "--file", gitconfig_path, "includeIf.gitdir:~/Work/.path", str(work_path)])
+
     def install_gitkraken():
         print_message("Installing GitKraken configurations...", indent_size=2)
 
@@ -420,7 +427,8 @@ def install_configurations():
     def install_playwright():
         print_message("Installing Playwright configurations...", indent_size=2)
 
-        copy_configuration(CONFIG_PATH / "playwright.json", home_path / ".playwright" / "cli.config.json")
+        playwright_path = home_path / ".playwright"
+        copy_configuration(CONFIG_PATH / "playwright.json", playwright_path / "cli.config.json")
 
     print_message("Installing configurations...")
 
