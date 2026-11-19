@@ -1,3 +1,5 @@
+WORK_HOSTNAME="dc-sanjua-v6yvf"
+
 export BUN_INSTALL="$HOME/.bun"
 export PLAYWRIGHT_MCP_OUTPUT_DIR="$HOME/.playwright-cli"
 export RUFF_CACHE_DIR="$HOME/.cache/ruff"
@@ -9,8 +11,9 @@ export HOMEBREW_NO_ENV_HINTS=1
 
 export CLOUDFLARE_ACCOUNT_ID="{env:CLOUDFLARE_ACCOUNT_ID}"
 export CLOUDFLARE_API_TOKEN="{env:CLOUDFLARE_API_TOKEN}"
+export NEON_API_KEY="{env:NEON_API_KEY}"
 
-if [ "$(scutil --get LocalHostName)" = "dc-sanjua-v6yvf" ]; then
+if [ "$(scutil --get LocalHostName)" = "$WORK_HOSTNAME" ]; then
     export NODE_EXTRA_CA_CERTS="$HOME/.config/cloudflare/gateway-ca.pem"
 fi
 

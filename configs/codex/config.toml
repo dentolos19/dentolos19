@@ -44,6 +44,11 @@ default_wait_timeout_ms = 1800000
 min_wait_timeout_ms = 600000
 max_wait_timeout_ms = 3600000
 
+[mcp_servers.composio]
+enabled = true
+url = "https://connect.composio.dev/mcp"
+http_headers = { "x-consumer-api-key" = "{env:COMPOSIO_API_KEY}" }
+
 [mcp_servers."1password"]
 enabled = true
 command = "1password-mcp"
@@ -53,7 +58,19 @@ enabled = true
 command = "gk"
 args = ["mcp"]
 
+[mcp_servers.cua]
+enabled = true
+command = "cua-driver"
+args = ["mcp", "--grant", "existing-profile"]
+
 [mcp_servers.playwright]
 enabled = true
 command = "bunx"
-args = ["--bun", "@playwright/mcp", "--browser", "chrome", "--user-data-dir", "{env:HOME}/.playwright/chrome"]
+args = [
+  "--bun",
+  "@playwright/mcp",
+  "--browser",
+  "chrome",
+  "--user-data-dir",
+  "{env:HOME}/.playwright/chrome",
+]

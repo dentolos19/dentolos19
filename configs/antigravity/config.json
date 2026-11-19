@@ -1,0 +1,12 @@
+{
+  "plugins": {
+    "swarm": {
+      "enabled": true
+    }
+  },
+  "userSettings": {
+    "enableNotificationsForSpecialEvents": false,
+    "enableSoundsForSpecialEvents": true,
+    "remoteControlEnabled": true
+  }
+}

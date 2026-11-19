@@ -1,0 +1,31 @@
+{
+  "mcpServers": {
+    "composio": {
+      "type": "http",
+      "url": "https://connect.composio.dev/mcp",
+      "headers": {
+        "x-consumer-api-key": "{env:COMPOSIO_API_KEY}"
+      }
+    },
+    "1password": {
+      "type": "stdio",
+      "command": "1password-mcp",
+      "args": []
+    },
+    "gitkraken": {
+      "type": "stdio",
+      "command": "gk",
+      "args": ["mcp"]
+    },
+    "cua": {
+      "type": "stdio",
+      "command": "cua-driver",
+      "args": ["mcp", "--grant", "existing-profile"]
+    },
+    "playwright": {
+      "type": "stdio",
+      "command": "bunx",
+      "args": ["--bun", "@playwright/mcp", "--browser", "chrome", "--user-data-dir", "{env:HOME}/.playwright/chrome"]
+    }
+  }
+}

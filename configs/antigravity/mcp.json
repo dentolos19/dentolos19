@@ -1,17 +1,20 @@
 {
   "mcpServers": {
+    "composio": {
+      "serverUrl": "https://connect.composio.dev/mcp",
+      "headers": {
+        "x-consumer-api-key": "{env:COMPOSIO_API_KEY}"
+      }
+    },
     "1password": {
-      "type": "stdio",
       "command": "1password-mcp",
       "args": []
     },
     "gitkraken": {
-      "type": "stdio",
       "command": "gk",
       "args": ["mcp"]
     },
     "playwright": {
-      "type": "stdio",
       "command": "bunx",
       "args": ["--bun", "@playwright/mcp", "--browser", "chrome", "--user-data-dir", "{env:HOME}/.playwright/chrome"]
     }

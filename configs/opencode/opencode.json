@@ -53,36 +53,55 @@
   },
   "agents": {
     "build": {
-      "model": "openai/gpt-6.1-sol#high"
+      "model": "opencode/longcat-2.5-free"
     },
     "plan": {
-      "model": "openai/gpt-6.1-sol#high"
+      "model": "opencode/longcat-2.5-free"
     },
     "compaction": {
-      "model": "openai/gpt-6.1-terra#max"
+      "model": "opencode/hy4-flash-free#high"
     },
     "general": {
-      "model": "openai/gpt-6.1-terra#max",
+      "model": "opencode/hy4-flash-free#high",
       "hidden": true
     },
     "explore": {
-      "model": "openai/gpt-6.1-terra#max",
+      "model": "opencode/hy4-flash-free#high",
       "hidden": true
     }
   },
   "mcp": {
     "servers": {
-      "gitkraken": {
-        "type": "local",
-        "command": ["gk", "mcp"]
+      "composio": {
+        "type": "remote",
+        "url": "https://connect.composio.dev/mcp",
+        "headers": {
+          "x-consumer-api-key": "{env:COMPOSIO_API_KEY}"
+        }
       },
       "1password": {
         "type": "local",
         "command": ["1password-mcp"]
       },
+      "gitkraken": {
+        "type": "local",
+        "command": ["gk", "mcp"]
+      },
+      "cua": {
+        "type": "local",
+        "command": ["cua-driver", "mcp", "--grant", "existing-profile"]
+      },
       "playwright": {
         "type": "local",
-        "command": ["bunx", "--bun", "@playwright/mcp", "--browser", "chrome", "--user-data-dir", "{env:HOME}/.playwright/chrome"]
+        "command": [
+          "bunx",
+          "--bun",
+          "@playwright/mcp",
+          "--browser",
+          "chrome",
+          "--user-data-dir",
+          "{env:HOME}/.playwright/chrome"
+        ]
       }
     }
   }

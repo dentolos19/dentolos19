@@ -1,7 +1,7 @@
 {
   "appDateFormat": "YYYY-MM-DD",
   "appDateTimeFormat": "YYYY-MM-DD h:mm A",
-  "keepGitConfigInSyncWithProfile": true,
+  "keepGitConfigInSyncWithProfile": false,
   "useCustomProvider": true,
   "profiles": {
     "Personal": {

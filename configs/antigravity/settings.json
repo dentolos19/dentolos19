@@ -1,0 +1,8 @@
+{
+  "$schema": "https://antigravity.google/schemas/v1/settings.json",
+  "model": "Gemini 4 Neon (High)",
+  "agentMode": "accept-edits",
+  "toolPermission": "always-proceed",
+  "artifactReviewPolicy": "always-proceed",
+  "allowNonWorkspaceAccess": true
+}

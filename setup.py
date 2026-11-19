@@ -20,9 +20,11 @@ from onepassword import Client, DesktopAuth
 
 SCRIPT_PATH = Path(__file__).resolve().parent
 CONFIG_PATH = SCRIPT_PATH / "configs"
-HOMEBREW_INSTALL = "https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
-COMPOSIO_INSTALL = "https://composio.dev/install"
 ENVIRONMENT_ID = "s4tychpwlg53m7bozmbqs3cvz4"
+WORK_HOSTNAME = "dc-sanjua-v6yvf"
+
+HOMEBREW_INSTALL = "https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
+CUA_INSTALL = "https://cua.ai/driver/install.sh"
 
 RESET_COLOR = "\033[0m"
 HEADING_COLOR = "\033[1;36m"
@@ -44,13 +46,13 @@ BUN_PACKAGES = (
     "@anthropic-ai/claude-code",
     "@openai/codex",
     "@opencode/cli",
-    "agent-browser",
     "cf",
     "neon",
     "skills",
 )
 
 BREW_PACKAGES = (
+    "antigravity-cli",
     "awscli",
     "azure-cli",
     "ffmpeg",
@@ -70,15 +72,14 @@ BREW_PATHS = {
     "Darwin": (Path("/opt/homebrew/bin/brew"), Path("/usr/local/bin/brew")),
 }
 
-SKILL_AGENTS = ("claude-code", "codex", "opencode")
-SKILL_AGENT_NAMES = {"Claude Code", "Codex", "OpenCode"}
+SKILL_AGENTS = ("antigravity-cli", "claude-code", "codex", "opencode")
+SKILL_AGENT_NAMES = {"Antigravity CLI", "Claude Code", "Codex", "OpenCode"}
 
 AGENT_SKILLS = {
     "composiohq/composio": ("composio",),
-    "currents-dev/playwright-best-practices-skill": ("playwright-best-practices",),
     "effect-ts/skills": ("effect-ts",),
+    "microsoft/playwright-cli": ("playwright-cli",),
     "shadcn-ui/ui": ("shadcn",),
-    "vercel-labs/agent-browser": ("agent-browser",),
 }
 
 ### Utilities ###
@@ -134,7 +135,8 @@ def merge_toml(source: Path, target: Path):
 
 
 def merge_json(updates: MutableMapping, target: Path):
-    current = json.loads(target.read_text(encoding="utf-8")) if target.is_file() else {}
+    content = target.read_text(encoding="utf-8").strip() if target.is_file() else ""
+    current = json.loads(content) if content else {}
     merge_values(current, updates)
     target.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=target.parent, delete=False) as file:
@@ -155,8 +157,8 @@ def merge_gitkraken():
         print_message("GitKraken is not initialized; skipping its configuration.", indent_size=4)
         return
 
-    desired = load_json(CONFIG_PATH / "gitkraken.json")
-    merge_values(desired, load_json(CONFIG_PATH / f"gitkraken.{platform.system().lower()}.json"))
+    desired = load_json(CONFIG_PATH / "gitkraken" / "config.json")
+    merge_values(desired, load_json(CONFIG_PATH / "gitkraken" / f"{platform.system().lower()}.json"))
 
     profiles = desired.pop("profiles", {})
     matched_profiles = set()
@@ -218,6 +220,16 @@ def run_command(command: list[str], *, env: dict[str, str] | None = None):
         raise
 
 
+def run_script(url: str, *, shell: str = "bash", env: dict[str, str]):
+    bash = shutil.which("bash")
+    if not bash or not shutil.which("curl"):
+        raise OSError(f"Bash and curl are required to run {url}.")
+
+    # The installers skip shell setup because ~/.personal already manages PATH, and skip agent setup because the
+    # configurations are installed from this repository.
+    run_command([bash, "-c", f"set -o pipefail; curl -fsSL {shlex.quote(url)} | {shell}"], env={**os.environ, **env})
+
+
 def copy_file(source: Path, target: Path):
     target.parent.mkdir(parents=True, exist_ok=True)
 
@@ -277,28 +289,25 @@ def install_packages():
         if bun_bin.is_dir():
             os.environ["PATH"] = f"{bun_bin}{os.pathsep}{os.environ.get('PATH', '')}"
 
-    def install_composio():
-        print_message("Installing Composio...", indent_size=2)
+    def install_cua():
+        print_message("Installing Cua Driver...", indent_size=2)
 
         local_bin = Path.home() / ".local" / "bin"
         os.environ["PATH"] = f"{local_bin}{os.pathsep}{os.environ.get('PATH', '')}"
-        if shutil.which("composio"):
-            return
+        if not shutil.which("cua-driver"):
+            run_script(
+                CUA_INSTALL,
+                env={"CUA_DRIVER_NO_MODIFY_PATH": "1", "CUA_DRIVER_NO_CONNECT": "1", "CUA_DRIVER_NO_TEST": "1"},
+            )
 
-        bash = shutil.which("bash")
-        if not bash or not shutil.which("curl"):
-            raise OSError("Bash and curl are required to install Composio.")
-
-        run_command(
-            [bash, "-c", f"set -o pipefail; curl -fsSL {shlex.quote(COMPOSIO_INSTALL)} | sh"],
-            env={**os.environ, "COMPOSIO_INSTALL_SHELL": "none"},
-        )
+        # The skill pack is bundled with the driver and linked into the detected agents.
+        run_command(["cua-driver", "skills", "install"])
 
     print_message("Installing packages...")
 
     install_brew()
     install_bun()
-    install_composio()
+    install_cua()
 
     print_message("Packages installed successfully!", indent_size=2, color=SUCCESS_COLOR)
 
@@ -358,6 +367,18 @@ def install_configurations():
             with shell_path.open("a", encoding="utf-8") as file:
                 file.write(f"{separator}. ~/.personal\n")
 
+    def install_antigravity():
+        print_message("Installing Antigravity configurations...", indent_size=2)
+
+        gemini_path = home_path / ".gemini"
+        copy_file(agents_path, gemini_path / "GEMINI.md")
+        merge_json(load_json(CONFIG_PATH / "antigravity" / "config.json"), gemini_path / "config" / "config.json")
+        merge_json(load_json(CONFIG_PATH / "antigravity" / "mcp.json"), gemini_path / "config" / "mcp_config.json")
+        merge_json(
+            load_json(CONFIG_PATH / "antigravity" / "settings.json"),
+            gemini_path / "antigravity-cli" / "settings.json",
+        )
+
     def install_codex():
         print_message("Installing Codex configurations...", indent_size=2)
 
@@ -368,15 +389,15 @@ def install_configurations():
         ):
             copy_file(agents_path, destination)
 
-        copy_tree(CONFIG_PATH / "pets", home_path / ".codex" / "pets")
-        merge_toml(CONFIG_PATH / "codex.toml", home_path / ".codex" / "config.toml")
+        copy_tree(CONFIG_PATH / "codex" / "pets", home_path / ".codex" / "pets")
+        merge_toml(CONFIG_PATH / "codex" / "config.toml", home_path / ".codex" / "config.toml")
 
     def install_claude():
         print_message("Installing Claude configurations...", indent_size=2)
 
         copy_file(agents_path, home_path / ".claude" / "CLAUDE.md")
-        merge_json(load_json(CONFIG_PATH / "claude.json"), home_path / ".claude" / "settings.json")
-        merge_json(load_json(CONFIG_PATH / "claude.mcp.json"), home_path / ".claude.json")
+        merge_json(load_json(CONFIG_PATH / "claude" / "settings.json"), home_path / ".claude" / "settings.json")
+        merge_json(load_json(CONFIG_PATH / "claude" / "mcp.json"), home_path / ".claude.json")
 
     def install_claude_desktop():
         print_message("Installing Claude Desktop configurations...", indent_size=2)
@@ -386,19 +407,20 @@ def install_configurations():
             if platform.system() == "Linux"
             else home_path / "Library" / "Application Support" / "Claude"
         )
-        merge_json(load_json(CONFIG_PATH / "claude.desktop.json"), desktop_path / "claude_desktop_config.json")
+        merge_json(load_json(CONFIG_PATH / "claude" / "desktop.json"), desktop_path / "claude_desktop_config.json")
 
     def install_opencode():
         print_message("Installing OpenCode configurations...", indent_size=2)
 
-        copy_configuration(CONFIG_PATH / "opencode.json", home_path / ".config" / "opencode" / "opencode.json")
-        copy_configuration(CONFIG_PATH / "opencode.cli.json", home_path / ".config" / "opencode" / "cli.json")
+        opencode_path = home_path / ".config" / "opencode"
+        copy_configuration(CONFIG_PATH / "opencode" / "opencode.json", opencode_path / "opencode.json")
+        copy_configuration(CONFIG_PATH / "opencode" / "cli.json", opencode_path / "cli.json")
 
     def install_git():
         print_message("Installing Git configurations...", indent_size=2)
 
-        copy_configuration(CONFIG_PATH / "allowed_signers", home_path / ".config" / "git" / "allowed_signers")
-        copy_configuration(CONFIG_PATH / ".gitconfig", home_path / ".gitconfig")
+        copy_configuration(CONFIG_PATH / "git" / "allowed_signers", home_path / ".config" / "git" / "allowed_signers")
+        copy_configuration(CONFIG_PATH / "git" / ".gitconfig", home_path / ".gitconfig")
 
         if platform.system() == "Darwin":
             run_command(
@@ -412,6 +434,12 @@ def install_configurations():
                 ]
             )
 
+        if platform.node().split(".")[0] == WORK_HOSTNAME:
+            work_path = home_path / ".config" / "git" / "work.gitconfig"
+            copy_configuration(CONFIG_PATH / "git" / ".gitconfig.work", work_path)
+            gitconfig_path = str(home_path / ".gitconfig")
+            run_command(["git", "config", "--file", gitconfig_path, "includeIf.gitdir:~/Work/.path", str(work_path)])
+
     def install_gitkraken():
         print_message("Installing GitKraken configurations...", indent_size=2)
 
@@ -420,11 +448,13 @@ def install_configurations():
     def install_playwright():
         print_message("Installing Playwright configurations...", indent_size=2)
 
-        copy_configuration(CONFIG_PATH / "playwright.json", home_path / ".playwright" / "cli.config.json")
+        playwright_path = home_path / ".playwright"
+        copy_configuration(CONFIG_PATH / "playwright.json", playwright_path / "cli.config.json")
 
     print_message("Installing configurations...")
 
     install_personal()
+    install_antigravity()
     install_codex()
     install_claude()
     install_claude_desktop()
