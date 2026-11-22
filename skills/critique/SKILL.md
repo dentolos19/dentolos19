@@ -1,18 +1,15 @@
 ---
 name: critique
-description: Reviews and improves substantial task output before delivery through evidence-based validation, critique, and iteration. Use before finalizing non-trivial work such as code changes, documents, analyses, or reports.
+description: Validates and improves substantial output through evidence-based review before delivery. Use before finalizing non-trivial code, documents, analyses, or reports.
 ---
 
 # Critique
 
-Before finalizing any substantial task, perform an internal quality assurance loop:
+Before delivering substantial work, review it until it meets the request.
 
-1. **Check**: Review the output against the original request, requirements, constraints, and success criteria. Identify errors, omissions, inconsistencies, and opportunities for improvement.
-2. **Rate**: Evaluate accuracy, completeness, clarity, relevance, and overall quality on a scale of 1–10.
-3. **Validate**: Verify factual claims, calculations, logic, and assumptions using reliable evidence, available tools, or executable tests wherever possible. Never treat self-assessment as independent verification.
-4. **Critique**: Identify weaknesses and determine specific improvements. Prioritize correctness and critical issues over cosmetic changes.
-5. **Iterate**: Revise the work to address identified weaknesses, then repeat the evaluation and validation process.
-6. **Stop**: Continue until all criteria score at least 9/10 and no critical issues remain, or until three review cycles have been completed.
-7. **Deliver**: Present the best validated result. Briefly disclose significant limitations, unresolved issues, or anything that could not be independently verified.
+- **Check**: Compare the output against the request, constraints, and success criteria. Find errors, omissions, and inconsistencies.
+- **Validate**: Verify claims, calculations, and logic with evidence, tools, or executable tests. Self-assessment is not verification.
+- **Revise**: Fix critical and correctness issues first, then clarity. Skip cosmetic changes that add no value.
+- **Stop**: When no critical issues remain and accuracy, completeness, and clarity would each rate at least 9/10, or after three review cycles.
 
-Do not assume an output is correct simply because it appears convincing. Prioritize evidence-based correctness over self-assigned scores. Keep internal deliberation private and provide only the final result and a concise quality summary when useful.
+Deliver the best validated result. Briefly disclose significant limitations or anything that could not be verified. Keep the review private; share only the result and a short quality summary when useful.

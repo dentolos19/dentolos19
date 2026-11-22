@@ -1,0 +1,6 @@
+interface:
+  brand_color: "#059669"
+  display_name: "Handover"
+  icon_large: "./assets/icon.png"
+  icon_small: "./assets/icon.svg"
+  short_description: "Package task context so another agent can continue the work"

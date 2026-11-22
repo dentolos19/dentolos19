@@ -9,6 +9,7 @@
 |-- docs/
 |-- .editorconfig
 |-- AGENTS.md
+|-- DESIGN.md
 |-- Justfile
 |-- PRODUCT.md
 |-- README.md
@@ -27,8 +28,12 @@
 |   |-- server/
 |   `-- simulator/
 |-- .editorconfig
+|-- AGENTS.md
 |-- compose.yml
+|-- DESIGN.md
 |-- Justfile
+|-- PRODUCT.md
+|-- README.md
 `-- <other project files>
 ```
 
@@ -45,6 +50,8 @@
 |   |-- routes/
 |   |-- server.ts
 |   `-- styles.css
+|-- .editorconfig
+|-- Justfile
 |-- package.json
 `-- <other project files>
 ```
@@ -55,7 +62,8 @@
 .
 |-- .vscode/
 |-- src/
-|   |-- main.py
+|   `-- main.py
+|-- .editorconfig
 |-- .python-version
 |-- Justfile
 |-- pyproject.toml

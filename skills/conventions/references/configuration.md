@@ -1,7 +1,13 @@
 # Configuration
 
 - Always have a `.editorconfig` file within the repository. Refer to `dentolos19` repo for the template.
-- Use the ignore templates in `dentolos19` repo as a base.
+
+## Ignores
+
+- Use the `.gitignore` file in `dentolos19` as the base template for any project.
+- Sync other ignore files, including `.dockerignore`, using the local `.gitignore` as the base.
+- Put normal rules at the top and exception rules at the bottom, with an empty line separating them.
+- Sort rules alphabetically. Do not add comments.
 
 ## Just
 

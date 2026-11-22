@@ -1,6 +1,6 @@
 ---
 name: handover
-description: Packages the current task's context, decisions, progress, and relevant files into a handover document or zip bundle so another agent, harness, or person can continue the work without the original conversation. Use when asked to hand over, hand off, transfer, export, or checkpoint work for a different agent, session, tool, or machine.
+description: Packages the current task's context, decisions, progress, and files into a handover document or zip bundle. Use when asked to hand over, transfer, or checkpoint work for another agent, session, or machine.
 ---
 
 # Handover
@@ -18,19 +18,11 @@ Write output to `.tmp/handover/` in the working directory unless the user names 
 
 ## Gather Context
 
-Collect only what the receiver needs to act:
-
-- The original request, goal, and success criteria in the user's own words where possible.
-- Current state: what is done, in progress, and not started. Check `git status`, recent commits, and the diff rather than relying on memory.
-- Decisions made, alternatives rejected, and the reasons. Include user preferences and constraints stated during the session.
-- Relevant files with a one-line purpose each, plus key commands to build, run, and test.
-- Environment and dependencies: runtimes, services, required environment variable names, and setup steps.
-- Known issues, failed approaches, gotchas, and open questions awaiting the user.
-- Concrete next steps in priority order.
+Collect only what the receiver needs to act, following the sections in [Template](references/template.md). Confirm the current state from `git status`, recent commits, and the diff rather than memory. Include decisions with their reasons, rejected approaches, and preferences the user stated during the session.
 
 ## Write The Document
 
-Use the structure in [Template](references/template.md). Omit sections that do not apply rather than filling them with placeholders. Keep it concise: link to files instead of pasting large contents, and quote only the snippets that carry a decision.
+Use the template's structure. Omit sections that do not apply rather than filling them with placeholders. Keep it concise: link to files instead of pasting large contents, and quote only the snippets that carry a decision.
 
 Distinguish clearly between verified facts, assumptions, and unknowns. Never report unfinished or untested work as complete.
 

@@ -2,15 +2,8 @@
 
 - Describe commit messages as past-tense actions, such as `Added README.md` or `Updated authentication system`.
 - Write PR titles as a feature or a fix, like `Case Region Improvements` or `Agentic Integration`.
-- For PR descriptions, include a summary section with a overview of the PR, and then the changes section listing the specific modifications.
+- Structure PR descriptions with a `## Summary` section giving an overview, followed by a `## Changes` section listing the specific modifications.
 - Do not be too technical on the description when writing issues or pull requests.
-
-# Ignores
-
-- In `dentolos19`, use the `.gitignore` file as a base template for any project.
-- Sync rules for other ignore files including `.dockerignore`, use the local `.gitignore` as a base.
-- Put normal rules at the top, exception rules at the bottom, with a empty line separating them.
-- Sort rules alphabetically. Do not add comments.
 
 ## GitHub
 

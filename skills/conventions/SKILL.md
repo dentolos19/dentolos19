@@ -1,6 +1,6 @@
 ---
 name: conventions
-description: Applies the user's project conventions for code style, directory layout, tech stack, tooling configuration, and Git commits, issues, and PRs. Use when writing or modifying code, scaffolding or restructuring a project, choosing frameworks or libraries, or working with Git.
+description: Applies the user's conventions for code, layout, stack, tooling, documentation, and Git. Use when writing code, structuring projects, choosing libraries, writing docs, or using Git.
 ---
 
 # Project Conventions
@@ -12,7 +12,8 @@ Start with the user's request and the current repository's instructions, nearby 
 Read the documentation below for the conventions and patterns to use.
 
 - [Code](references/code.md) for coding preferences.
-- [Configuration](references/configuration.md) for tooling, environments, CI, and local services.
+- [Configuration](references/configuration.md) for tooling, ignore files, environments, CI, and local services.
+- [Documentation](references/documentation.md) for `AGENTS.md`, `PRODUCT.md`, `DESIGN.md`, decision records, and the `docs` folder.
 - [Git](references/git.md) for commit rules, issue/PR writing, features, and GitHub settings.
 - [Layout](references/layout.md) for directories, structuring, naming, or project boundaries.
 - [Stack](references/stack.md) for framework, library, service, or tool choices.
