@@ -13,7 +13,7 @@ export CLOUDFLARE_ACCOUNT_ID="{env:CLOUDFLARE_ACCOUNT_ID}"
 export CLOUDFLARE_API_TOKEN="{env:CLOUDFLARE_API_TOKEN}"
 export NEON_API_KEY="{env:NEON_API_KEY}"
 
-if [ "$(scutil --get LocalHostName)" = "$WORK_HOSTNAME" ]; then
+if [ "$(uname -n | cut -d. -f1)" = "$WORK_HOSTNAME" ]; then
     export NODE_EXTRA_CA_CERTS="$HOME/.config/cloudflare/gateway-ca.pem"
 fi
 

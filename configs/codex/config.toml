@@ -1,6 +1,6 @@
 #:schema https://developers.openai.com/codex/config-schema.json
 
-model = "gpt-6.1-sol"
+model = "gpt-6.2-sol"
 model_reasoning_effort = "high"
 model_verbosity = "low"
 service_tier = "default"
@@ -16,6 +16,7 @@ agent-usage-reset-enabled = false
 sidebarShowYourDotInRecents = false
 preventSleepWhileRunning = true
 keepRemoteControlAwakeWhilePluggedIn = true
+followUpQueueMode = "steer"
 git-commit-instructions = "Describe commit messages as past-tense actions, such as `Added README.md` or `Updated authentication system`."
 git-pr-instructions = "Write PR titles as a feature or a fix, like `Case Region Improvements` or `Agentic Integration`. For PR descriptions, include a summary section with a overview of the PR, and then the changes section listing the specific modifications."
 
@@ -37,6 +38,10 @@ generate_memories = true
 extract_model = "gpt-6-luna"
 consolidation_model = "gpt-6.1-terra"
 
+[features]
+multi_agent = true
+memories = true
+
 [features.multi_agent_v2]
 enabled = true
 wait_agent_enabled = true
@@ -48,6 +53,11 @@ max_wait_timeout_ms = 3600000
 enabled = true
 url = "https://connect.composio.dev/mcp"
 http_headers = { "x-consumer-api-key" = "{env:COMPOSIO_API_KEY}" }
+
+[mcp_servers.denizen]
+enabled = true
+url = "https://dennise.me/mcp"
+http_headers = { "x-api-key" = "{env:DENIZEN_API_KEY}" }
 
 [mcp_servers."1password"]
 enabled = true
@@ -74,3 +84,8 @@ args = [
   "--user-data-dir",
   "{env:HOME}/.playwright/chrome",
 ]
+
+[mcp_servers.blender]
+enabled = true
+command = "uvx"
+args = ["mcp-for-blender"]

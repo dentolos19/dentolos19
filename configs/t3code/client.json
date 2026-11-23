@@ -1,0 +1,15 @@
+{
+  "inAppNotificationsEnabled": true,
+  "notificationMode": "notifications-and-sound",
+  "fontFamilyCode": "JetBrainsMono Nerd Font Mono",
+  "browserLinkTarget": "app",
+  "browserSearchEngine": "google",
+  "sidebarWorkingShelfEnabled": false,
+  "boringSidebarEnabled": true,
+  "confirmTerminalClose": false,
+  "threadDetailsItems": {
+    "usage": true,
+    "scripts": false,
+    "branch": false
+  }
+}

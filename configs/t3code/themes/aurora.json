@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "name": "Aurora",
+  "appearance": "dark",
+  "canvas": "#070b1a",
+  "accent": "#2ee6a6",
+  "colors": {
+    "sidebar": "#060916",
+    "sidebarRowActive": "#12233a",
+    "sidebarRowSelected": "#12233a",
+    "sidebarRowHover": "#0e1a2e",
+    "sidebarBorder": "#14203a",
+    "border": "#18263f",
+    "focus": "#2ee6a6",
+    "accentForeground": "#04120c",
+    "codeBackground": "#0a1122",
+    "terminalBackground": "#060916",
+    "terminalCursor": "#2ee6a6",
+    "terminalSelection": "#1d3a52",
+    "searchMatchActiveBackground": "#2ee6a6",
+    "searchMatchActiveForeground": "#04120c"
+  },
+  "css": "[data-workspace-area=\"conversation\"] {\n  background:\n    linear-gradient(180deg, rgba(5,8,20,0.5) 0%, rgba(5,8,20,0.3) 40%, rgba(5,8,20,0.6) 100%),\n    var(--theme-background-image) center / cover no-repeat fixed !important;\n}\n.messages-timeline-scroll { background: transparent !important; }\n[data-chat-header] {\n  background: rgba(6,9,22,0.55) !important;\n  backdrop-filter: blur(14px) saturate(140%);\n  -webkit-backdrop-filter: blur(14px) saturate(140%);\n}\n[data-slot=\"composer-host\"] {\n  background: rgba(8,13,30,0.72) !important;\n  backdrop-filter: blur(18px) saturate(150%);\n  -webkit-backdrop-filter: blur(18px) saturate(150%);\n  border-color: rgba(46,230,166,0.22) !important;\n  box-shadow: 0 0 0 1px rgba(46,230,166,0.06), 0 12px 40px -12px rgba(46,230,166,0.25);\n}\n[data-user-message-bubble] {\n  background: rgba(18,35,58,0.7) !important;\n  backdrop-filter: blur(10px);\n  -webkit-backdrop-filter: blur(10px);\n  border: 1px solid rgba(120,170,255,0.14) !important;\n}\n.chat-markdown { text-shadow: 0 1px 2px rgba(0,0,0,0.55); }\n.chat-markdown-codeblock {\n  background: rgba(8,13,30,0.82) !important;\n  backdrop-filter: blur(8px);\n  -webkit-backdrop-filter: blur(8px);\n}\n::-webkit-scrollbar-thumb { background: rgba(46,230,166,0.25); border-radius: 8px; }\n::-webkit-scrollbar-thumb:hover { background: rgba(46,230,166,0.45); }\n[data-slot=\"scroll-area-thumb\"] { background: rgba(46,230,166,0.3) !important; }"
+}

@@ -78,7 +78,16 @@ SKILL_AGENT_NAMES = {"Antigravity CLI", "Claude Code", "Codex", "OpenCode"}
 AGENT_SKILLS = {
     "composiohq/composio": ("composio",),
     "effect-ts/skills": ("effect-ts",),
+    "heygen-com/hyperframes": (
+        "hyperframes",
+        "hyperframes-cli",
+        "hyperframes-registry",
+        "media-use",
+        "reverse-any-video",
+        "style-sampling",
+    ),
     "microsoft/playwright-cli": ("playwright-cli",),
+    "ronykax/skills": ("draw-icons",),
     "shadcn-ui/ui": ("shadcn",),
 }
 
@@ -303,11 +312,26 @@ def install_packages():
         # The skill pack is bundled with the driver and linked into the detected agents.
         run_command(["cua-driver", "skills", "install"])
 
+    def install_blender():
+        print_message("Installing MCP for Blender addon...", indent_size=2)
+
+        uvx = shutil.which("uvx")
+        if not uvx:
+            raise OSError("uvx is not available after Homebrew installation.")
+
+        # The addon is copied into the newest Blender's user addons folder, replacing any older copy.
+        if subprocess.run([uvx, "mcp-for-blender", "addon-paths"], capture_output=True).returncode != 0:
+            print_message("Blender is not initialized; skipping its addon.", indent_size=4)
+            return
+
+        run_command([uvx, "mcp-for-blender", "install-addon"])
+
     print_message("Installing packages...")
 
     install_brew()
     install_bun()
     install_cua()
+    install_blender()
 
     print_message("Packages installed successfully!", indent_size=2, color=SUCCESS_COLOR)
 
@@ -416,6 +440,14 @@ def install_configurations():
         copy_configuration(CONFIG_PATH / "opencode" / "opencode.json", opencode_path / "opencode.json")
         copy_configuration(CONFIG_PATH / "opencode" / "cli.json", opencode_path / "cli.json")
 
+    def install_t3code():
+        print_message("Installing T3 Code configurations...", indent_size=2)
+
+        userdata_path = Path(os.environ.get("T3CODE_HOME", home_path / ".t3")) / "userdata"
+        copy_tree(CONFIG_PATH / "t3code" / "themes", userdata_path / "themes")
+        merge_json(load_json(CONFIG_PATH / "t3code" / "settings.json"), userdata_path / "settings.json")
+        merge_json(load_json(CONFIG_PATH / "t3code" / "client.json"), userdata_path / "client-settings.json")
+
     def install_git():
         print_message("Installing Git configurations...", indent_size=2)
 
@@ -459,6 +491,7 @@ def install_configurations():
     install_claude()
     install_claude_desktop()
     install_opencode()
+    install_t3code()
     install_git()
     install_gitkraken()
     install_playwright()

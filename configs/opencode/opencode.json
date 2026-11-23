@@ -53,20 +53,20 @@
   },
   "agents": {
     "build": {
-      "model": "opencode/longcat-2.5-free"
+      "model": "platform-ai/bedrock.claude-opus-5-5"
     },
     "plan": {
-      "model": "opencode/longcat-2.5-free"
+      "model": "platform-ai/bedrock.claude-opus-5-5"
     },
     "compaction": {
-      "model": "opencode/hy4-flash-free#high"
+      "model": "platform-ai/bedrock.claude-sonnet-5-5"
     },
     "general": {
-      "model": "opencode/hy4-flash-free#high",
+      "model": "platform-ai/bedrock.claude-sonnet-5-5",
       "hidden": true
     },
     "explore": {
-      "model": "opencode/hy4-flash-free#high",
+      "model": "platform-ai/bedrock.claude-haiku-5-5",
       "hidden": true
     }
   },
@@ -77,6 +77,13 @@
         "url": "https://connect.composio.dev/mcp",
         "headers": {
           "x-consumer-api-key": "{env:COMPOSIO_API_KEY}"
+        }
+      },
+      "denizen": {
+        "type": "remote",
+        "url": "https://dennise.me/mcp",
+        "headers": {
+          "x-api-key": "{env:DENIZEN_API_KEY}"
         }
       },
       "1password": {
@@ -102,6 +109,10 @@
           "--user-data-dir",
           "{env:HOME}/.playwright/chrome"
         ]
+      },
+      "blender": {
+        "type": "local",
+        "command": ["uvx", "mcp-for-blender"]
       }
     }
   }

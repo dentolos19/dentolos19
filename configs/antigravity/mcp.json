@@ -6,6 +6,12 @@
         "x-consumer-api-key": "{env:COMPOSIO_API_KEY}"
       }
     },
+    "denizen": {
+      "serverUrl": "https://dennise.me/mcp",
+      "headers": {
+        "x-api-key": "{env:DENIZEN_API_KEY}"
+      }
+    },
     "1password": {
       "command": "1password-mcp",
       "args": []
@@ -17,6 +23,10 @@
     "playwright": {
       "command": "bunx",
       "args": ["--bun", "@playwright/mcp", "--browser", "chrome", "--user-data-dir", "{env:HOME}/.playwright/chrome"]
+    },
+    "blender": {
+      "command": "uvx",
+      "args": ["mcp-for-blender"]
     }
   }
 }

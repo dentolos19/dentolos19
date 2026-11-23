@@ -2,7 +2,9 @@
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "model": "opus",
   "effortLevel": "medium",
+  "theme": "auto",
   "alwaysThinkingEnabled": true,
+  "agentPushNotifEnabled": true,
   "skipDangerousModePermissionPrompt": true,
   "permissions": {
     "defaultMode": "bypassPermissions"

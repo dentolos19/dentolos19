@@ -4,13 +4,16 @@
     "ccNextActions": false,
     "ccPromptSuggestions": false,
     "ccRemoteControlDefaultEnabled": false,
+    "chicagoEnabled": true,
     "claudeIosSimulatorAccessEnabled": false,
     "coworkBrowserToolsEnabled": true,
     "coworkPreferredBrowser": "built_in",
     "coworkScheduledTasksEnabled": true,
     "coworkWebSearchEnabled": true,
+    "dictationShortcut": "off",
+    "quickEntryShortcut": "off",
     "remoteControlStayReachable": true,
-    "sidebarMode": "epitaxy"
+    "sidebarMode": "chat"
   },
   "mcpServers": {
     "1password": {
@@ -24,6 +27,10 @@
     "playwright": {
       "command": "bunx",
       "args": ["--bun", "@playwright/mcp", "--browser", "chrome", "--user-data-dir", "{env:HOME}/.playwright/chrome"]
+    },
+    "blender": {
+      "command": "uvx",
+      "args": ["mcp-for-blender"]
     }
   }
 }
