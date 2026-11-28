@@ -17,9 +17,5 @@
 
 ## Services
 
-- [**Cloudflare**](https://developers.cloudflare.com): Workers with the Cloudflare CLI; retain Wrangler where required by project tooling, such as Python packaging. Use R2, D1, and KV when needed.
+- [**Cloudflare**](https://developers.cloudflare.com): Workers with the Cloudflare CLI. When binding resources share a name, define `workerName` once and derive the resource names from it, keeping the names of resources already deployed.
 - [**Neon**](https://neon.com/docs): Postgres hosting with database branching for isolated development.
-
-## Dependencies
-
-- Update dependencies to compatible versions, keeping related packages aligned and required compatibility pins intact.

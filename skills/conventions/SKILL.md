@@ -1,36 +1,38 @@
 ---
 name: conventions
-description: Applies the user's conventions for code, layout, stack, tooling, documentation, and Git. Use when writing code, structuring projects, choosing libraries, writing docs, or using Git.
+description: Applies the user's conventions for code, configuration, documentation, Git, layout, and stack. Use when writing code, configuring tooling, structuring projects, writing docs, or working with Git.
 ---
 
 # Project Conventions
 
-Start with the user's request and the current repository's instructions, nearby code, and tooling. Preserve established patterns unless the task calls for changing them.
+Start with the user's request and the current repository's instructions, nearby code, and tooling.
+
+## Precedence
+
+Decide whose repository it is before applying anything below.
+
+- **My Repositories**: Those under the `dentolos19` GitHub account, or any repository whose history already follows these conventions. Keep the existing tooling and stack, such as npm or Vitest, until the user asks to migrate.
+- **Other Repositories**: Team, work, or third-party repositories with their own established patterns. Follow the repository. Apply these conventions only where the repository has no pattern of its own. Only align strictly when explicitly asked.
+- **New Projects**: Apply these conventions in full, starting from the closest reference project.
 
 ## Documentation References
 
-Read the documentation below for the conventions and patterns to use.
+Read only the references relevant to the task.
 
-- [Code](references/code.md) for coding preferences.
-- [Configuration](references/configuration.md) for tooling, ignore files, environments, CI, and local services.
-- [Documentation](references/documentation.md) for `AGENTS.md`, `PRODUCT.md`, `DESIGN.md`, decision records, and the `docs` folder.
-- [Git](references/git.md) for commit rules, issue/PR writing, features, and GitHub settings.
-- [Layout](references/layout.md) for directories, structuring, naming, or project boundaries.
+- [Code](references/code.md) for coding style.
+- [Configuration](references/configuration.md) for editor configuration, ignore files, `.env` templates, the `Justfile`, etc.
+- [Documentation](references/documentation.md) for writing style, documentation management, `README.md`, `AGENTS.md`, and skills.
+- [Git](references/git.md) for commits, pull requests, issues, and GitHub repository settings.
+- [Layout](references/layout.md) for directories and project structure.
 - [Stack](references/stack.md) for framework, library, service, or tool choices.
 
-## Project References
+## Reference Projects
 
-Consult the closest project below for guidance on applying the conventions. Read only the files relevant to the decision: source for coding style, manifests for tooling, workflows for delivery, or documentation for structure and wording. Use local checkouts when available. Treat these as examples to adapt. Choose what fits the project's scale, stack, and constraints; avoid importing unrelated dependencies, files, or workflows. For new projects, use the closest example as a starting point. If a reference is unavailable, use local evidence and reasonable defaults.
+Consult the closest project below to see the conventions applied. Read only the files relevant to the decision: source for coding style, manifests for tooling, workflows for delivery, or documentation for structure and wording. Look for local checkouts in sibling directories of the current repository or in `~/Projects/<name>` before fetching from GitHub. Treat these as examples to adapt, not files to copy wholesale; leave out dependencies, files, and workflows the project does not need. When a project copies configuration from a reference, it keeps the reference's key order, values, and formatting.
 
 - [`dentolos19`](https://github.com/dentolos19/dentolos19): Shared configuration, templates, and agent guidance.
 - [`denizen`](https://github.com/dentolos19/denizen): Single-project TypeScript web application.
 - [`ecoprimers`](https://github.com/dentolos19/ecoprimers): Single-project Python web application.
 - [`facilix`](https://github.com/dentolos19/facilix): Multi-project web application with TypeScript and Python.
 
-## Convention Rules
-
-- When copying over a configuration from a project or reference, strictly follow the same order of keys, values, and formatting.
-
-## Other Documentation
-
-- [Skill Authoring Best Practices](https://docs.claude.com/en/docs/agents-and-tools/agent-skills/best-practices) when authoring or revising skills, `CLAUDE.md`, `AGENTS.md`, or task prompts. Write third-person descriptions that state what the skill does and when to use it, keep `SKILL.md` concise, load detailed guidance from references only when relevant, and define outcomes and boundaries without prescribing unnecessary steps.
+If a reference is unavailable, use local evidence and reasonable defaults.

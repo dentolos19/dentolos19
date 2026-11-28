@@ -1,5 +1,6 @@
 .DS_Store
 .env*
+.playwright-cli/
 .tmp/
 Desktop.ini
 Thumbs.db

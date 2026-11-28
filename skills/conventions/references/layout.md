@@ -1,4 +1,4 @@
-# Layouts
+# Layout
 
 ## Single Project Layout
 
@@ -8,6 +8,7 @@
 |-- .vscode/
 |-- docs/
 |-- .editorconfig
+|-- .env.template
 |-- AGENTS.md
 |-- DESIGN.md
 |-- Justfile
@@ -50,6 +51,7 @@
 |   |-- routes/
 |   |-- server.ts
 |   `-- styles.css
+|-- tests/
 |-- .editorconfig
 |-- Justfile
 |-- package.json
@@ -63,9 +65,14 @@
 |-- .vscode/
 |-- src/
 |   `-- main.py
+|-- tests/
 |-- .editorconfig
 |-- .python-version
 |-- Justfile
 |-- pyproject.toml
 `-- <other project files>
 ```
+
+## Editor
+
+- In `.vscode/`, add a `Setup` task in `tasks.json` that runs `just setup` and a launch configuration in `launch.json` that runs `just start` with `Setup` as its `preLaunchTask`.

@@ -1,6 +1,0 @@
-interface:
-  brand_color: "#2563EB"
-  display_name: "Conventions"
-  icon_large: "./assets/icon.png"
-  icon_small: "./assets/icon.svg"
-  short_description: "Apply code, layout, stack, tooling, documentation, and Git conventions"
